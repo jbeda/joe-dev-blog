@@ -2,8 +2,11 @@
   "$schema": "https://tangled.org/stevedylan.dev/sequoia/raw/main/sequoia.schema.json",
   "siteUrl": "https://joe.dev",
   "contentDir": "./content/posts",
-  "publicDir": "./public",
-  "pathPrefix": "/posts",
-  "pdsUrl": "https://bsky.social",
-  "publicationUri": "REPLACE_ME_run_sequoia_init"
+  "imagesDir": "./assets",
+  "outputDir": "./public",
+  "publicationUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.publication/3mmfe3yxkqd2b",
+  "frontmatter": {
+    "publishDate": "date"
+  },
+  "publishContent": true
 }
