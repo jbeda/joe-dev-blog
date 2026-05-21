@@ -1,9 +1,9 @@
 {
   "posts": {
     "content/posts/hello-world.md": {
-      "contentHash": "4f83cb723563882ff6cbb1a3b2e79c8c6fad2335e7cf7141f3eb39db97edc8a0",
-      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmfec6dqzn2h",
-      "lastPublished": "2026-05-21T21:26:21.220Z",
+      "contentHash": "b833fe060ff37eb9b653341ba3944fed832b567e100b1e63a771dbe436cee3b5",
+      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmfemk5n3622",
+      "lastPublished": "2026-05-21T21:32:09.167Z",
       "slug": "hello-world"
     }
   }
