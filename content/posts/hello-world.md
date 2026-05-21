@@ -4,6 +4,7 @@ draft = false
 title = 'Hello, World'
 description = 'First post — testing the pipeline.'
 tags = ['meta']
+atUri = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmff6f5q5w2u"
 +++
 
 Well, here we are.
