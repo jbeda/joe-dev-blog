@@ -1,0 +1,10 @@
+{
+  "posts": {
+    "content/posts/hello-world.md": {
+      "contentHash": "4f83cb723563882ff6cbb1a3b2e79c8c6fad2335e7cf7141f3eb39db97edc8a0",
+      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmfec6dqzn2h",
+      "lastPublished": "2026-05-21T21:26:21.220Z",
+      "slug": "hello-world"
+    }
+  }
+}
