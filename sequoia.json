@@ -1,0 +1,9 @@
+{
+  "$schema": "https://tangled.org/stevedylan.dev/sequoia/raw/main/sequoia.schema.json",
+  "siteUrl": "https://joe.dev",
+  "contentDir": "./content/posts",
+  "publicDir": "./public",
+  "pathPrefix": "/posts",
+  "pdsUrl": "https://bsky.social",
+  "publicationUri": "REPLACE_ME_run_sequoia_init"
+}

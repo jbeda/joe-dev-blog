@@ -1,0 +1,38 @@
+baseURL = 'https://joe.dev/'
+locale = 'en-us'
+title = "Joe Beda's Blog"
+theme = 'PaperMod'
+paginate = 10
+
+[params]
+  author = 'Joe Beda'
+  description = "Joe Beda's personal blog"
+  defaultTheme = 'auto'
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = false
+  ShowCodeCopyButtons = true
+  ShowFullTextinRSS = true
+
+[params.homeInfoParams]
+  Title = "Hi, I'm Joe"
+  Content = "Engineer, thinker, writer. Working on [Stacklok](https://stacklok.com)."
+
+[[params.socialIcons]]
+  name = 'bluesky'
+  url = 'https://bsky.app/profile/h.olysh.it'
+
+[[params.socialIcons]]
+  name = 'linkedin'
+  url = 'https://www.linkedin.com/in/jbeda/'
+
+[[params.socialIcons]]
+  name = 'github'
+  url = 'https://github.com/jbeda'
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+
+[markup.highlight]
+  noClasses = false
