@@ -9,7 +9,7 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 permissions:
-  contents: write  # needed to commit back .sequoia-state.json
+  contents: write  # needed to commit back sequoia state + frontmatter
 
 jobs:
   deploy:
@@ -25,23 +25,35 @@ jobs:
           hugo-version: latest
           extended: true
 
-      - name: Build
-        run: hugo --minify
-
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6  # v2.2.0
 
+      # 1. Publish source posts to ATproto.
+      #    Writes atUri into each post's frontmatter and updates state file.
       - name: Publish to ATproto
         run: bunx sequoia-cli publish
         env:
           ATP_IDENTIFIER: ${{ secrets.ATP_IDENTIFIER }}
           ATP_APP_PASSWORD: ${{ secrets.ATP_APP_PASSWORD }}
 
-      - name: Commit updated Sequoia state
+      # 2. Commit frontmatter updates + state before building.
+      #    Keeps the tracked working tree clean for Wrangler's git check.
+      - name: Commit sequoia state and frontmatter updates
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9  # v7.1.0
         with:
           commit_message: "chore: update sequoia publish state [skip ci]"
-          file_pattern: .sequoia-state.json
+          file_pattern: .sequoia-state.json content/posts/*.md
 
+      # 3. Build from the now-committed source (atUri values present in frontmatter).
+      - name: Build
+        run: hugo --minify
+
+      # 4. Inject <link rel="site.standard.document"> tags into built HTML.
+      #    Reads state for slug→atUri mappings, writes into public/*.html.
+      #    public/ is gitignored so this doesn't dirty the working tree.
+      - name: Inject ATproto link tags
+        run: bunx sequoia-cli inject
+
+      # 5. Deploy the fully-built, injected output.
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0  # v4.0.0
         with:
