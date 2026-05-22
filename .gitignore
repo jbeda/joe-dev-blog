@@ -9,3 +9,6 @@
 # Local Claude Code settings
 .claude/
 
+# Downloaded fonts (local tooling only, not committed)
+/fonts/
+

@@ -114,6 +114,27 @@ The script uses dynamic `import()` and only fetches mermaid when a `.mermaid` di
 </script>
 ```
 
+### Favicon
+Files live in `static/` and are picked up automatically by PaperMod's head template:
+- `static/favicon.ico` — multi-size (16+32) ICO for legacy browsers
+- `static/favicon-16x16.png` — 16×16 PNG
+- `static/favicon-32x32.png` — 32×32 PNG
+- `static/apple-touch-icon.png` — 180×180 PNG for iOS
+
+Design: uppercase **J**, Cormorant Semi Bold, white on `#0F766E` (deep teal), rounded square
+(corner radius ~12%), +7% optical lift. Source frames live in the Figma Brand Book
+(see link above) under "D — Optical Centering Refinement → +7%".
+
+To regenerate favicons: screenshot the brand book frame `2:2` at `maxDimension=3650`
+(renders 1:1 at 1440×3650), then crop with ImageMagick:
+```
+magick brandbook.png -crop 200x200+440+3384 +repage favicon-200.png
+magick favicon-200.png -resize 180x180 static/apple-touch-icon.png
+magick favicon-200.png -resize 32x32  static/favicon-32x32.png
+magick favicon-200.png -resize 16x16  static/favicon-16x16.png
+magick static/favicon-16x16.png static/favicon-32x32.png static/favicon.ico
+```
+
 ### Hugo Template Override Locations
 - `layouts/partials/extend_head.html` — Google Fonts + Mermaid script
 - `layouts/partials/extend_footer.html` — empty (reserved; do not use for per-page content)
@@ -133,6 +154,12 @@ The script uses dynamic `import()` and only fetches mermaid when a `.mermaid` di
 - `atUri` frontmatter field is written by `sequoia publish` — do not edit manually
 - About page: `content/about.md` — uses `.about-photo` CSS class for the headshot float
 - Headshot: `static/joe.png` (341×512px portrait)
+
+## Scripts & Local Tooling
+
+- `scripts/download-fonts.sh` — downloads brand fonts (Cormorant, Nunito, Space Mono) from
+  Google Fonts GitHub mirror into `fonts/` (gitignored). Run once after cloning.
+  Requires `curl`. Used for local image generation with ImageMagick.
 
 ## GitHub Secrets Required
 - `ATP_IDENTIFIER` — ATproto handle (e.g. `h.olysh.it`)
