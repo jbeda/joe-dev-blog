@@ -125,15 +125,34 @@ Design: uppercase **J**, Cormorant Semi Bold, white on `#0F766E` (deep teal), ro
 (corner radius ~12%), +7% optical lift. Source frames live in the Figma Brand Book
 (see link above) under "D — Optical Centering Refinement → +7%".
 
-To regenerate favicons: screenshot the brand book frame `2:2` at `maxDimension=3650`
-(renders 1:1 at 1440×3650), then crop with ImageMagick:
+Export frames live in the brand book at canvas y=4000 as standalone frames named
+`favicon-export/512`, `favicon-export/180`, `favicon-export/32`, `favicon-export/16`
+(node IDs 21:2, 21:4, 21:6, 21:8).
+
+**To regenerate favicons** — use `exportAsync` via `use_figma` (NOT `get_screenshot`,
+which captures the canvas background and produces opaque corners). `exportAsync` renders
+the frame in isolation giving proper alpha-0 corners:
+
+```js
+// In use_figma — export one frame as base64 PNG
+const node = figma.getNodeById("21:4"); // e.g. 180px
+const bytes = await node.exportAsync({ format: 'PNG', constraint: { type: 'SCALE', value: 1 } });
+let binary = '';
+for (let i = 0; i < bytes.length; i += 8192)
+  binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
+return JSON.stringify({ data: btoa(binary) });
 ```
-magick brandbook.png -crop 200x200+440+3384 +repage favicon-200.png
-magick favicon-200.png -resize 180x180 static/apple-touch-icon.png
-magick favicon-200.png -resize 32x32  static/favicon-32x32.png
-magick favicon-200.png -resize 16x16  static/favicon-16x16.png
+
+Decode and save with: `echo "<base64>" | base64 -d > static/apple-touch-icon.png`
+
+Rebuild ICO after updating PNGs:
+```
 magick static/favicon-16x16.png static/favicon-32x32.png static/favicon.ico
 ```
+
+To recreate the export frames from scratch (if lost), run `use_figma` with the code
+from the commit that added them — it uses `figma.createFrame()` + `exportAsync` design
+at y=4000 in the brand book.
 
 ### Hugo Template Override Locations
 - `layouts/partials/extend_head.html` — Google Fonts + Mermaid script
