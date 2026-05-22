@@ -1,0 +1,53 @@
+version: '3'
+
+tasks:
+
+  dev:
+    desc: Start Hugo dev server with drafts enabled (live reload)
+    cmds:
+      - hugo server -D
+
+  build:
+    desc: Production build (minified output → public/)
+    cmds:
+      - hugo --minify
+
+  preview:
+    desc: Build then serve the production output locally
+    cmds:
+      - hugo --minify
+      - hugo server --renderStaticToDisk
+
+  clean:
+    desc: Remove Hugo build output and cache
+    cmds:
+      - rm -rf public resources/_gen .hugo_build.lock
+
+  fonts:
+    desc: Download brand fonts from Google Fonts GitHub mirror into fonts/ (gitignored)
+    vars:
+      BASE: https://github.com/google/fonts/raw/main/ofl
+    cmds:
+      - mkdir -p fonts
+      - |
+        download() {
+          local url="$1" dest="fonts/$2"
+          if [[ -f "$dest" ]]; then
+            echo "  exists:      $2"
+          else
+            echo "  downloading: $2"
+            curl -fsSL "$url" -o "$dest"
+          fi
+        }
+        echo "==> Cormorant (variable)"
+        download "{{.BASE}}/cormorant/Cormorant%5Bwght%5D.ttf"        "Cormorant-variable.ttf"
+        download "{{.BASE}}/cormorant/Cormorant-Italic%5Bwght%5D.ttf" "Cormorant-Italic-variable.ttf"
+        echo "==> Nunito (variable)"
+        download "{{.BASE}}/nunito/Nunito%5Bwght%5D.ttf"              "Nunito-variable.ttf"
+        download "{{.BASE}}/nunito/Nunito-Italic%5Bwght%5D.ttf"       "Nunito-Italic-variable.ttf"
+        echo "==> Space Mono (static)"
+        download "{{.BASE}}/spacemono/SpaceMono-Regular.ttf"          "SpaceMono-Regular.ttf"
+        download "{{.BASE}}/spacemono/SpaceMono-Bold.ttf"             "SpaceMono-Bold.ttf"
+        download "{{.BASE}}/spacemono/SpaceMono-Italic.ttf"           "SpaceMono-Italic.ttf"
+        download "{{.BASE}}/spacemono/SpaceMono-BoldItalic.ttf"       "SpaceMono-BoldItalic.ttf"
+        echo "Done."

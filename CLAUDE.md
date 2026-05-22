@@ -174,11 +174,19 @@ at y=4000 in the brand book.
 - About page: `content/about.md` — uses `.about-photo` CSS class for the headshot float
 - Headshot: `static/joe.png` (341×512px portrait)
 
-## Scripts & Local Tooling
+## Local Tooling
 
-- `scripts/download-fonts.sh` — downloads brand fonts (Cormorant, Nunito, Space Mono) from
-  Google Fonts GitHub mirror into `fonts/` (gitignored). Run once after cloning.
-  Requires `curl`. Used for local image generation with ImageMagick.
+Common tasks are defined in `Taskfile.yml` (requires [Task](https://taskfile.dev), `brew install go-task`):
+
+| Command        | Description                                      |
+|----------------|--------------------------------------------------|
+| `task dev`     | Hugo dev server with drafts (live reload)        |
+| `task build`   | Production build → `public/`                     |
+| `task preview` | Production build + serve locally                 |
+| `task clean`   | Remove `public/`, `resources/_gen/`, build lock  |
+| `task fonts`   | Download brand fonts into `fonts/` (gitignored)  |
+
+Run `task fonts` once after cloning before any local image generation with ImageMagick.
 
 ## GitHub Secrets Required
 - `ATP_IDENTIFIER` — ATproto handle (e.g. `h.olysh.it`)
