@@ -9,6 +9,9 @@
 # Local Claude Code settings
 .claude/
 
+# Local environment variables (copy from .env.example, never commit)
+.env
+
 # Downloaded fonts (local tooling only, not committed)
 /fonts/
 

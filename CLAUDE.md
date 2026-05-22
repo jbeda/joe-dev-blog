@@ -105,8 +105,12 @@ Order matters — Sequoia must publish before Hugo builds, then inject after:
 **Stale records on the PDS:** Sequoia tracks published posts via `atUri` in each post's
 frontmatter and `.sequoia-state.json`. If those weren't committed between runs (e.g. during
 initial testing), each `publish` creates a new ATproto record instead of updating the
-existing one, leaving orphaned records on the PDS. To remove them, use the ATproto API
-directly: `com.atproto.repo.deleteRecord` with the orphaned `at://` URIs.
+existing one, leaving orphaned records on the PDS. Each `site.standard.document` record
+references its publication via the `site` field (not `publicationUri`).
+
+Use `task atproto-check` (dry run) and `task atproto-cleanup` (delete) to manage these.
+The underlying script is `scripts/delete-orphaned-records.py`; requires `ATP_IDENTIFIER`
+and `ATP_APP_PASSWORD` env vars.
 
 ### Mermaid Implementation
 The mermaid script lives in `layouts/partials/extend_head.html` (NOT `extend_footer.html`).
@@ -187,6 +191,9 @@ at y=4000 in the brand book.
 
 ## Local Tooling
 
+Copy `.env.example` → `.env` and fill in your credentials. The Taskfile loads `.env`
+automatically so all tasks pick up `ATP_IDENTIFIER`, `ATP_APP_PASSWORD`, etc.
+
 Common tasks are defined in `Taskfile.yml` (requires [Task](https://taskfile.dev), `brew install go-task`):
 
 | Command        | Description                                      |
@@ -195,7 +202,9 @@ Common tasks are defined in `Taskfile.yml` (requires [Task](https://taskfile.dev
 | `task build`   | Production build → `public/`                     |
 | `task preview` | Production build + serve locally                 |
 | `task clean`   | Remove `public/`, `resources/_gen/`, build lock  |
-| `task fonts`   | Download brand fonts into `fonts/` (gitignored)  |
+| `task fonts`          | Download brand fonts into `fonts/` (gitignored)         |
+| `task atproto-check`  | List orphaned ATproto records (dry run)                  |
+| `task atproto-cleanup`| Delete orphaned ATproto records (prompts for confirmation)|
 
 Run `task fonts` once after cloning before any local image generation with ImageMagick.
 

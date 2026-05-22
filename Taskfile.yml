@@ -1,5 +1,7 @@
 version: '3'
 
+dotenv: ['.env']
+
 tasks:
 
   dev:
@@ -51,3 +53,14 @@ tasks:
         download "{{.BASE}}/spacemono/SpaceMono-Italic.ttf"           "SpaceMono-Italic.ttf"
         download "{{.BASE}}/spacemono/SpaceMono-BoldItalic.ttf"       "SpaceMono-BoldItalic.ttf"
         echo "Done."
+
+  atproto-check:
+    desc: List orphaned ATproto records not tracked by Sequoia (dry run)
+    cmds:
+      - python3 scripts/delete-orphaned-records.py
+
+  atproto-cleanup:
+    desc: Delete orphaned ATproto records not tracked by Sequoia
+    prompt: This will permanently delete records from your PDS. Continue?
+    cmds:
+      - python3 scripts/delete-orphaned-records.py --delete
