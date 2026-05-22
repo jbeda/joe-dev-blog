@@ -97,6 +97,17 @@ Order matters — Sequoia must publish before Hugo builds, then inject after:
 - `publishContent`: `true`
 - `publicationUri`: `at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.publication/3mmfe3yxkqd2b`
 
+### Sequoia Reference
+- **Quickstart:** https://sequoia.pub/quickstart
+- **Source repo:** https://tangled.org/stevedylan.dev/sequoia
+- **Commands:** `auth`, `init`, `publish`, `inject` — there is no built-in delete/cleanup command
+
+**Stale records on the PDS:** Sequoia tracks published posts via `atUri` in each post's
+frontmatter and `.sequoia-state.json`. If those weren't committed between runs (e.g. during
+initial testing), each `publish` creates a new ATproto record instead of updating the
+existing one, leaving orphaned records on the PDS. To remove them, use the ATproto API
+directly: `com.atproto.repo.deleteRecord` with the orphaned `at://` URIs.
+
 ### Mermaid Implementation
 The mermaid script lives in `layouts/partials/extend_head.html` (NOT `extend_footer.html`).
 Reason: PaperMod's `baseof.html` calls `partialCached "footer.html"` which caches the footer
