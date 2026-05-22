@@ -1,0 +1,118 @@
+/* === Background warmth === */
+
+:root {
+    --theme:   rgb(245, 241, 235);   /* warm cream */
+    --entry:   rgb(248, 246, 242);   /* slightly deeper warm white for cards */
+    --border:  rgb(232, 228, 222);   /* warm light border */
+    --code-bg: rgb(242, 239, 234);   /* warm inline code bg */
+    --code-block-bg: rgb(42, 38, 32); /* code block bg — softer than PaperMod's near-black */
+}
+
+:root[data-theme=dark] {
+    --theme:   rgb(24, 21, 17);      /* rich warm dark brown */
+    --entry:   rgb(36, 32, 26);      /* warm dark card bg */
+    --border:  rgb(60, 54, 44);      /* warm amber-tinted border */
+    --code-bg: rgb(46, 41, 33);      /* warm dark inline code bg */
+}
+
+/* === Typography === */
+
+body {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 300;
+}
+
+/* Restore legible weight for bold/strong inline text */
+strong, b {
+    font-weight: 600;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant', serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+}
+
+/* Post titles slightly bolder */
+.post-title, h1.post-title {
+    font-weight: 600;
+}
+
+code, pre, kbd, samp {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82em; /* Space Mono runs large */
+}
+
+/* Restore normal size inside pre blocks */
+pre code {
+    font-size: 1em;
+}
+
+/* Site title in nav uses display font */
+.logo a {
+    font-family: 'Cormorant', serif;
+    font-weight: 600;
+    font-size: 28px;
+}
+
+/* About page photo */
+.about-photo {
+    float: right;
+    margin: 0 0 1.5rem 2rem;
+    width: 200px;
+}
+
+.about-photo img {
+    width: 100%;
+    border-radius: var(--radius);
+}
+
+@media (max-width: 480px) {
+    .about-photo {
+        float: none;
+        margin: 0 auto 1.5rem;
+        width: 160px;
+    }
+}
+
+/* === Teal accent — light mode === */
+a,
+.post-tags a {
+    color: #0D9488;
+}
+
+a:hover,
+.post-tags a:hover {
+    color: #0F766E;
+}
+
+.entry-header h2 a:hover,
+.post-title a:hover {
+    color: #0D9488;
+}
+
+#menu a.active,
+.menu a:hover {
+    color: #0D9488;
+}
+
+/* === Teal accent — dark mode === */
+[data-theme=dark] a,
+[data-theme=dark] .post-tags a {
+    color: #2DD4BF;
+}
+
+[data-theme=dark] a:hover,
+[data-theme=dark] .post-tags a:hover {
+    color: #5EEAD4;
+}
+
+[data-theme=dark] .entry-header h2 a:hover,
+[data-theme=dark] .post-title a:hover {
+    color: #2DD4BF;
+}
+
+[data-theme=dark] #menu a.active,
+[data-theme=dark] .menu a:hover {
+    color: #2DD4BF;
+}

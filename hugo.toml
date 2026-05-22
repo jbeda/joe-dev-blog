@@ -1,8 +1,9 @@
 baseURL = 'https://joe.dev/'
 locale = 'en-us'
-title = "Joe Beda's Blog"
+title = "Joe's Development Blog"
 theme = 'PaperMod'
 paginate = 10
+enableRobotsTXT = true
 
 [params]
   author = 'Joe Beda'
@@ -14,10 +15,12 @@ paginate = 10
   ShowBreadCrumbs = false
   ShowCodeCopyButtons = true
   ShowFullTextinRSS = true
+  ShowToc = true
+  TocOpen = false
 
 [params.homeInfoParams]
   Title = "Hi, I'm Joe"
-  Content = "Engineer, thinker, writer. Working on [Stacklok](https://stacklok.com)."
+  Content = "Engineer and serial builder — from Internet Explorer to Google Compute Engine to Kubernetes to now. CTO at [Stacklok](https://stacklok.com). This is where I write things that don't fit in a pull request."
 
 [[params.socialIcons]]
   name = 'bluesky'
@@ -30,6 +33,21 @@ paginate = 10
 [[params.socialIcons]]
   name = 'github'
   url = 'https://github.com/jbeda'
+
+[[menu.main]]
+  name = 'About'
+  url = '/about/'
+  weight = 10
+
+[[menu.main]]
+  name = 'Archives'
+  url = '/archives/'
+  weight = 20
+
+[[menu.main]]
+  name = 'Search'
+  url = '/search/'
+  weight = 30
 
 [outputs]
   home = ['HTML', 'RSS', 'JSON']
