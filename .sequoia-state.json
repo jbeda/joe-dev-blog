@@ -1,9 +1,9 @@
 {
   "posts": {
     "content/posts/hello-world.md": {
-      "contentHash": "a1fdd21f015ad430e0b45f20b44ea3e525a451263d2db8a8186a515cd70a3024",
+      "contentHash": "c7a75136b709a0ddabb0bfa513f836a3d467ee56684d936476f7edccec9da951",
       "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmff6f5q5w2u",
-      "lastPublished": "2026-05-22T17:45:20.475Z",
+      "lastPublished": "2026-05-22T21:14:27.976Z",
       "slug": "hello-world"
     }
   }
