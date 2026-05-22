@@ -9,7 +9,7 @@ atUri = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmff6f5q5
 
 Well, here we are.
 
-This is the first post on the new [joe.dev](https://joe.dev) — a fresh Hugo setup deploying via Cloudflare Pages, with posts mirrored to ATproto via [Sequoia](https://sequoia.tools).
+This is the first post on the new [joe.dev](https://joe.dev) — a fresh Hugo setup deploying via Cloudflare Pages, with posts mirrored to ATproto via [Sequoia](https://sequoia.pub).
 
 Nothing deep to say yet. Just kicking the tires and making sure the whole pipeline works end to end. More soon.
 
