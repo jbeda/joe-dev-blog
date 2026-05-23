@@ -7,7 +7,7 @@ enableRobotsTXT = true
 
 [params]
   author = 'Joe Beda'
-  description = "Joe Beda's personal blog"
+  description = "Joe Beda talking computer stuff"
   defaultTheme = 'auto'
   ShowReadingTime = true
   ShowShareButtons = false

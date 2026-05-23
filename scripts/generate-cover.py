@@ -49,7 +49,7 @@ FONT_DIR    = Path("fonts")
 TITLE_SIZES = [120, 96, 72, 60, 52]
 
 # Bump this when the visual design changes so old sidecars can be detected.
-SPEC_VERSION = "2"
+SPEC_VERSION = "3"
 
 
 def load_font(name: str, size: int) -> "ImageFont.FreeTypeFont":
@@ -149,13 +149,14 @@ def generate_cover(
             draw.text((PAD_X, y), line, font=description_font, fill=TEXT_DESC)
             y += desc_lh + desc_gap
 
-    # joe.dev wordmark — bottom-right
-    wm_w = int(draw.textlength("joe.dev", font=wordmark_font))
-    _, t, _, b = draw.textbbox((0, 0), "joe.dev", font=wordmark_font)
+    # wordmark — bottom-right
+    wordmark = "joe.dev · Joe Beda"
+    wm_w = int(draw.textlength(wordmark, font=wordmark_font))
+    _, t, _, b = draw.textbbox((0, 0), wordmark, font=wordmark_font)
     wm_h = b - t
     draw.text(
         (W - PAD_X - wm_w, H - PAD_Y - wm_h),
-        "joe.dev",
+        wordmark,
         font=wordmark_font,
         fill=TEXT_SECONDARY,
     )
