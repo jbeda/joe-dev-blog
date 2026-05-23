@@ -91,3 +91,8 @@ tasks:
     prompt: This will permanently delete records from your PDS. Continue?
     cmds:
       - python3 scripts/delete-orphaned-records.py --delete
+
+  publication-icon:
+    desc: "Upload a PNG as the publication icon blob (default: static/apple-touch-icon.png)"
+    cmds:
+      - python3 scripts/set-publication-icon.py {{.CLI_ARGS}}

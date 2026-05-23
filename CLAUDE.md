@@ -165,6 +165,11 @@ Rebuild ICO after updating PNGs:
 magick static/favicon-16x16.png static/favicon-32x32.png static/favicon.ico
 ```
 
+After updating `static/apple-touch-icon.png`, also re-upload the publication icon so the Bluesky card stays in sync:
+```
+task publication-icon
+```
+
 To recreate the export frames from scratch (if lost), run `use_figma` with the code
 from the commit that added them — it uses `figma.createFrame()` + `exportAsync` design
 at y=4000 in the brand book.
@@ -233,6 +238,7 @@ Bluesky uses `site.standard.*` records to display enhanced previews when a joe.d
 - `coverImage` blob → card thumbnail
 - `textContent` → estimated reading time
 - `title`, `description` → card headline and body
+- `site.standard.publication` `icon` blob → publication icon shown on the card (lowercase auto-generated initial if missing)
 
 **Link tags required on every article page** — both must be present:
 1. `<link rel="site.standard.document" …>` — injected by `bunx sequoia-cli inject` during CI
@@ -285,6 +291,7 @@ Common tasks are defined in `Taskfile.yml` (requires [Task](https://taskfile.dev
 | `task covers-regen`   | Regenerate all covers from sidecars (after branding changes) |
 | `task atproto-check`  | List orphaned ATproto records (dry run)                  |
 | `task atproto-cleanup`| Delete orphaned ATproto records (prompts for confirmation)|
+| `task publication-icon` | Upload PNG as publication icon blob (default: `static/apple-touch-icon.png`) |
 
 Run `task fonts` once after cloning before any local image generation with ImageMagick.
 
