@@ -54,9 +54,12 @@ jobs:
         run: bunx sequoia-cli inject
 
       # 5. Deploy the fully-built, injected output.
+      - name: Debug git state before deploy
+        run: git status --porcelain && git status --porcelain --ignored | grep "^!!" || true
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0  # v4.0.0
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy public --project-name=joe-dev-blog
+          command: pages deploy public --project-name=joe-dev-blog --commit-dirty=true
