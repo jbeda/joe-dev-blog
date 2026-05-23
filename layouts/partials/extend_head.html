@@ -1,5 +1,5 @@
 {{- with .Site.Params.standardSitePublicationURI }}
-<link rel="site.standard.publication" href="{{ . }}">
+<link rel="site.standard.publication" href="{{ . | safeURL }}">
 {{- end }}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
