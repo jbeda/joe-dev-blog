@@ -205,13 +205,19 @@ Script: `scripts/generate-cover.py`. See `--help` for manual title/output overri
 
 #### Attaching a cover to a post
 
-Add to the post's TOML frontmatter (path relative to repo root):
+Add to the post's TOML frontmatter:
 
 ```toml
-coverImage = "static/covers/my-post.png"
+coverImage = "static/covers/my-post.png"   # Sequoia → ATproto blob
+
+[cover]
+  image = "/covers/my-post.png"            # PaperMod → og:image / twitter:image
+  alt = "Post title here"
+  hidden = true                            # hide from page & list; OG tags still emitted
 ```
 
-Sequoia reads this on `publish` and uploads the file as an ATproto blob, populating the `coverImage` field in the `site.standard.document` record. The `coverImage` frontmatter key is mapped in `sequoia.json`.
+`coverImage` (local path) is read by Sequoia on `publish` and uploaded as an ATproto blob.
+`cover.image` (URL path) is used by PaperMod to populate `og:image` and `twitter:image` meta tags for LinkedIn and social previews. `hidden = true` keeps it off the page — the warm parchment background clashes with dark mode and the title is already in the post header.
 
 #### When branding changes
 
