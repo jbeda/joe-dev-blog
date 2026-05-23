@@ -274,10 +274,12 @@ Common tasks are defined in `Taskfile.yml` (requires [Task](https://taskfile.dev
 
 | Command        | Description                                      |
 |----------------|--------------------------------------------------|
-| `task dev`     | Hugo dev server with drafts (live reload)        |
-| `task build`   | Production build → `public/`                     |
-| `task preview` | Production build + serve locally                 |
-| `task clean`   | Remove `public/`, `resources/_gen/`, build lock  |
+| `task dev`         | Start Hugo dev server on port 1313 (kills any existing instance first) |
+| `task dev:stop`    | Stop any running Hugo dev server                                        |
+| `task dev:restart` | Restart the Hugo dev server                                             |
+| `task build`       | Production build → `public/`                                            |
+| `task preview`     | Production build + serve locally on port 1313                           |
+| `task clean`       | Remove `public/`, `resources/_gen/`, build lock                         |
 | `task fonts`          | Download brand fonts into `fonts/` (gitignored)         |
 | `task cover POST=content/posts/foo.md` | Generate cover image for a post  |
 | `task covers-regen`   | Regenerate all covers from sidecars (after branding changes) |

@@ -2,12 +2,26 @@ version: '3'
 
 dotenv: ['.env']
 
+vars:
+  DEV_PORT: "1313"
+
 tasks:
 
   dev:
-    desc: Start Hugo dev server with drafts enabled (live reload)
+    desc: "Start Hugo dev server on port {{.DEV_PORT}} with drafts (kills any existing instance first)"
     cmds:
-      - hugo server -D
+      - task: dev:stop
+      - hugo server -D --port {{.DEV_PORT}}
+
+  dev:stop:
+    desc: Stop any running Hugo dev server
+    cmds:
+      - pkill -f "hugo server" || true
+
+  dev:restart:
+    desc: Restart the Hugo dev server
+    cmds:
+      - task: dev
 
   build:
     desc: Production build (minified output → public/)
@@ -17,8 +31,9 @@ tasks:
   preview:
     desc: Build then serve the production output locally
     cmds:
+      - task: dev:stop
       - hugo --minify
-      - hugo server --renderStaticToDisk
+      - hugo server --renderStaticToDisk --port {{.DEV_PORT}}
 
   clean:
     desc: Remove Hugo build output and cache
