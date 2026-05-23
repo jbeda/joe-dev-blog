@@ -5,6 +5,12 @@ title = 'Hello, World'
 description = 'First post — testing the pipeline.'
 tags = ['meta']
 atUri = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmff6f5q5w2u"
+coverImage = "static/covers/hello-world.png"
+
+[cover]
+  image = "/covers/hello-world.png"
+  alt = "Hello, World"
+  hidden = true
 +++
 
 Well, here we are.
