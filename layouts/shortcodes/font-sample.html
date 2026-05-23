@@ -1,0 +1,4 @@
+<div style="margin-bottom:1.25rem;">
+  <div style="font-family:{{ .Get "family" | safeCSS }};font-size:{{ .Get "size" | default "1.8rem" | safeCSS }};font-weight:{{ .Get "weight" | default "400" | safeCSS }};line-height:1.2;">{{ .Get "sample" }}</div>
+  <div style="font-size:0.85rem;color:var(--secondary);margin-top:0.2rem;">{{ .Get "role" }} &mdash; <a href="{{ .Get "url" }}">Google Fonts</a></div>
+</div>

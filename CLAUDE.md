@@ -172,6 +172,7 @@ at y=4000 in the brand book.
 ### Hugo Template Override Locations
 - `layouts/partials/extend_head.html` — Google Fonts + Mermaid script
 - `layouts/partials/extend_footer.html` — empty (reserved; do not use for per-page content)
+- `layouts/partials/footer.html` — **copied from PaperMod** (only change: colophon link replaces "Powered by" text). Check this file whenever the PaperMod submodule is updated — it can drift from the theme's version.
 - `layouts/_default/_markup/render-codeblock-mermaid.html` — wraps mermaid fenced blocks
 - `assets/css/extended/custom.css` — all theme customization
 
