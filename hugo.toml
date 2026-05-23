@@ -18,6 +18,11 @@ enableRobotsTXT = true
   ShowToc = true
   TocOpen = false
 
+  # standard.site / ATproto publication URI — set this to your own publication URI.
+  # Used by extend_head.html to emit the <link rel="site.standard.publication"> tag
+  # required for Bluesky enhanced link cards.
+  standardSitePublicationURI = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.publication/3mmfe3yxkqd2b"
+
 [params.homeInfoParams]
   Title = "Hi, I'm Joe"
   Content = "Engineer and serial builder — from Internet Explorer to Google Compute Engine to Kubernetes to now. CTO at [Stacklok](https://stacklok.com). This is where I write things that don't fit in a pull request."

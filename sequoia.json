@@ -6,7 +6,8 @@
   "outputDir": "./public",
   "publicationUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.publication/3mmfe3yxkqd2b",
   "frontmatter": {
-    "publishDate": "date"
+    "publishDate": "date",
+    "coverImage": "coverImage"
   },
   "publishContent": true
 }

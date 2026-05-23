@@ -54,6 +54,18 @@ tasks:
         download "{{.BASE}}/spacemono/SpaceMono-BoldItalic.ttf"       "SpaceMono-BoldItalic.ttf"
         echo "Done."
 
+  cover:
+    desc: "Generate cover image for a post (reads title from frontmatter). Usage: task cover POST=content/posts/my-post.md"
+    cmds:
+      - python3 scripts/generate-cover.py --post {{.POST}}
+    requires:
+      vars: [POST]
+
+  covers-regen:
+    desc: Regenerate all cover images from their sidecars (use after branding changes)
+    cmds:
+      - python3 scripts/generate-cover.py --regen-all
+
   atproto-check:
     desc: List orphaned ATproto records not tracked by Sequoia (dry run)
     cmds:

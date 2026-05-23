@@ -169,8 +169,77 @@ To recreate the export frames from scratch (if lost), run `use_figma` with the c
 from the commit that added them — it uses `figma.createFrame()` + `exportAsync` design
 at y=4000 in the brand book.
 
+### Cover Images
+
+Standard cover image: **1200×630 px** PNG (16:9 / OG dimensions; also the ATproto blob size limit is 1 MB, so optimize).
+
+#### Visual spec (spec_version "2")
+
+| Layer | Details |
+|---|---|
+| Background | `#F5F1EB` warm parchment |
+| Title | Cormorant variable, 120 px (auto-reduces through 96/72/60/52 until ≤3 lines), `#1F1F1F` |
+| Teal rule | `#0D9488`, 4 px × 180 px, 28 px below title block |
+| Description | Nunito variable, 28 px, `#3D3D3D`, 18 px below teal rule |
+| Wordmark | `joe.dev`, Nunito variable 26 px, `#6C6C6C`, bottom-right |
+| Padding | 80 px horizontal and vertical |
+
+Title block is vertically centered −30 px above true center.
+
+#### Generating a cover
+
+```bash
+# Requires: pip install Pillow  +  task fonts (run once)
+
+task cover POST=content/posts/my-post.md
+# → static/covers/my-post.png  +  static/covers/my-post.cover.json (sidecar)
+```
+
+The sidecar `.cover.json` records the title, source post path, and `spec_version` so covers can be regenerated when the branding changes:
+
+```bash
+task covers-regen        # regenerates all covers from their sidecars
+```
+
+Script: `scripts/generate-cover.py`. See `--help` for manual title/output overrides.
+
+#### Attaching a cover to a post
+
+Add to the post's TOML frontmatter (path relative to repo root):
+
+```toml
+coverImage = "static/covers/my-post.png"
+```
+
+Sequoia reads this on `publish` and uploads the file as an ATproto blob, populating the `coverImage` field in the `site.standard.document` record. The `coverImage` frontmatter key is mapped in `sequoia.json`.
+
+#### When branding changes
+
+1. Update the colour/font constants at the top of `scripts/generate-cover.py` and bump `SPEC_VERSION`.
+2. Run `task covers-regen` to rebuild all images.
+3. Re-publish affected posts so Sequoia uploads the new blobs.
+
+### Bluesky Enhanced Link Cards
+
+Bluesky uses `site.standard.*` records to display enhanced previews when a joe.dev URL is shared. See [atproto discussion #4978](https://github.com/bluesky-social/atproto/discussions/4978).
+
+**What Bluesky pulls from the record (as of 2026-05-23 — this integration is in active development):**
+- `coverImage` blob → card thumbnail
+- `textContent` → estimated reading time
+- `title`, `description` → card headline and body
+
+**Link tags required on every article page** — both must be present:
+1. `<link rel="site.standard.document" …>` — injected by `bunx sequoia-cli inject` during CI
+2. `<link rel="site.standard.publication" …>` — emitted by `extend_head.html` from `params.standardSitePublicationURI` in `hugo.toml`
+
+The publication tag is also emitted on the home page (needed for publication-only links).
+
+**Config:** `params.standardSitePublicationURI` in `hugo.toml`. If unset (e.g. a fork that hasn't configured ATproto yet), the tag is silently omitted.
+
+**Testing:** paste any post URL into the composer at https://main.bsky.dev — the enhanced card preview appears without posting.
+
 ### Hugo Template Override Locations
-- `layouts/partials/extend_head.html` — Google Fonts + Mermaid script
+- `layouts/partials/extend_head.html` — Google Fonts + Mermaid script + standard.site publication link tag
 - `layouts/partials/extend_footer.html` — empty (reserved; do not use for per-page content)
 - `layouts/partials/footer.html` — **copied from PaperMod** (only change: colophon link replaces "Powered by" text). Check this file whenever the PaperMod submodule is updated — it can drift from the theme's version.
 - `layouts/_default/_markup/render-codeblock-mermaid.html` — wraps mermaid fenced blocks
