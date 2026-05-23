@@ -279,6 +279,8 @@ Common tasks are defined in `Taskfile.yml` (requires [Task](https://taskfile.dev
 | `task preview` | Production build + serve locally                 |
 | `task clean`   | Remove `public/`, `resources/_gen/`, build lock  |
 | `task fonts`          | Download brand fonts into `fonts/` (gitignored)         |
+| `task cover POST=content/posts/foo.md` | Generate cover image for a post  |
+| `task covers-regen`   | Regenerate all covers from sidecars (after branding changes) |
 | `task atproto-check`  | List orphaned ATproto records (dry run)                  |
 | `task atproto-cleanup`| Delete orphaned ATproto records (prompts for confirmation)|
 
