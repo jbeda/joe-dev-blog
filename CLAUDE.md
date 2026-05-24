@@ -189,7 +189,7 @@ at y=4000 in the brand book.
 
 Standard cover image: **1200×630 px** PNG (16:9 / OG dimensions; also the ATproto blob size limit is 1 MB, so optimize).
 
-#### Visual spec (spec_version "2")
+#### Visual spec (spec_version "4")
 
 | Layer | Details |
 |---|---|
@@ -197,7 +197,7 @@ Standard cover image: **1200×630 px** PNG (16:9 / OG dimensions; also the ATpro
 | Title | Cormorant variable, 120 px (auto-reduces through 96/72/60/52 until ≤3 lines), `#1F1F1F` |
 | Teal rule | `#0D9488`, 4 px × 180 px, 28 px below title block |
 | Description | Nunito variable, 28 px, `#3D3D3D`, 18 px below teal rule |
-| Wordmark | `joe.dev · Joe Beda`, Nunito variable 26 px, `#6C6C6C`, bottom-right |
+| Wordmark | favicon (`static/apple-touch-icon.png`, 32 px) + `joe.dev · Joe Beda`, Nunito 26 px, `#6C6C6C`, bottom-right; icon optically centered on text (4 px margin-top offset for Cormorant metrics) |
 | Padding | 80 px horizontal and vertical |
 
 Title block is vertically centered −30 px above true center.

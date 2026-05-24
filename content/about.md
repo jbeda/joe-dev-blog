@@ -26,3 +26,5 @@ His career at Google spanned many different areas. He started his career there w
 Joe started his professional career at Microsoft, where he was a core team member for Internet Explorer and led the graphics teams for Windows Presentation Foundation.
 
 Joe holds a B.S. from Harvey Mudd College and lives in Seattle, Washington with his wife Rachel (a medical doctor and also an HMC alum) and his two daughters.
+
+{{< social-icons >}}

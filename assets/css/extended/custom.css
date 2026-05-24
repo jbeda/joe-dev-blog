@@ -55,6 +55,20 @@ pre code {
     font-size: 28px;
 }
 
+/* Cormorant's optical center sits below its mathematical center; nudge icon to match */
+.logo a img {
+    margin-top: 4px;
+}
+
+/* Share label sits inline with the share icons */
+.share-label {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    color: var(--secondary);
+    line-height: 30px;
+    padding-right: 4px;
+}
+
 /* About page photo */
 .about-photo {
     float: right;

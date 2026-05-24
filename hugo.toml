@@ -10,7 +10,8 @@ enableRobotsTXT = true
   description = "Joe Beda talking computer stuff"
   defaultTheme = 'auto'
   ShowReadingTime = true
-  ShowShareButtons = false
+  ShowShareButtons = true
+  ShareButtons = ['bluesky', 'x', 'linkedin', 'reddit', 'email']
   ShowPostNavLinks = true
   ShowBreadCrumbs = false
   ShowCodeCopyButtons = true
@@ -42,6 +43,10 @@ enableRobotsTXT = true
 [[params.socialIcons]]
   name = 'github'
   url = 'https://github.com/jbeda'
+
+[[params.socialIcons]]
+  name = 'signal'
+  url = 'https://signal.me/#eu/eG4KC2NZkudFPpbAMSaVrliwN2GQfOJbMFcQ1KRPZL_wbLN9yONPyJRx4-BMW1GY'
 
 [[menu.main]]
   name = 'About'
