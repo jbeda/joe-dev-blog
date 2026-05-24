@@ -306,6 +306,20 @@ Common tasks are defined in `Taskfile.yml` (requires [Task](https://taskfile.dev
 
 Run `task fonts` once after cloning before any local image generation with ImageMagick.
 
+### Playwright MCP Server
+
+A Playwright MCP server is available (managed by [ToolHive](https://github.com/stacklok/toolhive)) for browser-based testing and visual verification of the site.
+
+**Important networking note:** The Playwright browser runs inside a Docker container (via ToolHive) and cannot reach `localhost`. The dev server (`task dev`) binds to `0.0.0.0` for this reason. When navigating Playwright to the local dev server, always use:
+
+```
+http://host.docker.internal:1313
+```
+
+Not `http://localhost:1313` — that will get `ERR_CONNECTION_REFUSED` from inside the container.
+
+The live site (`https://joe.dev`) is reachable normally without any special hostname.
+
 ## GitHub Secrets Required
 - `ATP_IDENTIFIER` — ATproto handle (e.g. `h.olysh.it`)
 - `ATP_APP_PASSWORD` — ATproto app password
