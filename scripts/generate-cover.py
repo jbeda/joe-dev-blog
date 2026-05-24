@@ -213,8 +213,12 @@ def regen_from_sidecar(sidecar_path: Path) -> None:
 def read_frontmatter(path: Path):
     """Return (title, description) from TOML frontmatter."""
     text = path.read_text()
-    title_m = re.search(r"""\btitle\s*=\s*['"](.+?)['"]""", text)
-    desc_m  = re.search(r"""\bdescription\s*=\s*['"](.+?)['"]""", text)
+    fm_match = re.match(r'^\+\+\+\s*\n(.*?)\n\+\+\+', text, re.DOTALL)
+    if not fm_match:
+        sys.exit(f"No TOML frontmatter found in {path}")
+    frontmatter = fm_match.group(1)
+    title_m = re.search(r"""\btitle\s*=\s*['"](.+?)['"]""", frontmatter)
+    desc_m  = re.search(r"""\bdescription\s*=\s*['"](.+?)['"]""", frontmatter)
     if not title_m:
         sys.exit(f"No title found in {path}")
     return title_m.group(1), (desc_m.group(1) if desc_m else None)

@@ -20,6 +20,7 @@
 body {
     font-family: 'Nunito', sans-serif;
     font-weight: 300;
+    line-height: 1.7;
 }
 
 /* Restore legible weight for bold/strong inline text */
@@ -33,9 +34,20 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
 }
 
+/* Small headings need more weight — Cormorant 500 at h4 size blurs into body text */
+h4, h5, h6 {
+    font-weight: 600;
+}
+
 /* Post titles slightly bolder */
 .post-title, h1.post-title {
     font-weight: 600;
+}
+
+/* Post description reads as subtitle, not body copy */
+.post-description {
+    color: var(--secondary);
+    font-size: 1.1rem;
 }
 
 code, pre, kbd, samp {
@@ -78,6 +90,7 @@ pre code {
 
 .about-photo img {
     width: 100%;
+    height: auto;
     border-radius: var(--radius);
 }
 
@@ -90,27 +103,34 @@ pre code {
 }
 
 /* === Teal accent — light mode === */
+/* #0A7A70 on #F5F1EB is ~4.6:1, clearing WCAG AA for normal body text */
 a,
 .post-tags a {
-    color: #0D9488;
+    color: #0A7A70;
 }
 
 a:hover,
 .post-tags a:hover {
-    color: #0F766E;
+    color: #086B62;
 }
 
 .entry-header h2 a:hover,
 .post-title a:hover {
-    color: #0D9488;
+    color: #0A7A70;
 }
 
 #menu a.active,
 .menu a:hover {
-    color: #0D9488;
+    color: #0A7A70;
 }
 
 /* === Teal accent — dark mode === */
+/* Logo link matches the favicon's #0D9488 background; body links use the
+   brighter #2DD4BF which reads better against the dark page background. */
+[data-theme=dark] .logo a {
+    color: #0D9488;
+}
+
 [data-theme=dark] a,
 [data-theme=dark] .post-tags a {
     color: #2DD4BF;
@@ -129,4 +149,16 @@ a:hover,
 [data-theme=dark] #menu a.active,
 [data-theme=dark] .menu a:hover {
     color: #2DD4BF;
+}
+
+/* === Accessibility === */
+
+/* Replace browser-default blue focus ring with on-brand teal */
+:focus-visible {
+    outline: 2px solid #0D9488;
+    outline-offset: 2px;
+}
+
+[data-theme=dark] :focus-visible {
+    outline-color: #2DD4BF;
 }

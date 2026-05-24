@@ -1,0 +1,15 @@
+# Cloudflare Pages cache headers
+# CSS and JS filenames include a content hash, so they're safe to cache for a year.
+# Covers and images are named by slug and may be regenerated, so use a shorter TTL.
+
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/covers/*
+  Cache-Control: public, max-age=86400
+
+/images/*
+  Cache-Control: public, max-age=86400

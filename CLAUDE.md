@@ -39,8 +39,8 @@ Full visual reference: https://www.figma.com/design/FE0YU473kXl1u9I6uHn29r
 | Border           | `#E8E4DE`          | `--border`         |
 | Inline Code BG   | `#F2EFEA`          | `--code-bg`        |
 | Code Block BG    | `rgb(42, 38, 32)`  | `--code-block-bg`  |
-| Teal Primary     | `#0D9488`          | accent             |
-| Teal Hover       | `#0F766E`          | accent:hover       |
+| Teal Primary     | `#0A7A70`          | accent             |
+| Teal Hover       | `#086B62`          | accent:hover       |
 | Text Primary     | `#1F1F1F`          | `--primary`        |
 | Text Secondary   | `#6C6C6C`          | `--secondary`      |
 
@@ -265,8 +265,43 @@ The publication tag is also emitted on the home page (needed for publication-onl
 - `layouts/partials/extend_head.html` — Google Fonts + Mermaid script + standard.site publication link tag
 - `layouts/partials/extend_footer.html` — empty (reserved; do not use for per-page content)
 - `layouts/partials/footer.html` — **copied from PaperMod** (only change: colophon link replaces "Powered by" text). Check this file whenever the PaperMod submodule is updated — it can drift from the theme's version.
+- `layouts/partials/share_icons.html` — **copied from PaperMod** with modifications (see drift notes below). Check on submodule updates.
+- `layouts/partials/templates/schema_json.html` — **copied from PaperMod** with modifications (see drift notes below).
 - `layouts/_default/_markup/render-codeblock-mermaid.html` — wraps mermaid fenced blocks
 - `assets/css/extended/custom.css` — all theme customization
+
+### Copied-partial Drift Notes
+
+These files are full copies of PaperMod partials that will not receive upstream updates automatically. On each `git submodule update` for PaperMod, diff these against their originals.
+
+#### `layouts/partials/footer.html`
+Original: `themes/PaperMod/layouts/_partials/footer.html`
+
+Only change: replaced the "Powered by Hugo & PaperMod" `<span>` with `<span><a href="/colophon/">Colophon</a></span>`.
+
+The bulk of the file (scroll-position JS, anchor-click smoothing, theme-toggle JS, code-copy button JS) is unchanged. Watch for upstream changes to those scripts.
+
+#### `layouts/partials/share_icons.html`
+Original: `themes/PaperMod/layouts/_partials/share_icons.html`
+
+Changes from upstream:
+- Added `<li><span class="share-label">Share:</span></li>` header
+- Added Bluesky share button (first in list; upstream doesn't have it)
+- Removed Facebook, WhatsApp, Telegram, YCombinator buttons
+- Button order: Bluesky → LinkedIn → Reddit → Email → X/Twitter (vs upstream: X → LinkedIn → Reddit → Facebook → WhatsApp → Telegram → YCombinator)
+- X/Twitter SVG uses the **old bird icon** rather than upstream's new X square logo
+- Removed hashtags scratch logic (upstream computes `#hashtags` for the tweet URL; ours omits them)
+
+When upstream adds new social buttons, evaluate whether they belong in `ShareButtons` in `hugo.toml`.
+
+#### `layouts/partials/templates/schema_json.html`
+Original: `themes/PaperMod/layouts/_partials/templates/schema_json.html`
+
+Changes from upstream:
+- Home page: emits `Person` schema instead of `Organization` (personal blog)
+- About page (`layout="about"`): emits `ProfilePage` + `Person` `mainEntity` instead of `BlogPosting`
+- BlogPosting `publisher`: `Person` instead of `Organization`
+- `sameAs` links on Person schemas pull from `params.socialIcons` in `hugo.toml`
 
 ### DNS & Deployment
 - Domain registrar: Porkbun

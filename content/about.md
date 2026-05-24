@@ -2,12 +2,14 @@
 title = 'About'
 date = '2026-05-22'
 layout = 'about'
+hideMeta = true
+description = "Co-creator of Kubernetes, initiator of SPIFFE, co-founder of Heptio. Engineer and builder across browsers, cloud, and AI. Currently CTO at Stacklok."
 +++
 
 {{< rawhtml >}}
 
 <div class="about-photo">
-  <img src="/joe.png" alt="Joe Beda">
+  <img src="/joe.webp" alt="Joe Beda" width="341" height="512">
 </div>
 {{< /rawhtml >}}
 

@@ -1,5 +1,5 @@
 baseURL = 'https://joe.dev/'
-locale = 'en-us'
+languageCode = 'en-US'
 title = "joe.dev"
 theme = 'PaperMod'
 paginate = 10
@@ -8,6 +8,7 @@ enableRobotsTXT = true
 [params]
   author = 'Joe Beda'
   description = "Joe Beda talking computer stuff"
+  images = ['/og-home.png']  # default OG image for pages without a cover
   defaultTheme = 'auto'
   ShowReadingTime = true
   ShowShareButtons = true

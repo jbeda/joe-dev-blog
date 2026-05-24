@@ -1,13 +1,26 @@
 {{- with .Site.Params.standardSitePublicationURI }}
 <link rel="site.standard.publication" href="{{ . | safeURL }}">
 {{- end }}
+
+{{- if .Params.noindex }}
+<meta name="robots" content="noindex, nofollow">
+{{- end }}
+
+{{- if .IsPage }}
+<link rel="alternate" type="application/rss+xml" href="{{ .Site.BaseURL }}index.xml" title="{{ .Site.Title }}">
+{{- end }}
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Nunito:wght@300;400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Nunito:wght@300;400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Nunito:wght@300;400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"></noscript>
+
 <script type="module">
   if (document.querySelector('.mermaid')) {
-    const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
-    const isDark = document.documentElement.dataset.theme === 'dark';
+    const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.esm.min.mjs');
+    const explicitTheme = document.documentElement.dataset.theme;
+    const isDark = explicitTheme === 'dark' ||
+      (!explicitTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
     mermaid.initialize({
       startOnLoad: false,
       theme: 'base',

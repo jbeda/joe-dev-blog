@@ -71,8 +71,15 @@ tasks:
         download "{{.BASE}}/spacemono/SpaceMono-BoldItalic.ttf"       "SpaceMono-BoldItalic.ttf"
         echo "Done."
 
+  og-home:
+    desc: Generate the home page OG image (static/og-home.png)
+    deps: [fonts]
+    cmds:
+      - python3 scripts/generate-og-home.py
+
   cover:
     desc: "Generate cover image for a post (reads title from frontmatter). Usage: task cover POST=content/posts/my-post.md"
+    deps: [fonts]
     cmds:
       - python3 scripts/generate-cover.py --post {{.POST}}
     requires:
@@ -80,6 +87,7 @@ tasks:
 
   covers-regen:
     desc: Regenerate all cover images from their sidecars (use after branding changes)
+    deps: [fonts]
     cmds:
       - python3 scripts/generate-cover.py --regen-all
 
