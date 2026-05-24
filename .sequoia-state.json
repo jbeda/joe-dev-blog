@@ -5,6 +5,12 @@
       "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmff6f5q5w2u",
       "lastPublished": "2026-05-23T19:55:10.259Z",
       "slug": "hello-world"
+    },
+    "content/posts/10-years-of-spiffe.md": {
+      "contentHash": "a35cf5892f2a4c363ac2575c0b42816fa93f9f703662da18453de30ace42106c",
+      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmmmhq3fe22s",
+      "lastPublished": "2026-05-24T18:41:15.690Z",
+      "slug": "10-years-of-spiffe"
     }
   }
 }
