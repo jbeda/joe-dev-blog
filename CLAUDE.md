@@ -11,6 +11,17 @@ layout managed by the `wt`/worktrunk CLI.
 - **Deploy:** Cloudflare Pages (project: `joe-dev-blog`)
 - **Hugo version:** 0.161.1 extended, PaperMod theme (git submodule)
 
+## Git Workflow
+
+**Always `git rebase origin/main` before pushing.** The CI pipeline (Sequoia publish +
+`git-auto-commit`) writes commits back to `main` after every deploy, so the remote is
+almost always ahead after a push. Never push without rebasing first or it will be
+rejected. The pattern for every commit:
+
+```bash
+git add <files> && git commit -m "..." && git rebase origin/main && git push
+```
+
 ---
 
 ## Brand & Theme
