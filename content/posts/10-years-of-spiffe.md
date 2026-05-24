@@ -24,7 +24,9 @@ To mark this I want to get some of the original artifacts out there for anyone t
 - Original design doc: https://docs.google.com/document/d/1GjurNK2ROw4rXz-k-l68JtpGRkGj2fZcWqP6gksEriQ/edit
 - Original presentation at GlueCon: http://slides.eightypercent.net/spiffe-intro/index.html#p1
 
-Easter egg: the colors in the original logo were based on my last name. Fun you can have when your name can be represented as hex. `#00BEDA` and `#BEDA00`. Those colors (or very similar) are still used in the logo!
+Easter egg: the colors in the original logo and design doc were based on my last name. Fun you can have when your name can be represented as hex. `#00BEDA` and `#BEDA00`. Those colors (or very similar) are still used in the logo!
+
+{{< figure-pair src1="/images/spiffe/spiffe-logo-original.png" cap1="The original SPIFFE logo, circa 2016" src2="/images/spiffe/spiffe-logo-current.png" cap2="The current SPIFFE logo" >}}
 
 Huge thank you to everyone who took the baton. Picking up someone else's half-formed idea and shipping it is harder than having the idea. You all did that.
 
