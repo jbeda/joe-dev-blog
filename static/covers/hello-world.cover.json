@@ -1,5 +1,5 @@
 {
-  "spec_version": "3",
+  "spec_version": "4",
   "title": "Hello, World",
   "output": "static/covers/hello-world.png",
   "description": "First post \u2014 testing the pipeline.",

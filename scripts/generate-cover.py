@@ -49,7 +49,7 @@ FONT_DIR    = Path("fonts")
 TITLE_SIZES = [120, 96, 72, 60, 52]
 
 # Bump this when the visual design changes so old sidecars can be detected.
-SPEC_VERSION = "3"
+SPEC_VERSION = "4"
 
 
 def load_font(name: str, size: int) -> "ImageFont.FreeTypeFont":
@@ -149,13 +149,33 @@ def generate_cover(
             draw.text((PAD_X, y), line, font=description_font, fill=TEXT_DESC)
             y += desc_lh + desc_gap
 
-    # wordmark — bottom-right
+    # wordmark — bottom-right: favicon icon + text
     wordmark = "joe.dev · Joe Beda"
     wm_w = int(draw.textlength(wordmark, font=wordmark_font))
     _, t, _, b = draw.textbbox((0, 0), wordmark, font=wordmark_font)
-    wm_h = b - t
+
+    ICON_SIZE = 32
+    ICON_GAP  = 10
+    favicon_path = Path("static/apple-touch-icon.png")
+    use_icon = favicon_path.exists()
+
+    total_w = (ICON_SIZE + ICON_GAP if use_icon else 0) + wm_w
+
+    if use_icon:
+        icon = Image.open(favicon_path).convert("RGBA")
+        icon = icon.resize((ICON_SIZE, ICON_SIZE), Image.LANCZOS)
+        icon_x = W - PAD_X - total_w
+        icon_y = H - PAD_Y - ICON_SIZE
+        img.paste(icon, (icon_x, icon_y), icon)
+        text_x = icon_x + ICON_SIZE + ICON_GAP
+        # Align text visual center (accounts for font's bbox offset t) to icon center
+        text_y = (icon_y + ICON_SIZE // 2) - (t + b) // 2
+    else:
+        text_x = W - PAD_X - wm_w
+        text_y = H - PAD_Y - b
+
     draw.text(
-        (W - PAD_X - wm_w, H - PAD_Y - wm_h),
+        (text_x, text_y),
         wordmark,
         font=wordmark_font,
         fill=TEXT_SECONDARY,
