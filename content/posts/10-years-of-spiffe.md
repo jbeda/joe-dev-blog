@@ -3,7 +3,7 @@ date = '2026-05-24T11:23:34-07:00'
 draft = false
 title = '10 Years of SPIFFE'
 description = 'A decade ago I wrote the design doc for SPIFFE. Workload identity is finally having its moment.'
-tags = ['spiffe', 'identity', 'open-source', 'history']
+tags = ['SPIFFE', 'identity', 'open-source', 'history']
 coverImage = "static/covers/10-years-of-spiffe.png"
 
 [cover]
