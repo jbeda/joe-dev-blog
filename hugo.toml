@@ -1,6 +1,6 @@
 baseURL = 'https://joe.dev/'
 locale = 'en-us'
-title = "Joe's Development Blog"
+title = "joe.dev"
 theme = 'PaperMod'
 paginate = 10
 enableRobotsTXT = true
@@ -23,9 +23,13 @@ enableRobotsTXT = true
   # required for Bluesky enhanced link cards.
   standardSitePublicationURI = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.publication/3mmfe3yxkqd2b"
 
+[params.label]
+  icon = "/apple-touch-icon.png"
+  iconHeight = 28
+
 [params.homeInfoParams]
   Title = "Hi, I'm Joe"
-  Content = "Engineer and serial builder — from Internet Explorer to Google Compute Engine to Kubernetes to now. CTO at [Stacklok](https://stacklok.com). This is where I write things that don't fit in a pull request."
+  Content = "Joe Beda's development blog. Engineer and serial builder — from Internet Explorer to Google Compute Engine to Kubernetes to now. CTO at [Stacklok](https://stacklok.com). This is where I write things that don't fit in a pull request."
 
 [[params.socialIcons]]
   name = 'bluesky'
