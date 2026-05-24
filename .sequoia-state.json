@@ -7,9 +7,9 @@
       "slug": "hello-world"
     },
     "content/posts/10-years-of-spiffe.md": {
-      "contentHash": "1c1be8563f2aa3b8a0ce84dd0a63f4f18ab2a3fea12c305e46ad1ef0781584dd",
-      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmmmxiypaj2x",
-      "lastPublished": "2026-05-24T18:50:05.132Z",
+      "contentHash": "2c24fcd51dba80a5b33c409d4eceaec8b0e465e98f263e34c719d70881607a4b",
+      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmmnk4cd3z2j",
+      "lastPublished": "2026-05-24T19:00:29.377Z",
       "slug": "10-years-of-spiffe"
     }
   }
