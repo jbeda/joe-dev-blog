@@ -9,12 +9,13 @@ vars:
 tasks:
 
   dev:
-    desc: "Start Hugo dev server on port {{.DEV_PORT}} with drafts (kills any existing instance first)"
+    desc: "Start Hugo dev server on port {{.DEV_PORT}} with drafts + future posts (kills any existing instance first)"
     cmds:
       - task: dev:stop
       # Binds to 0.0.0.0 so the Playwright MCP server (runs in a Docker container via ToolHive)
       # can reach it via http://host.docker.internal:1313. Use a firewall if on an untrusted LAN.
-      - hugo server -D --port {{.DEV_PORT}} --bind 0.0.0.0
+      # -D shows draft posts; -F shows future-dated posts (needed when previewing before publish date).
+      - hugo server -D -F --port {{.DEV_PORT}} --bind 0.0.0.0
 
   dev:stop:
     desc: Stop any running Hugo dev server
