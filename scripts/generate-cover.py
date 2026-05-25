@@ -52,6 +52,17 @@ TITLE_SIZES = [120, 96, 72, 60, 52]
 SPEC_VERSION = "5"
 
 
+def typographic_quotes(text: str) -> str:
+    """Convert straight quotes to curly typographic quotes."""
+    # Double quotes: opening after start/whitespace/open-bracket, closing elsewhere
+    text = re.sub(r'(^|[\s([{])"', r'\1“', text)
+    text = text.replace('"', '”')
+    # Single quotes/apostrophes: opening after whitespace/start, closing/apostrophe elsewhere
+    text = re.sub(r"(^|[\s([{])'", r'\1‘', text)
+    text = text.replace("'", '’')
+    return text
+
+
 def load_font(name: str, size: int) -> "ImageFont.FreeTypeFont":
     path = FONT_DIR / name
     if not path.exists():
@@ -86,6 +97,10 @@ def generate_cover(
     description: Optional[str] = None,
     source_post: Optional[str] = None,
 ) -> None:
+    title = typographic_quotes(title)
+    if description:
+        description = typographic_quotes(description)
+
     img  = Image.new("RGB", (W, H), BG)
     draw = ImageDraw.Draw(img)
 
