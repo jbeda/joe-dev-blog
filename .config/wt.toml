@@ -1,0 +1,3 @@
+# Initialize git submodules (PaperMod theme) in every new worktree.
+# Hugo's dev server fails with missing shortcodes/partials without this step.
+pre-start = "git submodule update --init"

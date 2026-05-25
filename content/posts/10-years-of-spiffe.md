@@ -8,7 +8,7 @@ coverImage = "static/covers/10-years-of-spiffe.png"
 
 [cover]
   image = "/covers/10-years-of-spiffe.png"
-  alt = "10 Years of SPIFFE"
+  alt = "10 Years of SPIFFE — A decade ago I wrote the design doc for SPIFFE. Workload identity is finally having its moment."
   hidden = true
 atUri = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmmnk4cd3z2j"
 +++

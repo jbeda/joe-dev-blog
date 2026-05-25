@@ -9,7 +9,7 @@ coverImage = "static/covers/hello-world.png"
 
 [cover]
   image = "/covers/hello-world.png"
-  alt = "Hello, World"
+  alt = "Hello, World — First post — testing the pipeline."
   hidden = true
 +++
 

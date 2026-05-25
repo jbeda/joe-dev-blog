@@ -13,6 +13,12 @@ layout managed by the `wt`/worktrunk CLI.
 
 ## Git Workflow
 
+**Submodule init is automated via `.config/wt.toml`.** The PaperMod theme is a git submodule, and new worktrees don't auto-initialize submodules — without it the dev server fails with missing shortcodes/partials. The `wt` `pre-start` hook in `.config/wt.toml` runs `git submodule update --init` automatically on every `wt switch --create`. If you create a worktree by other means, run it manually once:
+
+```bash
+git submodule update --init
+```
+
 **Always `git rebase origin/main` before pushing.** The CI pipeline (Sequoia publish +
 `git-auto-commit`) writes commits back to `main` after every deploy, so the remote is
 almost always ahead after a push. Never push without rebasing first or it will be

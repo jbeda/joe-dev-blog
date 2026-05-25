@@ -1,0 +1,7 @@
+{
+  "spec_version": "5",
+  "title": "Thinking out loud, with a URL I own",
+  "output": "static/covers/thinking-out-loud.png",
+  "description": "On returning to writing, ditching the platforms, and what ATproto makes possible.",
+  "source_post": "content/posts/thinking-out-loud.md"
+}
