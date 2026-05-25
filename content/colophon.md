@@ -51,12 +51,13 @@ The visual design uses a warm off-white palette with teal accents, with a near-b
 
 ### Colors
 
-{{< color-swatch role="Page background"  light="#F5F1EB"        dark="rgb(24,21,17)"    >}}
-{{< color-swatch role="Teal accent"      light="#0A7A70"        dark="#2DD4BF"          >}}
-{{< color-swatch role="Primary text"     light="#1F1F1F"        dark="rgb(196,196,197)" >}}
-{{< color-swatch role="Secondary text"   light="#6C6C6C"        dark="rgb(155,156,157)" >}}
-{{< color-swatch role="Border"           light="#E8E4DE"        dark="rgb(60,54,44)"    >}}
-{{< color-swatch role="Code block bg"    light="rgb(42,38,32)"  dark="rgb(42,38,32)"    >}}
+{{< color-swatch role="Page background"  light="#F5F1EB"           dark="rgb(24,21,17)"    >}}
+{{< color-swatch role="Teal accent"      light="#0A7A70"           dark="#2DD4BF"          >}}
+{{< color-swatch role="Primary text"     light="#1F1F1F"           dark="rgb(196,196,197)" >}}
+{{< color-swatch role="Secondary text"   light="#6C6C6C"           dark="rgb(155,156,157)" >}}
+{{< color-swatch role="Border"           light="#E8E4DE"           dark="rgb(60,54,44)"    >}}
+{{< color-swatch role="Inline code"      light="rgb(230,242,240)"  dark="rgb(30,44,42)"    >}}
+{{< color-swatch role="Code block bg"    light="rgb(42,38,32)"     dark="rgb(42,38,32)"    >}}
 
 ### Favicon
 

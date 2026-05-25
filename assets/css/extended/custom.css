@@ -47,7 +47,13 @@ h4, h5, h6 {
 /* Post description reads as subtitle, not body copy */
 .post-description {
     color: var(--secondary);
-    font-size: 1.1rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Card titles need more weight to read as headlines over Nunito 300 body */
+.entry-header h2 {
+    font-weight: 600;
 }
 
 code, pre, kbd, samp {
@@ -58,6 +64,20 @@ code, pre, kbd, samp {
 /* Restore normal size inside pre blocks */
 pre code {
     font-size: 1em;
+}
+
+/* Inline code: faint teal tint ties code to the brand accent without a heavy chip */
+.post-content code:not(pre code) {
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+    background: rgb(230, 242, 240);
+    color: #2D5F5B;
+    line-height: 1.6;
+}
+
+/* Inline code inside a link should keep code appearance, not turn teal */
+a code {
+    color: inherit;
 }
 
 /* Site title in nav uses display font */
@@ -122,6 +142,12 @@ a:hover,
 #menu a.active,
 .menu a:hover {
     color: #0A7A70;
+}
+
+/* Inline code dark mode */
+[data-theme=dark] .post-content code:not(pre code) {
+    background: rgb(30, 44, 42);
+    color: #7ECCC6;
 }
 
 /* === Teal accent — dark mode === */
