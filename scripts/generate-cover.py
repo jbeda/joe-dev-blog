@@ -40,7 +40,7 @@ BG             = "#F5F1EB"
 TEAL           = "#0D9488"
 TEXT_PRIMARY   = "#1F1F1F"
 TEXT_SECONDARY = "#6C6C6C"
-TEXT_DESC      = "#3D3D3D"
+TEXT_DESC      = "#505050"
 
 FONT_DIR    = Path("fonts")
 
@@ -49,7 +49,7 @@ FONT_DIR    = Path("fonts")
 TITLE_SIZES = [120, 96, 72, 60, 52]
 
 # Bump this when the visual design changes so old sidecars can be detected.
-SPEC_VERSION = "4"
+SPEC_VERSION = "5"
 
 
 def load_font(name: str, size: int) -> "ImageFont.FreeTypeFont":
@@ -89,10 +89,13 @@ def generate_cover(
     img  = Image.new("RGB", (W, H), BG)
     draw = ImageDraw.Draw(img)
 
-    wordmark_font     = load_font("Nunito-variable.ttf", 26)
-    description_font  = load_font("Nunito-variable.ttf", 28)
+    wordmark_font     = load_font("Nunito-Regular.ttf", 24)
+    description_font  = load_font("Nunito-Regular.ttf", 28)
 
-    max_w = W - PAD_X * 2
+    max_w      = W - PAD_X * 2
+    # Description must not run into the 128px signature block (icon_x = W-PAD_X-128 = 992).
+    # Leave a 32px gap → right edge at 960, so max desc width = 960 - PAD_X = 880.
+    max_w_desc = 880
 
     # Pick the largest title size that wraps to ≤3 lines
     title_font = None
@@ -112,14 +115,14 @@ def generate_cover(
     desc_lh = 0
     desc_gap = 8
     if description:
-        desc_lines = wrap_text(draw, description, description_font, max_w)
+        desc_lines = wrap_text(draw, description, description_font, max_w_desc)
         desc_lh = measure_lh(draw, description_font)
 
     desc_block_h = len(desc_lines) * desc_lh + (len(desc_lines) - 1) * desc_gap if desc_lines else 0
 
     # Teal rule height
     rule_gap  = 28
-    rule_h    = 4
+    rule_h    = 6
     desc_top_gap = 18  # space between rule and description
 
     total_h = (
@@ -139,7 +142,7 @@ def generate_cover(
 
     # Teal rule
     rule_y = y + rule_gap
-    draw.rectangle([(PAD_X, rule_y), (PAD_X + 180, rule_y + rule_h)], fill=TEAL)
+    draw.rectangle([(PAD_X, rule_y), (PAD_X + 380, rule_y + rule_h)], fill=TEAL)
     y = rule_y + rule_h
 
     # Description
@@ -149,37 +152,32 @@ def generate_cover(
             draw.text((PAD_X, y), line, font=description_font, fill=TEXT_DESC)
             y += desc_lh + desc_gap
 
-    # wordmark — bottom-right: favicon icon + text
-    wordmark = "joe.dev · Joe Beda"
-    wm_w = int(draw.textlength(wordmark, font=wordmark_font))
-    _, t, _, b = draw.textbbox((0, 0), wordmark, font=wordmark_font)
+    # Bottom teal stripe
+    draw.rectangle([(0, H - 8), (W, H)], fill=TEAL)
 
-    ICON_SIZE = 32
-    ICON_GAP  = 10
+    # Signature block — bottom-right: 128px icon, "joe.dev" / "Joe Beda" stacked below.
+    # Shifted up 8px so the text clears the bottom stripe.
+    ICON_SIZE = 128
+    ICON_GAP  = 8
+    LINE_GAP  = 4
     favicon_path = Path("static/apple-touch-icon.png")
-    use_icon = favicon_path.exists()
 
-    total_w = (ICON_SIZE + ICON_GAP if use_icon else 0) + wm_w
+    line_h        = measure_lh(draw, wordmark_font)
+    total_block_h = ICON_SIZE + ICON_GAP + line_h + LINE_GAP + line_h
+    block_y       = H - PAD_Y - total_block_h - 8
+    icon_x        = W - PAD_X - ICON_SIZE
 
-    if use_icon:
+    if favicon_path.exists():
         icon = Image.open(favicon_path).convert("RGBA")
         icon = icon.resize((ICON_SIZE, ICON_SIZE), Image.LANCZOS)
-        icon_x = W - PAD_X - total_w
-        icon_y = H - PAD_Y - ICON_SIZE
-        img.paste(icon, (icon_x, icon_y), icon)
-        text_x = icon_x + ICON_SIZE + ICON_GAP
-        # Align text visual center (accounts for font's bbox offset t) to icon center
-        text_y = (icon_y + ICON_SIZE // 2) - (t + b) // 2
-    else:
-        text_x = W - PAD_X - wm_w
-        text_y = H - PAD_Y - b
+        img.paste(icon, (icon_x, block_y), icon)
 
-    draw.text(
-        (text_x, text_y),
-        wordmark,
-        font=wordmark_font,
-        fill=TEXT_SECONDARY,
-    )
+    icon_cx = icon_x + ICON_SIZE // 2
+    ty = block_y + ICON_SIZE + ICON_GAP
+    for label in ["joe.dev", "Joe Beda"]:
+        lw = int(draw.textlength(label, font=wordmark_font))
+        draw.text((icon_cx - lw // 2, ty), label, font=wordmark_font, fill=TEXT_SECONDARY)
+        ty += line_h + LINE_GAP
 
     output.parent.mkdir(parents=True, exist_ok=True)
     img.save(output, "PNG", optimize=True)

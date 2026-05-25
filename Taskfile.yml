@@ -4,6 +4,7 @@ dotenv: ['.env']
 
 vars:
   DEV_PORT: "1313"
+  PY: scripts/.venv/bin/python3
 
 tasks:
 
@@ -42,8 +43,19 @@ tasks:
     cmds:
       - rm -rf public resources/_gen .hugo_build.lock
 
+  scripts:setup:
+    desc: Create Python venv under scripts/.venv (Python 3.13) and install dependencies
+    cmds:
+      - uv venv --python 3.13 scripts/.venv
+      - uv pip install --python scripts/.venv/bin/python3 -r scripts/requirements.txt
+    sources:
+      - scripts/requirements.txt
+    generates:
+      - scripts/.venv/pyvenv.cfg
+
   fonts:
-    desc: Download brand fonts from Google Fonts GitHub mirror into fonts/ (gitignored)
+    desc: Download brand fonts and generate static Nunito weight instances
+    deps: [scripts:setup]
     vars:
       BASE: https://github.com/google/fonts/raw/main/ofl
     cmds:
@@ -69,19 +81,40 @@ tasks:
         download "{{.BASE}}/spacemono/SpaceMono-Bold.ttf"             "SpaceMono-Bold.ttf"
         download "{{.BASE}}/spacemono/SpaceMono-Italic.ttf"           "SpaceMono-Italic.ttf"
         download "{{.BASE}}/spacemono/SpaceMono-BoldItalic.ttf"       "SpaceMono-BoldItalic.ttf"
-        echo "Done."
+      - |
+        # Nunito-variable.ttf defaults to wght=200 (ExtraLight); Pillow cannot select variable
+        # font axes, so we generate discrete static instances via fonttools for the weights we use.
+        echo "==> Nunito (static instances via fonttools)"
+        {{.PY}} - <<'EOF'
+        from pathlib import Path
+        from fontTools.varLib import instancer
+        from fontTools.ttLib import TTFont
+
+        weights = {"Light": 300, "Regular": 400, "SemiBold": 600}
+        for name, wght in weights.items():
+            out = Path(f"fonts/Nunito-{name}.ttf")
+            if out.exists():
+                print(f"  exists:      Nunito-{name}.ttf")
+            else:
+                print(f"  generating:  Nunito-{name}.ttf")
+                font = instancer.instantiateVariableFont(
+                    TTFont("fonts/Nunito-variable.ttf"), {"wght": wght}
+                )
+                font.save(str(out))
+        print("Done.")
+        EOF
 
   og-home:
     desc: Generate the home page OG image (static/og-home.png)
     deps: [fonts]
     cmds:
-      - python3 scripts/generate-og-home.py
+      - "{{.PY}} scripts/generate-og-home.py"
 
   cover:
     desc: "Generate cover image for a post (reads title from frontmatter). Usage: task cover POST=content/posts/my-post.md"
     deps: [fonts]
     cmds:
-      - python3 scripts/generate-cover.py --post {{.POST}}
+      - "{{.PY}} scripts/generate-cover.py --post {{.POST}}"
     requires:
       vars: [POST]
 
@@ -89,20 +122,23 @@ tasks:
     desc: Regenerate all cover images from their sidecars (use after branding changes)
     deps: [fonts]
     cmds:
-      - python3 scripts/generate-cover.py --regen-all
+      - "{{.PY}} scripts/generate-cover.py --regen-all"
 
   atproto-check:
     desc: List orphaned ATproto records not tracked by Sequoia (dry run)
+    deps: [scripts:setup]
     cmds:
-      - python3 scripts/delete-orphaned-records.py
+      - "{{.PY}} scripts/delete-orphaned-records.py"
 
   atproto-cleanup:
     desc: Delete orphaned ATproto records not tracked by Sequoia
     prompt: This will permanently delete records from your PDS. Continue?
+    deps: [scripts:setup]
     cmds:
-      - python3 scripts/delete-orphaned-records.py --delete
+      - "{{.PY}} scripts/delete-orphaned-records.py --delete"
 
   publication-icon:
     desc: "Upload a PNG as the publication icon blob (default: static/apple-touch-icon.png)"
+    deps: [scripts:setup]
     cmds:
-      - python3 scripts/set-publication-icon.py {{.CLI_ARGS}}
+      - "{{.PY}} scripts/set-publication-icon.py {{.CLI_ARGS}}"

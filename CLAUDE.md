@@ -195,17 +195,18 @@ Standard cover image: **1200×630 px** PNG (16:9 / OG dimensions; also the ATpro
 |---|---|
 | Background | `#F5F1EB` warm parchment |
 | Title | Cormorant variable, 120 px (auto-reduces through 96/72/60/52 until ≤3 lines), `#1F1F1F` |
-| Teal rule | `#0D9488`, 4 px × 180 px, 28 px below title block |
-| Description | Nunito variable, 28 px, `#3D3D3D`, 18 px below teal rule |
-| Wordmark | favicon (`static/apple-touch-icon.png`, 32 px) + `joe.dev · Joe Beda`, Nunito 26 px, `#6C6C6C`, bottom-right; icon optically centered on text (4 px margin-top offset for Cormorant metrics) |
+| Teal rule | `#0D9488`, 6 px × 380 px, 28 px below title block |
+| Description | Nunito Regular (400), 28 px, `#505050`, 18 px below teal rule; max width 880 px to clear signature block |
+| Bottom stripe | `#0D9488`, 8 px × full width, bottom edge |
+| Signature block | `static/apple-touch-icon.png` at 128 px, bottom-right; `joe.dev` / `Joe Beda` stacked below at Nunito Regular 24 px, `#6C6C6C`, centred on icon |
 | Padding | 80 px horizontal and vertical |
 
-Title block is vertically centered −30 px above true center.
+Title block is vertically centered −20 px above true center.
 
 #### Generating a cover
 
 ```bash
-# Requires: pip install Pillow  +  task fonts (run once)
+# Requires: task fonts (run once — sets up venv + downloads fonts)
 
 task cover POST=content/posts/my-post.md
 # → static/covers/my-post.png  +  static/covers/my-post.cover.json (sidecar)
@@ -332,14 +333,44 @@ Common tasks are defined in `Taskfile.yml` (requires [Task](https://taskfile.dev
 | `task build`       | Production build → `public/`                                            |
 | `task preview`     | Production build + serve locally on port 1313                           |
 | `task clean`       | Remove `public/`, `resources/_gen/`, build lock                         |
-| `task fonts`          | Download brand fonts into `fonts/` (gitignored)         |
+| `task scripts:setup`  | Create `scripts/.venv/` (Python 3.13) and install Pillow + fonttools |
+| `task fonts`          | Download brand fonts + generate static Nunito weight instances (runs `scripts:setup` automatically) |
 | `task cover POST=content/posts/foo.md` | Generate cover image for a post  |
 | `task covers-regen`   | Regenerate all covers from sidecars (after branding changes) |
 | `task atproto-check`  | List orphaned ATproto records (dry run)                  |
 | `task atproto-cleanup`| Delete orphaned ATproto records (prompts for confirmation)|
 | `task publication-icon` | Upload PNG as publication icon blob (default: `static/apple-touch-icon.png`) |
 
-Run `task fonts` once after cloning before any local image generation with ImageMagick.
+Run `task fonts` once after cloning before any local image generation. This also runs `task scripts:setup` automatically as a dependency.
+
+### Python Tooling
+
+All Python utilities live in `scripts/`. Dependencies are declared in `scripts/requirements.txt` and the venv is kept at `scripts/.venv/` (gitignored) — nothing Python-related lands at the repo root.
+
+**Why this layout:** The macOS system Python (`/usr/bin/python3`) is 3.9 and installs packages globally. We use **Python 3.13 via brew** and a project-local venv to keep things isolated and reproducible.
+
+**Setup** (runs automatically as a dep of `task fonts` and all script tasks):
+```bash
+task scripts:setup   # creates scripts/.venv/ and installs Pillow + fonttools
+```
+
+Or manually:
+```bash
+uv venv --python 3.13 scripts/.venv
+uv pip install --python scripts/.venv/bin/python3 -r scripts/requirements.txt
+```
+
+**Nunito static weight instances** — `Nunito-variable.ttf` defaults to `wght=200` (ExtraLight), and Pillow cannot select variable font axes at load time. `task fonts` uses `fonttools.varLib.instancer` to generate discrete weight files after download:
+
+| File | Weight |
+|---|---|
+| `fonts/Nunito-Light.ttf` | 300 |
+| `fonts/Nunito-Regular.ttf` | 400 |
+| `fonts/Nunito-SemiBold.ttf` | 600 |
+
+Scripts that need a specific weight load the discrete file (e.g. `load_font("Nunito-Regular.ttf", 28)`) rather than the variable font.
+
+**Adding a new Python dependency:** add it to `scripts/requirements.txt`, then run `task scripts:setup` to update the venv.
 
 ### Playwright MCP Server
 

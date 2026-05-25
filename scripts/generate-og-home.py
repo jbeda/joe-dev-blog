@@ -50,7 +50,7 @@ def main() -> None:
     title_h = tb - tt
 
     # Teal rule
-    rule_w, rule_h, rule_gap = 220, 4, 28
+    rule_w, rule_h, rule_gap = 280, 6, 28
 
     # Block layout: icon → gap → title → rule_gap → rule
     icon_title_gap = 28
@@ -71,6 +71,16 @@ def main() -> None:
     rule_x = (W - rule_w) // 2
     rule_y = y + rule_gap
     draw.rectangle([(rule_x, rule_y), (rule_x + rule_w, rule_y + rule_h)], fill=TEAL)
+
+    # Name — centred below rule, primary identity element at this scale
+    name_font = load_font("Nunito-Regular.ttf", 28)
+    name      = "Joe Beda"
+    name_w    = int(draw.textlength(name, font=name_font))
+    _, nt, _, nb = draw.textbbox((0, 0), name, font=name_font)
+    draw.text(((W - name_w) // 2, rule_y + rule_h + 20 - nt), name, font=name_font, fill="#6C6C6C")
+
+    # Bottom teal stripe — matches post cover family
+    draw.rectangle([(0, H - 8), (W, H)], fill=TEAL)
 
     output = Path("static/og-home.png")
     img.save(output, "PNG", optimize=True)
