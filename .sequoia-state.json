@@ -1,16 +1,22 @@
 {
   "posts": {
     "content/posts/hello-world.md": {
-      "contentHash": "0265b95fef10ad8c08581d341c7a32a6362885ae4ce338558be8a337fb762b80",
+      "contentHash": "a27d210d728ece39c921e33de8cc82a759487baf72074320f926258fbcf42644",
       "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmff6f5q5w2u",
-      "lastPublished": "2026-05-23T19:55:10.259Z",
+      "lastPublished": "2026-05-25T19:16:11.069Z",
       "slug": "hello-world"
     },
     "content/posts/10-years-of-spiffe.md": {
-      "contentHash": "2c24fcd51dba80a5b33c409d4eceaec8b0e465e98f263e34c719d70881607a4b",
-      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmmnk4cd3z2j",
-      "lastPublished": "2026-05-24T19:00:29.377Z",
+      "contentHash": "d85715d275c51756bdfc6884a3b14cf44ae8a9770c26a0c6a5507a076aaf0644",
+      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmp6v2v6me2v",
+      "lastPublished": "2026-05-25T19:16:10.451Z",
       "slug": "10-years-of-spiffe"
+    },
+    "content/posts/thinking-out-loud.md": {
+      "contentHash": "c0109ae00eb402b24030275b0e366c518083de845bca28c53436d45944f6281d",
+      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmp6v2clw52s",
+      "lastPublished": "2026-05-25T19:16:09.805Z",
+      "slug": "thinking-out-loud"
     }
   }
 }
