@@ -13,7 +13,8 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs'
 import { join, dirname, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { renderPng, STATIC_DIR, CONTENT_DIR, h } from './lib/render.mjs'
+import satori from 'satori'
+import { renderPng, STATIC_DIR, CONTENT_DIR, h, getFonts } from './lib/render.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const REPO_ROOT  = join(__dirname, '..', '..')
@@ -23,6 +24,11 @@ const W = 1200, H = 630
 const PAD = 80
 const TEAL = '#0D9488'
 const SPEC_VERSION = '5'
+
+// Pillow calibration: textbbox("Hg") height / fontSize for Cormorant Light ≈ 109/120.
+// Used to compute rule margin that matches Pillow's ink-bounds-based positioning.
+const PILLOW_LH_RATIO = 109 / 120
+const PILLOW_LINE_GAP = 10   // Pillow added 10px between lines explicitly
 
 // ── Typographic quotes ────────────────────────────────────────────────────────
 
@@ -34,39 +40,50 @@ function typographicQuotes(text) {
   return text
 }
 
-// ── Title font size estimation ────────────────────────────────────────────────
+// ── Two-pass font sizing & rule margin ────────────────────────────────────────
 
-// Calibrated for Cormorant SemiBold in 1040px (W - 2*PAD) content width.
-const FONT_SIZES = [
-  { size: 120, charsPerLine: 22 },
-  { size: 96,  charsPerLine: 27 },
-  { size: 72,  charsPerLine: 37 },
-  { size: 60,  charsPerLine: 44 },
-  { size: 52,  charsPerLine: 51 },
-]
+// Try sizes largest-first until ≤3 lines.
+const FONT_SIZES = [120, 96, 72, 60, 52]
 
-function estimateLines(text, cpl) {
-  const words = text.split(/\s+/)
-  let lines = 1, len = 0
-  for (const w of words) {
-    if (len > 0 && len + 1 + w.length > cpl) { lines++; len = w.length }
-    else { len = len > 0 ? len + 1 + w.length : w.length }
-  }
-  return lines
+// Render a probe SVG (no PNG) and return the actual laid-out height of the title element.
+async function measureTitleHeight(title, fontSize) {
+  let height = null
+  const container = h('div',
+    { style: { width: W, height: H, display: 'flex', flexDirection: 'column', paddingLeft: PAD, paddingRight: PAD } },
+    h('div',
+      { id: 'TITLE_PROBE', style: { fontFamily: 'Cormorant', fontWeight: 300, fontSize, lineHeight: 1.15, color: '#000' } },
+      title
+    )
+  )
+  await satori(container, {
+    width: W, height: H, fonts: getFonts(),
+    onNodeDetected: (n) => { if (n.props?.id === 'TITLE_PROBE') height = n.height },
+  })
+  return height ?? (fontSize * 1.15)
 }
 
-function pickFontSize(title) {
-  for (const { size, charsPerLine } of FONT_SIZES) {
-    if (estimateLines(title, charsPerLine) <= 3) return size
+// Returns the chosen font size and the measured title height for that size.
+async function selectFontSize(title) {
+  for (const size of FONT_SIZES) {
+    const h = await measureTitleHeight(title, size)
+    const lines = Math.round(h / (size * 1.15))
+    if (lines <= 3) return { size, titleHeight: h }
   }
-  return FONT_SIZES.at(-1).size
+  const size = FONT_SIZES.at(-1)
+  return { size, titleHeight: await measureTitleHeight(title, size) }
+}
+
+// Compute the marginTop for the teal rule so it sits at the same visual distance
+// from the last glyph as Pillow placed it (28px below the ink bounding box bottom).
+function computeRuleMargin(fontSize, titleHeight) {
+  const N = Math.round(titleHeight / (fontSize * 1.15))
+  const pillowH = N * Math.round(fontSize * PILLOW_LH_RATIO) + Math.max(0, N - 1) * PILLOW_LINE_GAP
+  return Math.round(28 + pillowH - titleHeight)
 }
 
 // ── Layout ────────────────────────────────────────────────────────────────────
 
-function makeCoverNode({ title, description, logoDataUrl }) {
-  const titleSize = pickFontSize(title)
-
+function makeCoverNode({ title, description, logoDataUrl, titleSize, ruleMargin }) {
   return h('div',
     { style: { width: W, height: H, background: '#F5F1EB', display: 'flex', flexDirection: 'column', position: 'relative' } },
 
@@ -76,7 +93,7 @@ function makeCoverNode({ title, description, logoDataUrl }) {
       h('div',
         { style: { display: 'flex', flexDirection: 'column', marginTop: -20 } },
         h('div', { style: { fontFamily: 'Cormorant', fontWeight: 300, fontSize: titleSize, color: '#1F1F1F', lineHeight: 1.15 } }, title),
-        h('div', { style: { width: 380, height: 6, background: TEAL, marginTop: 28 } }),
+        h('div', { style: { width: 380, height: 6, background: TEAL, marginTop: ruleMargin } }),
         description
           ? h('div', { style: { fontFamily: 'Nunito', fontWeight: 400, fontSize: 28, color: '#505050', marginTop: 18, maxWidth: 880, lineHeight: 1.45 } }, description)
           : null,
@@ -108,13 +125,16 @@ async function generateCover({ title, description, output, sourcePost }) {
   title = typographicQuotes(title)
   if (description) description = typographicQuotes(description)
 
+  const { size: titleSize, titleHeight } = await selectFontSize(title)
+  const ruleMargin = computeRuleMargin(titleSize, titleHeight)
+
   const logoDataUrl = loadLogoDataUrl()
-  const node = makeCoverNode({ title, description, logoDataUrl })
+  const node = makeCoverNode({ title, description, logoDataUrl, titleSize, ruleMargin })
   const png  = await renderPng(node, W, H)
 
   mkdirSync(dirname(output), { recursive: true })
   writeFileSync(output, png)
-  console.log(`✓ ${output}`)
+  console.log(`✓ ${output}  (${titleSize}px, ruleMargin=${ruleMargin})`)
 
   const sidecarData = { spec_version: SPEC_VERSION, title, output }
   if (description) sidecarData.description = description
