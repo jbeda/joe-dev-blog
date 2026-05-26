@@ -5,6 +5,8 @@ dotenv: ['.env']
 vars:
   DEV_PORT: "1313"
   PY: scripts/.venv/bin/python3
+  NODE: ~/.nvm/versions/node/v24.15.0/bin/node
+  NPM: ~/.nvm/versions/node/v24.15.0/bin/npm
 
 tasks:
 
@@ -83,27 +85,40 @@ tasks:
         download "{{.BASE}}/spacemono/SpaceMono-Italic.ttf"           "SpaceMono-Italic.ttf"
         download "{{.BASE}}/spacemono/SpaceMono-BoldItalic.ttf"       "SpaceMono-BoldItalic.ttf"
       - |
-        # Nunito-variable.ttf defaults to wght=200 (ExtraLight); Pillow cannot select variable
-        # font axes, so we generate discrete static instances via fonttools for the weights we use.
-        echo "==> Nunito (static instances via fonttools)"
+        # Variable fonts default to a weight that may not match what we need.
+        # Satori crashes on variable TTFs so we extract discrete static instances.
+        echo "==> Static instances via fonttools (Cormorant + Nunito)"
         {{.PY}} - <<'EOF'
         from pathlib import Path
         from fontTools.varLib import instancer
         from fontTools.ttLib import TTFont
 
-        weights = {"Light": 300, "Regular": 400, "SemiBold": 600}
-        for name, wght in weights.items():
-            out = Path(f"fonts/Nunito-{name}.ttf")
+        instances = [
+            ("fonts/Cormorant-variable.ttf", {"wght": 600}, "fonts/Cormorant-SemiBold.ttf"),
+            ("fonts/Nunito-variable.ttf",    {"wght": 300}, "fonts/Nunito-Light.ttf"),
+            ("fonts/Nunito-variable.ttf",    {"wght": 400}, "fonts/Nunito-Regular.ttf"),
+            ("fonts/Nunito-variable.ttf",    {"wght": 600}, "fonts/Nunito-SemiBold.ttf"),
+        ]
+        for src, axes, dest in instances:
+            out = Path(dest)
             if out.exists():
-                print(f"  exists:      Nunito-{name}.ttf")
+                print(f"  exists:      {out.name}")
             else:
-                print(f"  generating:  Nunito-{name}.ttf")
-                font = instancer.instantiateVariableFont(
-                    TTFont("fonts/Nunito-variable.ttf"), {"wght": wght}
-                )
+                print(f"  generating:  {out.name}")
+                font = instancer.instantiateVariableFont(TTFont(src), axes)
                 font.save(str(out))
         print("Done.")
         EOF
+
+  graphics-gen:setup:
+    desc: Install Node.js dependencies for graphics-gen
+    sources:
+      - graphics-gen/package.json
+    generates:
+      - graphics-gen/node_modules/.package-lock.json
+    cmds:
+      - "{{.NPM}} install"
+    dir: graphics-gen
 
   og-home:
     desc: Generate the home page OG image (static/og-home.png)
@@ -113,17 +128,25 @@ tasks:
 
   cover:
     desc: "Generate cover image for a post (reads title from frontmatter). Usage: task cover POST=content/posts/my-post.md"
-    deps: [fonts]
+    deps: [fonts, graphics-gen:setup]
     cmds:
-      - "{{.PY}} scripts/generate-cover.py --post {{.POST}}"
+      - "{{.NODE}} graphics-gen/src/cover.mjs --post {{.POST}}"
     requires:
       vars: [POST]
 
   covers-regen:
     desc: Regenerate all cover images from their sidecars (use after branding changes)
-    deps: [fonts]
+    deps: [fonts, graphics-gen:setup]
     cmds:
-      - "{{.PY}} scripts/generate-cover.py --regen-all"
+      - "{{.NODE}} graphics-gen/src/cover.mjs --regen-all"
+
+  favicon:
+    desc: Regenerate all favicon PNGs and rebuild favicon.ico
+    deps: [fonts, graphics-gen:setup]
+    cmds:
+      - "{{.NODE}} graphics-gen/src/favicon.mjs"
+      - magick static/favicon-16x16.png static/favicon-32x32.png static/favicon.ico
+      - echo "✓ favicon.ico rebuilt"
 
   atproto-check:
     desc: List orphaned ATproto records not tracked by Sequoia (dry run)

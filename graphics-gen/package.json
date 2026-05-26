@@ -1,0 +1,13 @@
+{
+  "name": "joe-dev-blog-graphics-gen",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "satori": "^0.10.13"
+  }
+}
