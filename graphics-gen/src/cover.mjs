@@ -132,7 +132,9 @@ function parseFrontmatter(postPath) {
   if (!m) throw new Error(`No TOML frontmatter found in ${postPath}`)
   const fm = m[1]
   const get = (key) => {
-    const r = fm.match(new RegExp(`\\b${key}\\s*=\\s*['"]([^'"]+)['"]`))
+    // Try double-quoted first (allows inner single quotes), then single-quoted (allows inner double quotes)
+    let r = fm.match(new RegExp(`\\b${key}\\s*=\\s*"([^"]*)"` ))
+    if (!r) r = fm.match(new RegExp(`\\b${key}\\s*=\\s*'([^']*)'`))
     return r ? r[1] : null
   }
   const title = get('title')

@@ -122,9 +122,9 @@ tasks:
 
   og-home:
     desc: Generate the home page OG image (static/og-home.png)
-    deps: [fonts]
+    deps: [fonts, graphics-gen:setup]
     cmds:
-      - "{{.PY}} scripts/generate-og-home.py"
+      - "{{.NODE}} graphics-gen/src/og-home.mjs"
 
   cover:
     desc: "Generate cover image for a post (reads title from frontmatter). Usage: task cover POST=content/posts/my-post.md"
