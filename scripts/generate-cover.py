@@ -149,15 +149,16 @@ def generate_cover(
     # Vertically center the whole block, nudged slightly above center
     y = (H - total_h) // 2 - 20
 
+    # Draw rule first so title descenders appear on top of it
+    rule_y = y + title_block_h + rule_gap
+    draw.rectangle([(PAD_X, rule_y), (PAD_X + 380, rule_y + rule_h)], fill=TEAL)
+
     # Draw title
     for line in title_lines:
         draw.text((PAD_X, y), line, font=title_font, fill=TEXT_PRIMARY)
         y += title_lh + title_gap
     y -= title_gap  # remove trailing gap
 
-    # Teal rule
-    rule_y = y + rule_gap
-    draw.rectangle([(PAD_X, rule_y), (PAD_X + 380, rule_y + rule_h)], fill=TEAL)
     y = rule_y + rule_h
 
     # Description
@@ -230,11 +231,11 @@ def read_frontmatter(path: Path):
     if not fm_match:
         sys.exit(f"No TOML frontmatter found in {path}")
     frontmatter = fm_match.group(1)
-    title_m = re.search(r"""\btitle\s*=\s*['"](.+?)['"]""", frontmatter)
-    desc_m  = re.search(r"""\bdescription\s*=\s*['"](.+?)['"]""", frontmatter)
+    title_m = re.search(r"""\btitle\s*=\s*(['"])(.+?)\1""", frontmatter)
+    desc_m  = re.search(r"""\bdescription\s*=\s*(['"])(.+?)\1""", frontmatter)
     if not title_m:
         sys.exit(f"No title found in {path}")
-    return title_m.group(1), (desc_m.group(1) if desc_m else None)
+    return title_m.group(2), (desc_m.group(2) if desc_m else None)
 
 
 def main() -> None:
