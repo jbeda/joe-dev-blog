@@ -51,7 +51,7 @@ function makeOgHomeNode() {
         {
           style: {
             fontFamily: 'Cormorant',
-            fontWeight: 600,
+            fontWeight: 300,
             fontSize: 108,
             color: '#1F1F1F',
             lineHeight: 1,

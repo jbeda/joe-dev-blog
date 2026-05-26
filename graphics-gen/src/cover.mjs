@@ -75,7 +75,7 @@ function makeCoverNode({ title, description, logoDataUrl }) {
       { style: { flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: PAD, paddingRight: PAD, paddingTop: PAD, paddingBottom: PAD } },
       h('div',
         { style: { display: 'flex', flexDirection: 'column', marginTop: -20 } },
-        h('div', { style: { fontFamily: 'Cormorant', fontWeight: 600, fontSize: titleSize, color: '#1F1F1F', lineHeight: 1.15 } }, title),
+        h('div', { style: { fontFamily: 'Cormorant', fontWeight: 300, fontSize: titleSize, color: '#1F1F1F', lineHeight: 1.15 } }, title),
         h('div', { style: { width: 380, height: 6, background: TEAL, marginTop: 28 } }),
         description
           ? h('div', { style: { fontFamily: 'Nunito', fontWeight: 400, fontSize: 28, color: '#505050', marginTop: 18, maxWidth: 880, lineHeight: 1.45 } }, description)

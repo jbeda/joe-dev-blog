@@ -94,6 +94,7 @@ tasks:
         from fontTools.ttLib import TTFont
 
         instances = [
+            ("fonts/Cormorant-variable.ttf", {"wght": 300}, "fonts/Cormorant-Light.ttf"),
             ("fonts/Cormorant-variable.ttf", {"wght": 600}, "fonts/Cormorant-SemiBold.ttf"),
             ("fonts/Nunito-variable.ttf",    {"wght": 300}, "fonts/Nunito-Light.ttf"),
             ("fonts/Nunito-variable.ttf",    {"wght": 400}, "fonts/Nunito-Regular.ttf"),
