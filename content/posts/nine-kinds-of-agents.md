@@ -11,6 +11,7 @@ coverImage = "static/covers/nine-kinds-of-agents.png"
   image = "/covers/nine-kinds-of-agents.png"
   alt = "I counted nine kinds of agents. The word \"agent\" is doing too much work. A rough map helps."
   hidden = true
+atUri = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmrtnrnj752u"
 +++
 
 "Agent" is everywhere in AI conversations. I'd been nodding along with my own rough definition, assuming I'd sharpen it later.

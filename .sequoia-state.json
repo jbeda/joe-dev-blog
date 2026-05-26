@@ -17,6 +17,12 @@
       "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmp6v2clw52s",
       "lastPublished": "2026-05-25T19:16:09.805Z",
       "slug": "thinking-out-loud"
+    },
+    "content/posts/nine-kinds-of-agents.md": {
+      "contentHash": "684e38d2c94427662ae356b79005f73ad50c5ec114f6212a8240dd3f47537256",
+      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmrtnrnj752u",
+      "lastPublished": "2026-05-26T20:33:13.813Z",
+      "slug": "nine-kinds-of-agents"
     }
   }
 }
