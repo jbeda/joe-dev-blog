@@ -35,9 +35,6 @@ See [`BRAND.md`](BRAND.md) — the canonical source for all brand values: colors
 Mermaid theme variables, cover image visual spec, and favicon design spec. **Update `BRAND.md`
 first when anything changes**, then propagate to downstream files (CSS, `graphics-gen/src/cover.mjs`, etc.).
 
-The Figma Brand Book (https://www.figma.com/design/FE0YU473kXl1u9I6uHn29r) is a design
-workspace and historical reference — not the authority.
-
 ---
 
 ## Architecture Notes
