@@ -10,7 +10,7 @@ coverImage = "static/covers/thinking-out-loud.png"
   image = "/covers/thinking-out-loud.png"
   alt = "Thinking out loud, with a URL I own — On returning to writing, ditching the platforms, and what ATproto makes possible."
   hidden = true
-atUri = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmp6v2clw52s"
+atUri = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmtnzh2jrv2s"
 +++
 
 I rejoined the working world about a month ago as CTO at [Stacklok](https://stacklok.com). That means I'm writing again: customer conversations, product decisions, technical strategy. Some of that writing wants to be longer and more considered than a social post. I needed a home for it.
