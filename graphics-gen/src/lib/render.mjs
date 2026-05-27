@@ -1,6 +1,7 @@
 import { readFileSync, existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import opentype from '@shuding/opentype.js'
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
 
@@ -16,6 +17,22 @@ function loadFont(filename) {
     throw new Error(`Font not found: ${p}\nRun: task fonts`)
   }
   return readFileSync(p)
+}
+
+// Returns typographic ratios from the OS/2 table (all relative to unitsPerEm).
+export function getFontMetrics(filename) {
+  const font = opentype.parse(loadFont(filename).buffer)
+  const upm  = font.unitsPerEm
+  const os2  = font.tables.os2
+  return {
+    ascenderRatio:  os2.sTypoAscender            / upm,
+    capHeightRatio: os2.sCapHeight               / upm,
+    descenderRatio: Math.abs(os2.sTypoDescender) / upm,
+  }
+}
+
+export function getFontAscenderRatio(filename) {
+  return getFontMetrics(filename).ascenderRatio
 }
 
 const FONT_DEFS = [

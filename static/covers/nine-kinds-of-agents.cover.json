@@ -1,7 +1,7 @@
 {
-  "spec_version": "5",
+  "spec_version": "6",
   "title": "I counted nine kinds of agents",
-  "output": "static/covers/nine-kinds-of-agents.png",
-  "description": "The word \u201cagent\u201d is doing too much work. A rough map helps.",
+  "output": "/Users/jbeda/src/joe-dev-blog/main/static/covers/nine-kinds-of-agents.png",
+  "description": "The word “agent” is doing too much work. A rough map helps.",
   "source_post": "content/posts/nine-kinds-of-agents.md"
 }

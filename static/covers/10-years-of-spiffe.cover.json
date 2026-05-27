@@ -1,5 +1,5 @@
 {
-  "spec_version": "5",
+  "spec_version": "6",
   "title": "10 Years of SPIFFE",
   "output": "/Users/jbeda/src/joe-dev-blog/main/static/covers/10-years-of-spiffe.png",
   "description": "A decade ago I wrote the design doc for SPIFFE. Workload identity is finally having its moment.",
