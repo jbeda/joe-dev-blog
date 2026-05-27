@@ -25,65 +25,73 @@ const PAD = 80
 const TEAL = '#0D9488'
 const SPEC_VERSION = '5'
 
-// Pillow calibration: textbbox("Hg") height / fontSize for Cormorant Light ≈ 109/120.
-// Used to compute rule margin that matches Pillow's ink-bounds-based positioning.
-const PILLOW_LH_RATIO = 109 / 120
-const PILLOW_LINE_GAP = 10   // Pillow added 10px between lines explicitly
+// Cormorant Light (fonts/Cormorant-Light.ttf) OS/2 table: sTypoAscender=924, UPM=1000.
+// The baseline of a line sits sTypoAscender/UPM * fontSize below the top of the em square.
+const CORMORANT_ASCENDER_RATIO = 924 / 1000
+
+// Gap from the baseline of the last title line (= bottom of capital letters) to the rule top.
+const RULE_GAP = 28
 
 // ── Typographic quotes ────────────────────────────────────────────────────────
 
 function typographicQuotes(text) {
-  text = text.replace(/(^|[\s([{])"/g, '$1“')
-  text = text.replace(/"/g, '”')
-  text = text.replace(/(^|[\s([{])'/g, '$1‘')
-  text = text.replace(/'/g, '’')
+  text = text.replace(/(^|[\s([{])"/g, '$1\u201c')
+  text = text.replace(/"/g, '\u201d')
+  text = text.replace(/(^|[\s([{])'/g, '$1\u2018')
+  text = text.replace(/'/g, '\u2019')
   return text
 }
 
-// ── Two-pass font sizing & rule margin ────────────────────────────────────────
+// ── Two-pass font sizing ───────────────────────────────────────────────────────
 
-// Try sizes largest-first until ≤3 lines.
 const FONT_SIZES = [120, 96, 72, 60, 52]
+const TITLE_LINE_HEIGHT = 1.15
 
-// Render a probe SVG (no PNG) and return the actual laid-out height of the title element.
+// Probe render: return actual layout height of the title element via onNodeDetected.
 async function measureTitleHeight(title, fontSize) {
   let height = null
-  const container = h('div',
-    { style: { width: W, height: H, display: 'flex', flexDirection: 'column', paddingLeft: PAD, paddingRight: PAD } },
+  await satori(
     h('div',
-      { id: 'TITLE_PROBE', style: { fontFamily: 'Cormorant', fontWeight: 300, fontSize, lineHeight: 1.15, color: '#000' } },
-      title
-    )
+      { style: { width: W, height: H, display: 'flex', flexDirection: 'column', paddingLeft: PAD, paddingRight: PAD } },
+      h('div',
+        { id: 'TITLE_PROBE', style: { fontFamily: 'Cormorant', fontWeight: 300, fontSize, lineHeight: TITLE_LINE_HEIGHT, color: '#000' } },
+        title
+      )
+    ),
+    { width: W, height: H, fonts: getFonts(),
+      onNodeDetected: (n) => { if (n.props?.id === 'TITLE_PROBE') height = n.height } }
   )
-  await satori(container, {
-    width: W, height: H, fonts: getFonts(),
-    onNodeDetected: (n) => { if (n.props?.id === 'TITLE_PROBE') height = n.height },
-  })
-  return height ?? (fontSize * 1.15)
+  return height ?? (fontSize * TITLE_LINE_HEIGHT)
 }
 
-// Returns the chosen font size and the measured title height for that size.
+// Try font sizes largest-first; return the first that fits in ≤3 lines.
 async function selectFontSize(title) {
   for (const size of FONT_SIZES) {
-    const h = await measureTitleHeight(title, size)
-    const lines = Math.round(h / (size * 1.15))
-    if (lines <= 3) return { size, titleHeight: h }
+    const titleHeight = await measureTitleHeight(title, size)
+    const lines = Math.round(titleHeight / (size * TITLE_LINE_HEIGHT))
+    if (lines <= 3) return { size, titleHeight }
   }
   const size = FONT_SIZES.at(-1)
   return { size, titleHeight: await measureTitleHeight(title, size) }
 }
 
-// Compute the marginTop for the teal rule so it sits at the same visual distance
-// from the last glyph as Pillow placed it (28px below the ink bounding box bottom).
-function computeRuleMargin(fontSize, titleHeight) {
-  const N = Math.round(titleHeight / (fontSize * 1.15))
-  const pillowH = N * Math.round(fontSize * PILLOW_LH_RATIO) + Math.max(0, N - 1) * PILLOW_LINE_GAP
-  return Math.round(28 + pillowH - titleHeight)
+// ── Rule positioning (pure font metrics, no Pillow calibration) ────────────────
+
+// The rule sits RULE_GAP px below the baseline of the last title line.
+// Baseline offset from the bottom of the title CSS box:
+//   halfLeading + ascender * fontSize - lineBoxH
+//   = fontSize*(LH-1)/2 + ascenderRatio*fontSize - fontSize*LH
+//   = fontSize * (ascenderRatio - (LH+1)/2)
+// This is N-independent.
+function computeRuleMargin(fontSize) {
+  return Math.round(RULE_GAP + fontSize * (CORMORANT_ASCENDER_RATIO - (TITLE_LINE_HEIGHT + 1) / 2))
 }
 
 // ── Layout ────────────────────────────────────────────────────────────────────
 
-function makeCoverNode({ title, description, logoDataUrl, titleSize, ruleMargin }) {
+function makeCoverNode({ title, description, logoDataUrl, titleSize, titleHeight, ruleMargin }) {
+  const ruleTop = titleHeight + ruleMargin   // absolute position within hero block
+
   return h('div',
     { style: { width: W, height: H, background: '#F5F1EB', display: 'flex', flexDirection: 'column', position: 'relative' } },
 
@@ -91,9 +99,20 @@ function makeCoverNode({ title, description, logoDataUrl, titleSize, ruleMargin 
     h('div',
       { style: { flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: PAD, paddingRight: PAD, paddingTop: PAD, paddingBottom: PAD } },
       h('div',
-        { style: { display: 'flex', flexDirection: 'column', marginTop: -20 } },
-        h('div', { style: { fontFamily: 'Cormorant', fontWeight: 300, fontSize: titleSize, color: '#1F1F1F', lineHeight: 1.15 } }, title),
-        h('div', { style: { width: 380, height: 6, background: TEAL, marginTop: ruleMargin } }),
+        { style: { display: 'flex', flexDirection: 'column', marginTop: -20, position: 'relative' } },
+
+        // ① Rule: FIRST in DOM so it renders behind the title text in SVG z-order.
+        //   position:absolute takes it out of flow; the spacer below reserves its layout space.
+        h('div', { style: { position: 'absolute', top: ruleTop, left: 0, width: 380, height: 6, background: TEAL } }),
+
+        // ② Title: rendered ON TOP of the rule (later in DOM = higher z in SVG).
+        //   Descender letters (g, y, p…) naturally extend through the rule, visible above it.
+        h('div', { style: { fontFamily: 'Cormorant', fontWeight: 300, fontSize: titleSize, color: '#1F1F1F', lineHeight: TITLE_LINE_HEIGHT } }, title),
+
+        // ③ Spacer: holds the layout space the rule would occupy if it were in-flow,
+        //   so the description is positioned correctly below the rule.
+        h('div', { style: { height: 6, marginTop: ruleMargin } }),
+
         description
           ? h('div', { style: { fontFamily: 'Nunito', fontWeight: 400, fontSize: 28, color: '#505050', marginTop: 18, maxWidth: 880, lineHeight: 1.45 } }, description)
           : null,
@@ -126,10 +145,10 @@ async function generateCover({ title, description, output, sourcePost }) {
   if (description) description = typographicQuotes(description)
 
   const { size: titleSize, titleHeight } = await selectFontSize(title)
-  const ruleMargin = computeRuleMargin(titleSize, titleHeight)
+  const ruleMargin = computeRuleMargin(titleSize)
 
   const logoDataUrl = loadLogoDataUrl()
-  const node = makeCoverNode({ title, description, logoDataUrl, titleSize, ruleMargin })
+  const node = makeCoverNode({ title, description, logoDataUrl, titleSize, titleHeight, ruleMargin })
   const png  = await renderPng(node, W, H)
 
   mkdirSync(dirname(output), { recursive: true })
