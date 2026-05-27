@@ -28,17 +28,15 @@ const SPEC_VERSION = '6'
 // Font metrics from Cormorant-Light.ttf OS/2 table (via opentype.js).
 const { ascenderRatio: CORMORANT_ASCENDER_RATIO, capHeightRatio, descenderRatio } = getFontMetrics('Cormorant-Light.ttf')
 
-// Pillow used textbbox("Hg") height as its per-line height: cap-top to descender-bottom.
-// That equals (sCapHeight + |sTypoDescender|) / UPM * fontSize.
+// Cap-top to descender-bottom as a fraction of font size (from OS/2 capHeight + |descender|).
 const CORMORANT_LH_RATIO = capHeightRatio + descenderRatio   // 0.912 for Cormorant Light
 
-// Pillow added 10px of visual space between lines (descender-bottom of line N to cap-top of N+1).
-// Expressed as a CSS lineHeight: lhRatio + gap/fontSize (font-size-dependent).
+// 10px visual gap between lines (descender-bottom of line N to cap-top of N+1).
+// Expressed as a CSS lineHeight ratio: lhRatio + gap/fontSize (font-size-dependent).
 const TITLE_GAP = 10
 const titleLineHeight = (fontSize) => CORMORANT_LH_RATIO + TITLE_GAP / fontSize
 
-// Gap from the baseline of the last title line (= bottom of capital letters) to the rule top.
-// 25px matches Pillow's effective gap: Pillow's lh=109, rule_gap=28, bottom_H=112 → 109+28-112=25.
+// Gap from the baseline of the last title line to the rule top.
 const RULE_GAP = 25
 
 // ── Typographic quotes ────────────────────────────────────────────────────────
@@ -107,8 +105,7 @@ function makeCoverNode({ title, description, logoDataUrl, titleSize, titleHeight
     h('div',
       { style: { flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: PAD, paddingRight: PAD, paddingTop: PAD, paddingBottom: PAD } },
       h('div',
-        // marginTop: -32 places the visual center at H/2 - 20, matching Pillow's formula
-        // (Pillow: center = H/2 - 20; Satori flex center = 311; -32/2 = -16 shift → 295 ✓)
+        // marginTop: -32 nudges the block 16px above true center for visual balance.
         { style: { display: 'flex', flexDirection: 'column', marginTop: -32, position: 'relative' } },
 
         // ① Rule: FIRST in DOM so it renders behind the title text in SVG z-order.

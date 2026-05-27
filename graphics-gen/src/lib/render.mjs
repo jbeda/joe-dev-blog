@@ -36,7 +36,7 @@ export function getFontAscenderRatio(filename) {
 }
 
 const FONT_DEFS = [
-  // 300 = the variable font's default weight; used for cover/og-home titles (matches old Pillow output)
+  // 300 = Light; used for cover/og-home titles
   { name: 'Cormorant', weight: 300, style: 'normal', file: 'Cormorant-Light.ttf' },
   // 600 = SemiBold; used for the favicon J and wherever a heavy display weight is wanted
   { name: 'Cormorant', weight: 600, style: 'normal', file: 'Cormorant-SemiBold.ttf' },
