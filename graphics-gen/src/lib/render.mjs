@@ -31,9 +31,6 @@ export function getFontMetrics(filename) {
   }
 }
 
-export function getFontAscenderRatio(filename) {
-  return getFontMetrics(filename).ascenderRatio
-}
 
 const FONT_DEFS = [
   // 300 = Light; used for cover/og-home titles
@@ -55,6 +52,16 @@ export function getFonts() {
   return _fonts
 }
 
+// satori/jsx's createElement always wraps rest-arg children into an array; satori 0.26+
+// requires explicit display on any element whose children prop is an array. We skip
+// createElement and build the node object directly so we can normalize children to
+// a scalar (single child) or array (multiple) before they land in props.
+export function h(type, props, ...children) {
+  const flat = children.flat(Infinity).filter(c => c != null)
+  const ch = flat.length === 0 ? undefined : flat.length === 1 ? flat[0] : flat
+  return { type, props: ch !== undefined ? { ...props, children: ch } : props }
+}
+
 export async function renderPng(node, width, height, { scale = 1 } = {}) {
   const svg = await satori(node, { width, height, fonts: getFonts() })
   const resvg = new Resvg(svg, scale === 1
@@ -63,9 +70,3 @@ export async function renderPng(node, width, height, { scale = 1 } = {}) {
   return resvg.render().asPng()
 }
 
-// JSX-without-JSX helper. Null/undefined children are filtered out.
-export function h(type, props, ...children) {
-  const flat = children.flat(Infinity).filter(c => c != null)
-  const ch = flat.length === 0 ? undefined : flat.length === 1 ? flat[0] : flat
-  return { type, props: { ...props, children: ch } }
-}

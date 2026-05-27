@@ -99,7 +99,7 @@ Current spec version: **"6"** (defined as `SPEC_VERSION` in `graphics-gen/src/co
 | Signature block | `static/apple-touch-icon.png` at 128 px, bottom-right; `joe.dev` / `Joe Beda` stacked below at Nunito Regular 24 px, `#6C6C6C`, centred on icon |
 | Padding | 80 px horizontal and vertical |
 
-Title block is vertically centered −20 px above true center.
+Title block is vertically centered −16 px above true center.
 
 ---
 
