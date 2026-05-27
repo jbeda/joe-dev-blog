@@ -232,7 +232,7 @@ The sidecar `.cover.json` records the title, source post path, and `spec_version
 task covers-regen        # regenerates all covers from their sidecars
 ```
 
-Script: `scripts/generate-cover.py`. See `--help` for manual title/output overrides.
+Script: `graphics-gen/src/cover.mjs`. See the CLI flags at the bottom of that file for manual title/output overrides.
 
 #### Attaching a cover to a post
 
@@ -252,7 +252,7 @@ coverImage = "static/covers/my-post.png"   # Sequoia → ATproto blob
 
 #### When branding changes
 
-1. Update the colour/font constants at the top of `scripts/generate-cover.py` and bump `SPEC_VERSION`.
+1. Update the colour/font constants at the top of `graphics-gen/src/cover.mjs` and bump `SPEC_VERSION`.
 2. Run `task covers-regen` to rebuild all images.
 3. Re-publish affected posts so Sequoia uploads the new blobs.
 
@@ -347,7 +347,7 @@ Common tasks are defined in `Taskfile.yml` (requires [Task](https://taskfile.dev
 | `task build`       | Production build → `public/`                                            |
 | `task preview`     | Production build + serve locally on port 1313                           |
 | `task clean`       | Remove `public/`, `resources/_gen/`, build lock                         |
-| `task scripts:setup`  | Create `scripts/.venv/` (Python 3.13) and install Pillow + fonttools |
+| `task scripts:setup`  | Create `scripts/.venv/` (Python 3.13) and install fonttools |
 | `task fonts`          | Download brand fonts + generate static Nunito weight instances (runs `scripts:setup` automatically) |
 | `task cover POST=content/posts/foo.md` | Generate cover image for a post  |
 | `task covers-regen`   | Regenerate all covers from sidecars (after branding changes) |
@@ -365,7 +365,7 @@ All Python utilities live in `scripts/`. Dependencies are declared in `scripts/r
 
 **Setup** (runs automatically as a dep of `task fonts` and all script tasks):
 ```bash
-task scripts:setup   # creates scripts/.venv/ and installs Pillow + fonttools
+task scripts:setup   # creates scripts/.venv/ and installs fonttools
 ```
 
 Or manually:
@@ -374,15 +374,13 @@ uv venv --python 3.13 scripts/.venv
 uv pip install --python scripts/.venv/bin/python3 -r scripts/requirements.txt
 ```
 
-**Nunito static weight instances** — `Nunito-variable.ttf` defaults to `wght=200` (ExtraLight), and Pillow cannot select variable font axes at load time. `task fonts` uses `fonttools.varLib.instancer` to generate discrete weight files after download:
+**Nunito static weight instances** — Satori crashes on variable TTFs, so `task fonts` uses `fonttools.varLib.instancer` to extract discrete weight files from `Nunito-variable.ttf`:
 
 | File | Weight |
 |---|---|
 | `fonts/Nunito-Light.ttf` | 300 |
 | `fonts/Nunito-Regular.ttf` | 400 |
 | `fonts/Nunito-SemiBold.ttf` | 600 |
-
-Scripts that need a specific weight load the discrete file (e.g. `load_font("Nunito-Regular.ttf", 28)`) rather than the variable font.
 
 **Adding a new Python dependency:** add it to `scripts/requirements.txt`, then run `task scripts:setup` to update the venv.
 
