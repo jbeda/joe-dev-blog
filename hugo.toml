@@ -5,6 +5,10 @@ theme = 'PaperMod'
 paginate = 10
 enableRobotsTXT = true
 
+# Skip *.notes.md files: working notes / outlines kept next to a post in
+# content/ that should never render to the site.
+ignoreFiles = ['\.notes\.md$']
+
 [params]
   author = 'Joe Beda'
   description = "Joe Beda talking computer stuff"

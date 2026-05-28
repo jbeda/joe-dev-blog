@@ -108,6 +108,7 @@ The publication tag is also emitted on the home page.
 - `atUri` frontmatter field is written by `sequoia publish` — do not edit manually
 - About page: `content/about.md` — uses `.about-photo` CSS class for the headshot float
 - Headshot: `static/joe.png` (341×512px portrait)
+- **Working notes:** keep per-post notes/outlines as `<slug>.notes.md` next to the post in `content/posts/`. Hugo skips these via `ignoreFiles = ['\.notes\.md$']` in `hugo.toml`. Verify exclusion with `hugo list all | grep notes` (want 0 matches). These files may eventually become public, so keep them clean.
 
 ---
 
