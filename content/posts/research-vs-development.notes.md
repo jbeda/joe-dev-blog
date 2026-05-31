@@ -4,7 +4,16 @@ Not rendered to the site. `*.notes.md` is excluded via `ignoreFiles` in `hugo.to
 
 ## Status
 
-Outline approved (pending final tweaks). Prose not yet drafted.
+Draft written and edited down with a multi-perspective expert review pass. Diagram built
+and inserted after the intro. Still `draft = true`.
+
+## TODO
+
+- Pre-publish: generate the cover (`task cover`), then flip `draft = false`.
+- Identify a pull quote: pick one strong line to feature, and figure out pull-quote
+  styling for the PaperMod theme (`assets/css/extended/custom.css`). Candidate lines:
+  "Coherence hides the missed question." / "The factory is a machine for converging on a
+  target." / "an open research question wearing a development costume."
 
 ## Working title
 
@@ -86,4 +95,55 @@ still learning where and how it works. Be technical; don't over-explain.
   trusted, acceptance tests are meaningful and constant."
 - Luke PM — "The Software Factory" (Dec 2024). Origin of the metaphor;
   aspirational. Cite for lineage, not substance.
+- Steve Yegge — "Welcome to Gas Town" (Jan 2026). Semi-autonomous swarm of
+  Claude Code instances under a human "Overseer"; high throughput, some work gets
+  lost. Brief nod for lineage; paraphrased, not quoted.
 - Reference style: https://joe.dev/posts/nine-kinds-of-agents/
+
+## Diagram: "R&D is two jobs" spectrum
+
+- **Figma file:** https://www.figma.com/design/T0kxs7dbT4VesH6jUxkVpA (org: Stacklok)
+- **Exported asset:** `static/images/research-vs-development-spectrum.png` (1440x1008, 2x of
+  the 720px display size). Inserted right after the intro via a `figure` shortcode with
+  long, blind-reader alt text.
+- **Style reference:** the "Nine Kinds / Agent Taxonomy" Figma file
+  (`4L1ozFe1cs5uTjhMZnGOII`); house colors/fonts are canonical in `BRAND.md`.
+
+### Brief used to design it
+
+A horizontal Research -> Development spectrum showing where two kinds of AI tool work.
+720px wide; parchment background; Cormorant title top-left; Nunito labels; teal accent;
+"(c) Joe Beda . joe.dev" bottom-right (matches the nine-kinds house style).
+
+- Spine: a single gradient bar (parchment on the left/research end, teal on the
+  right/development end) with a full-width double-headed arrow as the axis. Research pole
+  on the left ("find what 'good' looks like"); Development pole on the right ("execute
+  against a known good").
+- Two coverage bars above the spine, sized to show different reach: a bold solid-teal
+  FULL-width bar, "Interactive agent (you in the loop): works across the whole spectrum";
+  and a lighter teal HALF-width bar over the development side, "Autonomous factory: needs
+  a known target", with its left edge pixel-aligned to the boundary.
+- A vertical amber boundary marker at the seam, annotated "<- drifts left over time"
+  (today's research becomes tomorrow's development).
+- An amber "dangerous middle" callout hanging from the boundary: work that looks like
+  development but hides an unproven assumption; point the factory at it and it converges
+  confidently on the wrong target, and it looks done.
+
+### How we iterated (built in Figma, critiqued by a design-expert subagent)
+
+- v1-v2: first build. Bars above a two-card spine with the amber callout below.
+- Expert round 1 (verdict ITERATE). P0s: factory bar's alignment to the seam wasn't
+  visually enforced; the "dangerous middle" read as a footnote, not the climax; the
+  spectrum read as two buckets, not a continuum. P1: bar saturations were inverted (the
+  limited factory looked bolder than the universal interactive agent); drift note was
+  italic, low-contrast, and floating with nothing to point at.
+- v3-v4: swapped bar saturations (interactive = solid-teal hero; factory = light);
+  promoted the callout to the climax (Cormorant 24 serif title, heavier border, fixed the
+  text clipping); replaced the two cards with one gradient continuum; added an amber
+  boundary line tying factory bar -> seam -> callout; de-italicized and anchored the drift
+  note. Expert round 2: verdict SHIP, one P1 left (continuum still read a little card-like).
+- v5: strengthened the gradient; anchored Research/Development as the two poles; darkened
+  borderline secondary text for contrast.
+- v6: added the full-width double-headed arrow as the spectrum-axis centerpiece (Joe's
+  request, to make "spectrum" unmistakable). Expert round 3: verdict SHIP; continuum
+  payload resolved; only cosmetic P2s remained, already handled.
