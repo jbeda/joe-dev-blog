@@ -1,0 +1,3 @@
+{{- /* Pull quote. Repeats a line from the body, so aria-hidden to avoid a
+       double read by screen readers. */ -}}
+<aside class="pullquote" aria-hidden="true">{{ $.Page.RenderString (trim .Inner "\n ") }}</aside>

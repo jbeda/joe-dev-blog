@@ -10,10 +10,11 @@ and inserted after the intro. Still `draft = true`.
 ## TODO
 
 - Pre-publish: generate the cover (`task cover`), then flip `draft = false`.
-- Identify a pull quote: pick one strong line to feature, and figure out pull-quote
-  styling for the PaperMod theme (`assets/css/extended/custom.css`). Candidate lines:
-  "Coherence hides the missed question." / "The factory is a machine for converging on a
-  target." / "an open research question wearing a development costume."
+- Pull quote: done. "The factory is a machine for converging on a target." featured in
+  The factory wants a target (after the lineage list) via the `pullquote` shortcode
+  (`layouts/shortcodes/pullquote.html`) and the `.pullquote` style in
+  `assets/css/extended/custom.css` (centered Cormorant italic with a short teal rule;
+  `aria-hidden` since it repeats a body line).
 
 ## Working title
 
