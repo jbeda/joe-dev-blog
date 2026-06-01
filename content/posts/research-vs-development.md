@@ -1,10 +1,12 @@
 +++
-date = '2026-05-29T00:00:00-07:00'
-draft = true
+date = '2026-06-01T10:34:49-07:00'
+draft = false
 title = "R&D is two jobs, and research doesn't run on autopilot"
-description = 'Research figures out what good looks like. Development executes against a known good. Coding agents help with both, but the autonomous factory only does one, and the trap is the work in between.'
+description = 'Research figures out what good looks like. Development executes against a known good. The trap is the work in between.'
 tags = ['AI', 'agents', 'engineering', 'strategy']
 ShowToc = true
+coverImage = "static/covers/research-vs-development.png"
+cover = { image = "/covers/research-vs-development.png", alt = "R&D is two jobs, and research doesn't run on autopilot. Research figures out what good looks like. Development executes against a known good. The trap is the work in between.", hidden = true }
 +++
 
 We say "R&D" like it's one word for one activity. It isn't. Research and development are two different jobs with different rhythms, and a coding agent helps with each in a completely different way.
