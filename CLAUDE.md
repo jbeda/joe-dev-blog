@@ -159,7 +159,6 @@ Common tasks (`brew install go-task`):
 | `task build`       | Production build → `public/`                                            |
 | `task preview`     | Production build + serve locally on port 1313                           |
 | `task clean`       | Remove `public/`, `resources/_gen/`, build lock                         |
-| `task scripts:setup`  | Create `scripts/.venv/` (Python 3.13) and install dependencies |
 | `task fonts`          | Download brand fonts + generate static Nunito weight instances |
 | `task cover POST=content/posts/foo.md` | Generate cover image for a post  |
 | `task covers-regen`   | Regenerate all covers from sidecars (after branding changes) |
@@ -167,7 +166,10 @@ Common tasks (`brew install go-task`):
 | `task atproto-cleanup`| Delete orphaned ATproto records (prompts for confirmation)|
 | `task publication-icon` | Upload PNG as publication icon blob (default: `static/apple-touch-icon.png`) |
 
-Run `task fonts` once after cloning before any local image generation. Python tooling details: see `scripts/CLAUDE.md`.
+Run `task fonts` once after cloning before any local image generation. Node tasks use the
+nvm-managed node (resolved via `NODE_BIN` in the Taskfile); Python tasks run ephemerally
+via `uv run` (no managed venv). Both require `uv` and nvm installed. Python tooling details:
+see `scripts/CLAUDE.md`.
 
 ### Playwright MCP Server
 

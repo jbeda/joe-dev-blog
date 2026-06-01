@@ -4,9 +4,14 @@ dotenv: ['.env']
 
 vars:
   DEV_PORT: "1313"
-  PY: scripts/.venv/bin/python3
-  NODE: ~/.nvm/versions/node/v24.15.0/bin/node
-  NPM: ~/.nvm/versions/node/v24.15.0/bin/npm
+  # Newest nvm-managed node bin dir (not version-pinned). Task ignores a
+  # top-level `env: PATH:`, so NODE/NPM prepend it to PATH themselves — this is
+  # what lets npm's `#!/usr/bin/env node` shebang and any node-spawned children
+  # resolve in Task's non-interactive shell.
+  NODE_BIN:
+    sh: ls -td "$HOME"/.nvm/versions/node/*/bin 2>/dev/null | head -1
+  NODE: 'PATH="{{.NODE_BIN}}:$PATH" node'
+  NPM: 'PATH="{{.NODE_BIN}}:$PATH" npm'
 
 tasks:
 
@@ -46,19 +51,8 @@ tasks:
     cmds:
       - rm -rf public resources/_gen .hugo_build.lock
 
-  scripts:setup:
-    desc: Create Python venv under scripts/.venv (Python 3.13) and install dependencies
-    cmds:
-      - uv venv --python 3.13 scripts/.venv
-      - uv pip install --python scripts/.venv/bin/python3 -r scripts/requirements.txt
-    sources:
-      - scripts/requirements.txt
-    generates:
-      - scripts/.venv/pyvenv.cfg
-
   fonts:
     desc: Download brand fonts and generate static Nunito weight instances
-    deps: [scripts:setup]
     vars:
       BASE: https://github.com/google/fonts/raw/main/ofl
     cmds:
@@ -88,7 +82,7 @@ tasks:
         # Variable fonts default to a weight that may not match what we need.
         # Satori crashes on variable TTFs so we extract discrete static instances.
         echo "==> Static instances via fonttools (Cormorant + Nunito)"
-        {{.PY}} - <<'EOF'
+        uv run --with-requirements scripts/requirements.txt --no-project python - <<'EOF'
         from pathlib import Path
         from fontTools.varLib import instancer
         from fontTools.ttLib import TTFont
@@ -151,19 +145,16 @@ tasks:
 
   atproto-check:
     desc: List orphaned ATproto records not tracked by Sequoia (dry run)
-    deps: [scripts:setup]
     cmds:
-      - "{{.PY}} scripts/delete-orphaned-records.py"
+      - "uv run --no-project python scripts/delete-orphaned-records.py"
 
   atproto-cleanup:
     desc: Delete orphaned ATproto records not tracked by Sequoia
     prompt: This will permanently delete records from your PDS. Continue?
-    deps: [scripts:setup]
     cmds:
-      - "{{.PY}} scripts/delete-orphaned-records.py --delete"
+      - "uv run --no-project python scripts/delete-orphaned-records.py --delete"
 
   publication-icon:
     desc: "Upload a PNG as the publication icon blob (default: static/apple-touch-icon.png)"
-    deps: [scripts:setup]
     cmds:
-      - "{{.PY}} scripts/set-publication-icon.py {{.CLI_ARGS}}"
+      - "uv run --no-project python scripts/set-publication-icon.py {{.CLI_ARGS}}"
