@@ -177,6 +177,50 @@ a:hover,
     color: #2DD4BF;
 }
 
+/* === Sequoia recommend button === */
+/* The button is a shadow-DOM web component; it only exposes a `button` part, so
+   theming is limited to that. Match the brand teal in both modes. */
+.post-recommend {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin: 2rem 0 0;
+}
+
+.post-recommend__hint {
+    font-size: 0.85rem;
+    color: var(--secondary);
+}
+
+sequoia-recommend::part(button) {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    background: #0A7A70;
+    color: #fff;
+    border: 1px solid #0A7A70;
+    border-radius: var(--radius);
+    padding: 0.45rem 1rem;
+    cursor: pointer;
+}
+
+sequoia-recommend::part(button):hover {
+    background: #086B62;
+    border-color: #086B62;
+}
+
+[data-theme=dark] sequoia-recommend::part(button) {
+    background: transparent;
+    color: #2DD4BF;
+    border-color: #2DD4BF;
+}
+
+[data-theme=dark] sequoia-recommend::part(button):hover {
+    background: rgba(45, 212, 191, 0.12);
+    color: #5EEAD4;
+}
+
 /* === Accessibility === */
 
 /* Replace browser-default blue focus ring with on-brand teal */

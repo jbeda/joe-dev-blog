@@ -1,0 +1,12 @@
+{{- /* Sequoia recommend button, rendered after the post body on published posts.
+       document-uri is passed explicitly from frontmatter so the button works in
+       `hugo server` too — it does not depend on the CI-only inject step that adds
+       the <link rel="site.standard.document"> tag. */ -}}
+{{- if and (eq .Type "posts") .Params.atUri }}
+<div class="post-recommend">
+  {{- /* safeURL: the at:// scheme isn't on Go's template allow-list, so without
+         this Hugo rewrites the value to "#ZgotmplZ". */ -}}
+  <sequoia-recommend document-uri="{{ .Params.atUri | safeURL }}"></sequoia-recommend>
+  <span class="post-recommend__hint">Recommend this on the open social web (ATproto / Bluesky)</span>
+</div>
+{{- end }}
