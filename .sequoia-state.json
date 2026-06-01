@@ -1,27 +1,27 @@
 {
   "posts": {
     "content/posts/hello-world.md": {
-      "contentHash": "34595392db15b3eef6a00a523da5d129402770ab5c9d61b443b015e5fa1375ba",
+      "contentHash": "c112132d398be1922e9ba2132a4df83241a6478c053deee420879b158ce2ae95",
       "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmff6f5q5w2u",
-      "lastPublished": "2026-05-21T20:05:12.000Z",
+      "lastPublished": "2026-06-01T17:30:11.098Z",
       "slug": "hello-world"
     },
     "content/posts/10-years-of-spiffe.md": {
-      "contentHash": "df5a6d74b7694dc6860b6a592caabd6726dcfb2e4f48669a50e9aaea2c7f3035",
+      "contentHash": "3d41897c84fee205c2b8e153204448874e521ab492587d6dc1eeb27de4772a8c",
       "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmmmhq3fe22s",
-      "lastPublished": "2026-05-24T18:23:34.000Z",
+      "lastPublished": "2026-06-01T17:30:10.177Z",
       "slug": "10-years-of-spiffe"
     },
     "content/posts/thinking-out-loud.md": {
-      "contentHash": "10ebac94f5399e8ca6e8b3e4ee2c5766a34d84793517d4c1a4226d6b46d6eb0b",
+      "contentHash": "19e1f3cdc972ce8809b9b64e76d2cbede72997edc85a63c88247bb65d7fe38ac",
       "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmp6v2clw52s",
-      "lastPublished": "2026-05-25T18:40:09.000Z",
+      "lastPublished": "2026-06-01T17:30:09.265Z",
       "slug": "thinking-out-loud"
     },
     "content/posts/nine-kinds-of-agents.md": {
-      "contentHash": "684e38d2c94427662ae356b79005f73ad50c5ec114f6212a8240dd3f47537256",
+      "contentHash": "3b6e63b247e352e53890881218cef6d6372c1fc254d9f082763a5f8a30a53b98",
       "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmrtnrnj752u",
-      "lastPublished": "2026-05-26T07:00:00.000Z",
+      "lastPublished": "2026-06-01T17:30:08.648Z",
       "slug": "nine-kinds-of-agents"
     }
   },
