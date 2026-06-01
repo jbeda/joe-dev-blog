@@ -1,28 +1,32 @@
 {
   "posts": {
     "content/posts/hello-world.md": {
-      "contentHash": "a27d210d728ece39c921e33de8cc82a759487baf72074320f926258fbcf42644",
+      "contentHash": "34595392db15b3eef6a00a523da5d129402770ab5c9d61b443b015e5fa1375ba",
       "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmff6f5q5w2u",
-      "lastPublished": "2026-05-25T19:16:11.069Z",
+      "lastPublished": "2026-05-21T20:05:12.000Z",
       "slug": "hello-world"
     },
     "content/posts/10-years-of-spiffe.md": {
-      "contentHash": "d85715d275c51756bdfc6884a3b14cf44ae8a9770c26a0c6a5507a076aaf0644",
-      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmp6v2v6me2v",
-      "lastPublished": "2026-05-25T19:16:10.451Z",
+      "contentHash": "df5a6d74b7694dc6860b6a592caabd6726dcfb2e4f48669a50e9aaea2c7f3035",
+      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmmmhq3fe22s",
+      "lastPublished": "2026-05-24T18:23:34.000Z",
       "slug": "10-years-of-spiffe"
     },
     "content/posts/thinking-out-loud.md": {
-      "contentHash": "a6198e7a5c869b8330afe5b4f8d38f29418787a71cc5c5c40464e4a0eacf8b8d",
-      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmtnzh2jrv2s",
-      "lastPublished": "2026-05-27T13:57:42.575Z",
+      "contentHash": "10ebac94f5399e8ca6e8b3e4ee2c5766a34d84793517d4c1a4226d6b46d6eb0b",
+      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmp6v2clw52s",
+      "lastPublished": "2026-05-25T18:40:09.000Z",
       "slug": "thinking-out-loud"
     },
     "content/posts/nine-kinds-of-agents.md": {
       "contentHash": "684e38d2c94427662ae356b79005f73ad50c5ec114f6212a8240dd3f47537256",
       "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmrtnrnj752u",
-      "lastPublished": "2026-05-26T20:33:13.813Z",
+      "lastPublished": "2026-05-26T07:00:00.000Z",
       "slug": "nine-kinds-of-agents"
     }
+  },
+  "publication": {
+    "cid": "bafyreiar5qz7oznxir5csxqdndvswiwrmxoyw6wvntnvt7yfb3iaijtq3a",
+    "uri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.publication/3mmfe3yxkqd2b"
   }
 }
