@@ -422,3 +422,31 @@ main#main:focus {
 @media (max-width: 480px) {
     .pullquote { font-size: 1.55rem; }
 }
+
+/* === Footnotes === */
+/* Goldmark emits the endnotes as <div class="footnotes"> with a faint default
+   rule, so they read like another body paragraph. Set them apart: drop the
+   default rule for a labeled one, shrink the text, and mute the color. */
+.footnotes {
+    margin-top: 3rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--secondary);
+}
+
+.footnotes hr {
+    display: none;
+}
+
+.footnotes::before {
+    content: "Notes";
+    display: block;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--secondary);
+}

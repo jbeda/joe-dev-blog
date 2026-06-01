@@ -10,11 +10,42 @@ and inserted after the intro. Still `draft = true`.
 ## TODO
 
 - Pre-publish: generate the cover (`task cover`), then flip `draft = false`.
-- Pull quote: done. "The factory is a machine for converging on a target." featured in
-  The factory wants a target (after the lineage list) via the `pullquote` shortcode
-  (`layouts/shortcodes/pullquote.html`) and the `.pullquote` style in
-  `assets/css/extended/custom.css` (centered Cormorant italic with a short teal rule;
-  `aria-hidden` since it repeats a body line).
+- Pull quotes: done. Two, both via the `pullquote` shortcode
+  (`layouts/shortcodes/pullquote.html`) + `.pullquote` style in
+  `assets/css/extended/custom.css` (centered Cormorant italic, short teal rule,
+  `aria-hidden` since each repeats a body line):
+  1. "The factory is a machine for converging on a target." (in "The factory wants a
+     target", after the lineage list)
+  2. "The better you know what good looks like, the longer the leash you can let out."
+     (in "The agent isn't the factory")
+
+## Revisions after the draft (post-review feedback)
+
+Three changes folded in after the multi-perspective pass, from a round of human feedback:
+
+1. **Autonomy is its own spectrum.** Feedback: we treat interactive-vs-factory as binary,
+   but it's a dial too. Reframed it in "The agent isn't the factory" as a continuum (in
+   every loop -> approve a plan -> oversee a swarm = Gas Town -> lights-out = StrongDM),
+   and coupled it to the research/development axis: how far you can safely let the leash
+   out is set by how well you know the target. One-line echo in "The boundary keeps
+   moving" (the autonomy dial rises with the boundary). The diagram already encodes the
+   coupling (factory bar covers only the known half), so no art change.
+2. **Sharper human payoff at the close.** Feedback: the recommendation wasn't satisfying;
+   the durable edge is uniquely human. Split the old "taste + decomposition" list into two
+   named skills, each mapped to a failure mode in the piece: **experience** spots the soft
+   spot in your own understanding before you hand it to the factory (defends the dangerous
+   middle); **taste** steers experimentation toward what "good" is (the target the factory
+   can't invent). Framed decomposition as the teachable/automatable part; experience and
+   taste as the slow, human part. Kept the honest "I've been wrong about the pace" ending.
+3. **Borrowed-taste footnote.** Feedback: the agent's help is uneven by problem space.
+   Added the post's first footnote on "context it doesn't have": the model's taste is
+   borrowed from training data, so it's dense for common shapes (CRUD over a recipe DB)
+   and absent for esoteric work, which is exactly the work that's still research. Kept as a
+   footnote (not body text) so it doesn't blunt the experience/taste close.
+   - Footnote styling added (`.footnotes` in `custom.css`): hid Goldmark's faint default
+     rule, drew a clearer one, added an uppercase "NOTES" label, shrank + muted the text.
+     Uses theme variables so it adapts to light/dark. Verified light render in the dev
+     server.
 
 ## Working title
 
