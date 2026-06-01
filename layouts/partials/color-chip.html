@@ -1,0 +1,5 @@
+{{- /* color-chip: a small color swatch next to its CSS color value.
+       Shared by the color-chip shortcode (inline use) and the color-swatch
+       shortcode (colophon table). Expects a dict: { "color": "<css color>" }. */ -}}
+{{- $color := .color -}}
+<span class="color-chip" title="{{ $color }}"><span class="color-chip__swatch" style="background:{{ $color | safeCSS }};"></span><code class="color-chip__code">{{ $color }}</code></span>

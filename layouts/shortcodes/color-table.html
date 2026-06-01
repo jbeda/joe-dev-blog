@@ -1,0 +1,17 @@
+{{- /* Colophon color table. Wraps a set of color-swatch rows:
+
+       {{< color-table >}}
+       {{< color-swatch role="Page background" light="#F5F1EB" dark="#181511" >}}
+       ...
+       {{< /color-table >}}
+*/ -}}
+<div class="color-table-wrap">
+  <table class="color-table">
+    <thead>
+      <tr><th scope="col">Role</th><th scope="col">Light</th><th scope="col">Dark</th></tr>
+    </thead>
+    <tbody>
+      {{ .Inner }}
+    </tbody>
+  </table>
+</div>

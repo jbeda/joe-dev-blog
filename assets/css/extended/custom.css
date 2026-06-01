@@ -1,18 +1,18 @@
 /* === Background warmth === */
 
 :root {
-    --theme:   rgb(245, 241, 235);   /* warm cream */
-    --entry:   rgb(248, 246, 242);   /* slightly deeper warm white for cards */
-    --border:  rgb(232, 228, 222);   /* warm light border */
-    --code-bg: rgb(242, 239, 234);   /* warm inline code bg */
-    --code-block-bg: rgb(42, 38, 32); /* code block bg — softer than PaperMod's near-black */
+    --theme:   #F5F1EB;   /* warm cream */
+    --entry:   #F8F6F2;   /* slightly deeper warm white for cards */
+    --border:  #E8E4DE;   /* warm light border */
+    --code-bg: #F2EFEA;   /* warm inline code bg */
+    --code-block-bg: #2A2620; /* code block bg — softer than PaperMod's near-black */
 }
 
 :root[data-theme=dark] {
-    --theme:   rgb(24, 21, 17);      /* rich warm dark brown */
-    --entry:   rgb(36, 32, 26);      /* warm dark card bg */
-    --border:  rgb(60, 54, 44);      /* warm amber-tinted border */
-    --code-bg: rgb(46, 41, 33);      /* warm dark inline code bg */
+    --theme:   #181511;   /* rich warm dark brown */
+    --entry:   #24201A;   /* warm dark card bg */
+    --border:  #3C362C;   /* warm amber-tinted border */
+    --code-bg: #2E2921;   /* warm dark inline code bg */
 }
 
 /* === Typography === */
@@ -70,7 +70,7 @@ pre code {
 .post-content code:not(pre code) {
     padding: 0.15em 0.4em;
     border-radius: 3px;
-    background: rgb(230, 242, 240);
+    background: #E6F2F0;
     color: #2D5F5B;
     line-height: 1.6;
 }
@@ -146,7 +146,7 @@ a:hover,
 
 /* Inline code dark mode */
 [data-theme=dark] .post-content code:not(pre code) {
-    background: rgb(30, 44, 42);
+    background: #1E2C2A;
     color: #7ECCC6;
 }
 
@@ -187,4 +187,126 @@ a:hover,
 
 [data-theme=dark] :focus-visible {
     outline-color: #2DD4BF;
+}
+
+/* === Color chip (swatch + CSS value) === */
+/* Reusable inline unit: a small swatch next to its color value. Used inline in
+   prose and as the building block of the colophon color table below. */
+.color-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.color-chip__swatch {
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+}
+
+.color-chip__code {
+    color: var(--secondary);
+}
+
+/* === Colophon color table === */
+/* Role on the left, Light and Dark chips in their own columns. A real table so
+   the chips line up in neat columns across every row. Uniform 7-char hex values
+   keep the columns even. */
+/* Safety net: on very narrow screens the table can scroll horizontally rather
+   than break the page layout. At 375px+ it fits without scrolling. */
+.color-table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.color-table {
+    /* Size to content. When the viewport is too narrow to fit all three columns
+       the wrapper scrolls horizontally instead of the page breaking. */
+    width: max-content;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.color-table th,
+.color-table td {
+    text-align: left;
+    padding: 0.5rem 1.25rem 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.color-table thead th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--secondary);
+    font-weight: 600;
+}
+
+.color-table__role {
+    font-weight: 400;
+}
+
+@media (max-width: 600px) {
+    .color-table {
+        font-size: 0.8rem;
+    }
+
+    .color-table th,
+    .color-table td {
+        padding-right: 0.6rem;
+    }
+
+    .color-chip__swatch {
+        width: 0.85rem;
+        height: 0.85rem;
+    }
+}
+
+/* === Paired figures (side-by-side images) === */
+.figure-pair {
+    display: flex;
+    gap: 1.5rem;
+    align-items: stretch;
+    margin: 1.5rem 0;
+}
+
+.figure-pair figure {
+    flex: 1;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.figure-pair__img {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.figure-pair__img img {
+    max-width: 100%;
+    max-height: 280px;
+    object-fit: contain;
+}
+
+.figure-pair figcaption {
+    font-size: 0.85em;
+    margin-top: 0.4rem;
+    text-align: center;
+}
+
+/* Stack the pair vertically on narrow screens so neither image is squished. */
+@media (max-width: 480px) {
+    .figure-pair {
+        flex-direction: column;
+        gap: 1rem;
+    }
 }

@@ -14,8 +14,8 @@ Update this file first when anything changes; then propagate to downstream files
 | Page Background     | `#F5F1EB`              | `--theme`                        |
 | Card Background     | `#F8F6F2`              | `--entry`                        |
 | Border              | `#E8E4DE`              | `--border`                       |
-| Code Block BG       | `rgb(42, 38, 32)`      | `--code-block-bg`                |
-| Inline Code BG      | `rgb(230, 242, 240)`   | explicit rule (teal tint)        |
+| Code Block BG       | `#2A2620`              | `--code-block-bg`                |
+| Inline Code BG      | `#E6F2F0`              | explicit rule (teal tint)        |
 | Inline Code Text    | `#2D5F5B`              | explicit rule (muted teal)       |
 | Teal Primary        | `#0A7A70`              | accent                           |
 | Teal Hover          | `#086B62`              | accent:hover                     |
@@ -25,16 +25,16 @@ Update this file first when anything changes; then propagate to downstream files
 ### Dark Mode
 | Token               | Value                  | CSS Variable / Note              |
 |---------------------|------------------------|----------------------------------|
-| Page Background     | `rgb(24, 21, 17)`      | `--theme`                        |
-| Card Background     | `rgb(36, 32, 26)`      | `--entry`                        |
-| Border              | `rgb(60, 54, 44)`      | `--border`                       |
-| Code Block BG       | `rgb(42, 38, 32)`      | `--code-block-bg`                |
-| Inline Code BG      | `rgb(30, 44, 42)`      | explicit rule (dark teal tint)   |
+| Page Background     | `#181511`              | `--theme`                        |
+| Card Background     | `#24201A`              | `--entry`                        |
+| Border              | `#3C362C`              | `--border`                       |
+| Code Block BG       | `#2A2620`              | `--code-block-bg`                |
+| Inline Code BG      | `#1E2C2A`              | explicit rule (dark teal tint)   |
 | Inline Code Text    | `#7ECCC6`              | explicit rule (soft teal)        |
 | Teal Primary        | `#2DD4BF`              | accent                           |
 | Teal Hover          | `#5EEAD4`              | accent:hover                     |
-| Text Primary        | `rgb(196, 196, 197)`   | `--primary`                      |
-| Text Secondary      | `rgb(155, 156, 157)`   | `--secondary`                    |
+| Text Primary        | `#C4C4C5`              | `--primary`                      |
+| Text Secondary      | `#9B9C9D`              | `--secondary`                    |
 
 All CSS overrides live in `assets/css/extended/custom.css`. PaperMod CSS variables use `:root { }` for light and `:root[data-theme=dark] { }` for dark (NOT `.dark`).
 

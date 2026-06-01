@@ -1,0 +1,3 @@
+{{- /* Inline color chip: {{< color-chip "#0A7A70" >}} or {{< color-chip color="#0A7A70" >}} */ -}}
+{{- $color := .Get "color" | default (.Get 0) -}}
+{{- partial "color-chip.html" (dict "color" $color) -}}
