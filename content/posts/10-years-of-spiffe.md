@@ -21,8 +21,8 @@ This just goes to show I suck at timing. 😂 It is having a moment now. It only
 
 To mark this I want to get some of the original artifacts out there for anyone that is interested.
 
-- Original design doc: https://docs.google.com/document/d/1GjurNK2ROw4rXz-k-l68JtpGRkGj2fZcWqP6gksEriQ/edit
-- Original presentation at GlueCon: http://slides.eightypercent.net/spiffe-intro/index.html#p1
+- [Original design doc](https://docs.google.com/document/d/1GjurNK2ROw4rXz-k-l68JtpGRkGj2fZcWqP6gksEriQ/edit) (Google Docs)
+- [Original presentation at GlueCon](http://slides.eightypercent.net/spiffe-intro/index.html#p1)
 
 Easter egg: the colors in the original logo and design doc were based on my last name. Fun you can have when your name can be represented as hex. {{< color-chip "#00BEDA" >}} and {{< color-chip "#BEDA00" >}}. Those colors (or very similar) are still used in the logo!
 

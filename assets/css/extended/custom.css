@@ -189,6 +189,44 @@ a:hover,
     outline-color: #2DD4BF;
 }
 
+/* Skip-to-content link: hidden until focused, then pinned to the top-left.
+   Lets keyboard and screen-reader users bypass the header nav. */
+.skip-link {
+    position: absolute;
+    top: -3rem;
+    left: 0.5rem;
+    z-index: 100;
+    padding: 0.5rem 0.85rem;
+    background: var(--theme);
+    color: var(--primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: top 0.15s ease-in-out;
+}
+
+.skip-link:focus {
+    top: 0.5rem;
+}
+
+/* The main landmark is focused programmatically via the skip link; suppress its
+   focus outline since it's a scroll target, not an interactive control. */
+main#main:focus {
+    outline: none;
+}
+
+/* Code-block comments: PaperMod's default comment color (#6e738d) only reaches
+   ~3.2:1 on our warm dark code background (#2A2620). Lift to a warm gray that
+   clears WCAG AA (~5.4:1) while still reading as muted. */
+.chroma .c,
+.chroma .ch,
+.chroma .cm,
+.chroma .c1,
+.chroma .cs,
+.chroma .cp,
+.chroma .cpf {
+    color: #9E9C8C;
+}
+
 /* === Color chip (swatch + CSS value) === */
 /* Reusable inline unit: a small swatch next to its color value. Used inline in
    prose and as the building block of the colophon color table below. */

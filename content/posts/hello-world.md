@@ -67,6 +67,13 @@ And a Mermaid diagram:
 
 ```mermaid
 graph LR
+    accTitle: How a post gets published
+    accDescr {
+      Left-to-right flowchart of the publishing pipeline. Writing a post and
+      running git push triggers GitHub Actions, which branches into two paths:
+      sequoia publish, which writes the post to ATproto / Bluesky; and hugo
+      build, which deploys to Cloudflare Pages, which serves joe.dev.
+    }
     A[Write post] --> B[git push]
     B --> C[GitHub Actions]
     C --> D[sequoia publish]

@@ -11,6 +11,13 @@ layout managed by the `wt`/worktrunk CLI.
 - **Deploy:** Cloudflare Pages (project: `joe-dev-blog`)
 - **Hugo version:** 0.161.1 extended, PaperMod theme (git submodule)
 
+## Checklists
+
+See [`CHECKLISTS.md`](CHECKLISTS.md) before **publishing a post** (cover image, mobile +
+accessibility eval, build, rebase) or making **layout / template / CSS changes** (mobile +
+accessibility checks in both light and dark mode). It also documents the repeatable mobile
+and axe-core check recipes.
+
 ## Git Workflow
 
 **Submodule init is automated via `.config/wt.toml`.** The PaperMod theme is a git submodule, and new worktrees don't auto-initialize submodules — without it the dev server fails with missing shortcodes/partials. The `wt` `pre-start` hook runs `git submodule update --init` automatically on every `wt switch --create`. If you create a worktree by other means, run it manually once:
@@ -64,7 +71,10 @@ Orphaned ATproto records can accumulate if `atUri` isn't committed between runs.
 ### Hugo Template Override Locations
 - `layouts/partials/extend_head.html` — Google Fonts + Mermaid script + standard.site publication link tag
 - `layouts/partials/extend_footer.html` — empty (reserved; do not use for per-page content)
+- `layouts/baseof.html` — **copied from PaperMod** (skip-to-content link + `id`/`tabindex` on `<main>`). Check on submodule updates.
 - `layouts/partials/footer.html` — **copied from PaperMod** (colophon link change). Check on submodule updates.
+- `layouts/partials/header.html` — **copied from PaperMod** (nav `aria-label` + logo-image a11y fix). Check on submodule updates.
+- `layouts/partials/post_nav_links.html` — **copied from PaperMod** (pagination nav `aria-label`). Check on submodule updates.
 - `layouts/partials/share_icons.html` — **copied from PaperMod** with modifications. Check on submodule updates.
 - `layouts/partials/templates/schema_json.html` — **copied from PaperMod** with modifications. Check on submodule updates.
 - `layouts/_default/_markup/render-codeblock-mermaid.html` — wraps mermaid fenced blocks
