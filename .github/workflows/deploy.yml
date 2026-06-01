@@ -30,7 +30,7 @@ jobs:
       # 1. Publish source posts to ATproto.
       #    Writes atUri into each post's frontmatter and updates state file.
       - name: Publish to ATproto
-        run: bunx sequoia-cli publish
+        run: bunx sequoia-cli@0.5.7 publish
         env:
           ATP_IDENTIFIER: ${{ secrets.ATP_IDENTIFIER }}
           ATP_APP_PASSWORD: ${{ secrets.ATP_APP_PASSWORD }}
@@ -51,7 +51,7 @@ jobs:
       #    Reads state for slug→atUri mappings, writes into public/*.html.
       #    public/ is gitignored so this doesn't dirty the working tree.
       - name: Inject ATproto link tags
-        run: bunx sequoia-cli inject
+        run: bunx sequoia-cli@0.5.7 inject
 
       # 5. Deploy the fully-built, injected output.
       - name: Deploy to Cloudflare Pages

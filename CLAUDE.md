@@ -48,11 +48,14 @@ first when anything changes**, then propagate to downstream files (CSS, `graphic
 
 ### CI/CD Pipeline (`.github/workflows/deploy.yml`)
 Order matters — Sequoia must publish before Hugo builds, then inject after:
-1. `bunx sequoia-cli publish` — writes `atUri` to post frontmatter
+1. `bunx sequoia-cli@0.5.7 publish` — writes `atUri` to post frontmatter
 2. `git-auto-commit` — commits `.sequoia-state.json` and updated frontmatter `[skip ci]`
 3. `hugo --minify` — builds into `public/`
-4. `bunx sequoia-cli inject` — injects `<link rel="site.standard.document">` into built HTML
+4. `bunx sequoia-cli@0.5.7 inject` — injects `<link rel="site.standard.document">` into built HTML
 5. `wrangler pages deploy public` — deploys to Cloudflare Pages
+
+The Sequoia version is **pinned** in `deploy.yml` (both steps) for reproducible deploys.
+Bumping it is a deliberate step — see `CHECKLISTS.md` → Upgrading pinned tools.
 
 ### Sequoia Config (`sequoia.json`)
 - `contentDir`: `./content/posts`

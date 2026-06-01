@@ -53,6 +53,27 @@ Whenever you touch `layouts/`, shortcodes, partials, or `assets/css/`:
 
 ---
 
+## Upgrading pinned tools (Hugo, Sequoia)
+
+Build-affecting tools are **pinned to an explicit version** so deploys are reproducible and
+breakage never arrives silently on a random deploy:
+
+- **Hugo** — `hugo-version` in `.github/workflows/deploy.yml` (and `0.161.1` in `CLAUDE.md`).
+- **Sequoia** — `bunx sequoia-cli@<version>` in **both** the publish and inject steps of
+  `deploy.yml`. (Unpinned `bunx` auto-pulls latest — don't rely on that.)
+
+Bumping a pin is a deliberate change, not automatic:
+
+- [ ] Check the new version's changelog / release notes for **breaking changes**.
+- [ ] Confirm config still validates — for Sequoia, check `sequoia.json` against the current
+      schema (`https://tangled.org/stevedylan.dev/sequoia/raw/main/sequoia.schema.json`); for
+      Hugo, watch for deprecated config keys / template APIs.
+- [ ] Update the pinned version in `deploy.yml` **and** the matching reference in `CLAUDE.md`
+      (CI/CD Pipeline section / Hugo version) so docs and pipeline agree.
+- [ ] Let the deploy run and verify the published output (post records, injected link tags).
+
+---
+
 ## How to run the checks
 
 Both recipes use the dev server + the Playwright MCP server (Docker/ToolHive). The browser
