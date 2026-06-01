@@ -23,6 +23,12 @@
       "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmrtnrnj752u",
       "lastPublished": "2026-06-01T17:30:08.648Z",
       "slug": "nine-kinds-of-agents"
+    },
+    "content/posts/research-vs-development.md": {
+      "contentHash": "0cec620a466ebc8f8980663f025a7be8f0d1f831a92caaa10f1f08b77673177a",
+      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mnamsq476f2x",
+      "lastPublished": "2026-06-01T17:40:39.953Z",
+      "slug": "research-vs-development"
     }
   },
   "publication": {

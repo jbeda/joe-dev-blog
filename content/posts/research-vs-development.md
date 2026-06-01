@@ -7,6 +7,7 @@ tags = ['AI', 'agents', 'engineering', 'strategy']
 ShowToc = true
 coverImage = "static/covers/research-vs-development.png"
 cover = { image = "/covers/research-vs-development.png", alt = "R&D is two jobs, and research doesn't run on autopilot. Research figures out what good looks like. Development executes against a known good. The trap is the work in between.", hidden = true }
+atUri = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mnamsq476f2x"
 +++
 
 We say "R&D" like it's one word for one activity. It isn't. Research and development are two different jobs with different rhythms, and a coding agent helps with each in a completely different way.
