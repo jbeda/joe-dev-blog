@@ -1,7 +1,7 @@
 {
   "spec_version": "6",
   "title": "R&D is two jobs, and research doesn’t run on autopilot",
-  "output": "/Users/jbeda/src/joe-dev-blog/post-research-vs-development/static/covers/research-vs-development.png",
-  "description": "Research figures out what good looks like. Development executes against a known good. Coding agents help with both, but the autonomous factory only does one, and the trap is the work in between.",
+  "output": "/Users/jbeda/src/joe-dev-blog/main/static/covers/research-vs-development.png",
+  "description": "Research figures out what good looks like. Development executes against a known good. The trap is the work in between.",
   "source_post": "content/posts/research-vs-development.md"
 }
