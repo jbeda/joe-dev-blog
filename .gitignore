@@ -15,8 +15,9 @@
 # Downloaded fonts (local tooling only, not committed)
 /fonts/
 
-# Python utility venv — created by `task scripts:setup`, uses Python 3.13 from brew
-# All Python tooling lives under scripts/ to keep the repo root clean
+# Python tooling runs ephemerally via `uv run` (no managed venv); ignore stray
+# bytecode and any leftover venv from the old setup.
+__pycache__/
 /scripts/.venv/
 
 # Task runner cache
