@@ -5,12 +5,8 @@ title = '10 Years of SPIFFE'
 description = 'A decade ago I wrote the design doc for SPIFFE. Workload identity is finally having its moment.'
 tags = ['SPIFFE', 'identity', 'open-source', 'history']
 coverImage = "static/covers/10-years-of-spiffe.png"
-
-[cover]
-  image = "/covers/10-years-of-spiffe.png"
-  alt = "10 Years of SPIFFE — A decade ago I wrote the design doc for SPIFFE. Workload identity is finally having its moment."
-  hidden = true
 atUri = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mmmmhq3fe22s"
+cover = { image = "/covers/10-years-of-spiffe.png", alt = "10 Years of SPIFFE — A decade ago I wrote the design doc for SPIFFE. Workload identity is finally having its moment.", hidden = true }
 +++
 
 A little over 10 years ago I wrote the design doc for [SPIFFE](https://spiffe.io), a standard for giving workloads cryptographic identities so services can authenticate to each other without passwords. I launched it at a talk at [GlueCon](https://gluecon.com) that year. This was a unique thing as it was an "open source" project that was just a document. There was no code initially.

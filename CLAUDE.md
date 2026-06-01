@@ -67,6 +67,9 @@ Bumping it is a deliberate step — see `CHECKLISTS.md` → Upgrading pinned too
 - **Quickstart:** https://sequoia.pub/quickstart
 - **Source repo:** https://tangled.org/stevedylan.dev/sequoia
 - **Commands:** `auth`, `init`, `publish`, `inject` — there is no built-in delete/cleanup command
+- **Known issue:** `publish` appends `atUri` at the end of frontmatter, which nests it under a
+  trailing `[cover]` table and breaks top-level `.Params.atUri`. Use the inline-table cover form
+  (see Cover Images). Tracked at https://tangled.org/stevedylan.dev/sequoia/issues/46
 
 Orphaned ATproto records can accumulate if `atUri` isn't committed between runs. Use
 `task atproto-check` (dry run) and `task atproto-cleanup` (delete) to manage them.
@@ -121,12 +124,17 @@ Then add to the post's TOML frontmatter:
 
 ```toml
 coverImage = "static/covers/my-post.png"   # Sequoia → ATproto blob
-
-[cover]
-  image = "/covers/my-post.png"            # PaperMod → og:image / twitter:image
-  alt = "Post title here"
-  hidden = true                            # OG tags only; not shown on page
+# PaperMod cover — MUST be an inline table, not a [cover] section header (see below):
+cover = { image = "/covers/my-post.png", alt = "Post title here", hidden = true }
 ```
+
+**Always use the inline-table form (`cover = { … }`), never a `[cover]` section header.**
+Sequoia's `publish` appends `atUri` to the *end* of the frontmatter. In TOML, a bare key
+after a `[cover]` header belongs to that table — so the appended `atUri` parses as
+`cover.atUri`, leaving top-level `.Params.atUri` empty. The recommend button (and anything
+else gating on `atUri`) then silently disappears, with no build error. An inline table has
+no open section, so the appended `atUri` stays top-level. (Upstream bug:
+https://tangled.org/stevedylan.dev/sequoia/issues/46 — remove this workaround note if fixed.)
 
 `hidden = true` is deliberate — the warm parchment background clashes with dark mode.
 `coverImage` (local path) → Sequoia uploads as ATproto blob (Bluesky card thumbnail).

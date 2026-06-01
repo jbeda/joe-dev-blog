@@ -15,7 +15,13 @@ Before a new post goes live (merged to `main` / deployed):
 - [ ] **Frontmatter complete** — `title`, `date`, `description`, `tags`, `showToc` as needed.
       Do **not** hand-edit `atUri` (Sequoia writes it).
 - [ ] **Cover image generated** — `task cover POST=content/posts/<slug>.md`, then add
-      `coverImage` + the `[cover]` block to frontmatter (see `CLAUDE.md` → Cover Images).
+      `coverImage` + the cover block to frontmatter (see `CLAUDE.md` → Cover Images).
+- [ ] **Cover uses the inline-table form** — write the cover as a one-line TOML inline table
+      (`cover = { image = "…", alt = "…", hidden = true }`), **not** a `[cover]` section header.
+      Sequoia's `publish` appends `atUri` at the end of the frontmatter; a `[cover]` header
+      would swallow it into the table (`cover.atUri`), leaving top-level `atUri` empty so the
+      recommend button silently disappears. The inline table has no open section, so the
+      appended `atUri` stays top-level. See `CLAUDE.md` → Cover Images.
 - [ ] **Cover alt text** written for a no-vision reader — include the post title and a
       description, not a filename or one-word label.
 - [ ] **Prose voice check** — apply `voice-profile.md` + `writing-rules.md` and the
