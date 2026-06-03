@@ -164,6 +164,7 @@ Common tasks (`brew install go-task`):
 | `task covers-regen`   | Regenerate all covers from sidecars (after branding changes) |
 | `task atproto-check`  | List orphaned ATproto records (dry run)                  |
 | `task atproto-cleanup`| Delete orphaned ATproto records (prompts for confirmation)|
+| `task atproto-republish`| Force-republish all posts (re-uploads covers; use after regenerating a cover image) |
 | `task publication-icon` | Upload PNG as publication icon blob (default: `static/apple-touch-icon.png`) |
 
 Run `task fonts` once after cloning before any local image generation. Node tasks use the

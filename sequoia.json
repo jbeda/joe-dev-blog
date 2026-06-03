@@ -9,5 +9,6 @@
     "publishDate": "date",
     "coverImage": "coverImage"
   },
-  "publishContent": true
+  "publishContent": true,
+  "ignore": ["*.notes.md", "**/*.notes.md"]
 }

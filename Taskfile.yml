@@ -158,3 +158,16 @@ tasks:
     desc: "Upload a PNG as the publication icon blob (default: static/apple-touch-icon.png)"
     cmds:
       - "uv run --no-project python scripts/set-publication-icon.py {{.CLI_ARGS}}"
+
+  atproto-republish:
+    # Sequoia's change detection hashes only the raw markdown file (frontmatter +
+    # body) — regenerated cover images have identical text, so a normal publish
+    # skips them and the cover blob is never re-uploaded. --force marks every
+    # non-draft post as an update, re-uploading each cover and putRecord-ing the
+    # site.standard.document in place (no delete needed). Note: this does NOT
+    # refresh the original Bluesky post thumbnail (frozen at post-creation time),
+    # only the enhanced-card coverImage on the document record.
+    desc: "Force-republish all posts to ATproto (re-uploads cover images; touches every record)"
+    prompt: This re-uploads every cover blob and rewrites every ATproto record. Continue?
+    cmds:
+      - bunx sequoia-cli@0.5.7 publish --force
