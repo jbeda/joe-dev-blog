@@ -18,6 +18,88 @@ accessibility eval, build, rebase) or making **layout / template / CSS changes**
 accessibility checks in both light and dark mode). It also documents the repeatable mobile
 and axe-core check recipes.
 
+## Writing & editing a post
+
+A repeatable playbook for drafting and tightening posts (started with the "new 20% time" post,
+2026-06; refine as we learn). Voice rules live in the global `~/.claude/CLAUDE.md` (voice
+profile + writing rules) and govern every choice; this is the *process* around them.
+
+### Draft
+- Read the global voice files first (voice profile + writing rules).
+- Read source material in full and verbatim before drafting. Don't work from summaries; pull
+  the original text (an old post, a paper's actual abstract) so quotes are exact.
+- Keep a working file beside the post: `content/posts/<slug>.notes.md` (excluded from the build
+  via `ignoreFiles`). Sections: Status, dated Decisions, Section map, Research + sources,
+  Parking lot, Social teasers (a Bluesky + LinkedIn companion post), Pre-publish checklist.
+  It is the record of *why* the post is the way it is.
+  These notes may go public someday: keep undeveloped future-post ideas out of them (park those
+  in CoWork `WORK AREAS/Marketing/blog-ideas-project/`).
+- Verify every factual claim against a primary source before it goes in. Flag unverifiable
+  claims `[NEEDS SOURCE]`; never fabricate. Cite the primary (paper, on-the-record quote), not
+  the secondary blog that paraphrases it (the paraphrase often gets it backwards).
+- Pick a one-line **spine** (the post's central question or claim). Every section must serve
+  it. A section that serves a different thread is a different post: cut it to a seed and park
+  it in CoWork blog ideas.
+
+### Tighten (length is the enemy of retention)
+- Bias to cut. When unsure, cut. The reader's attention is the scarce resource.
+- The open earns at most two short paragraphs before the first real idea. Kill preamble.
+- Every paragraph earns its place with a fact, an insight, or forward momentum. If it can be
+  deleted without loss, delete it.
+- One idea per section. Watch cross-section redundancy: explain a thing once. A brief callback
+  is fine; a re-explanation is not.
+- One analogy per job. Don't stack analogies for the same point.
+- Don't open a question you can't close in the space you have. Park it as a future post.
+- Two short sentences beat a dash. No em/en-dashes. Run the banned-word / AI-tell check.
+- Read the first sentence of each paragraph in sequence; vary the rhythm.
+
+### Collaborate
+- Use `AskUserQuestion` for genuine forks (use option previews for wording/heading choices).
+- Commit safe, clearly-instructed edits directly; *propose* subjective rewrites (conclusions,
+  reframes) before committing.
+- Log decisions, dated, in the notes file as you go. Re-check the notes for drift after big
+  changes: a stale "PENDING/TODO" reads as misleading.
+
+### Review (before publish)
+Run a multi-perspective expert review and fold the findings (separate verified from unverified).
+Pick lenses that match the post's claims and risks. A good default set:
+- **Domain fact-checker(s)** for time-sensitive, citation-heavy claims (industry history,
+  pricing/economics, named companies and numbers).
+- **Subject-matter checker** for any research cited (e.g. a cognitive-science read on an
+  attention/psychology claim).
+- **The most-affected reader** for any group the post characterizes (e.g. a working artist for
+  a claim about creative work). Catches tone that reads as dismissive.
+- **Hostile/contrarian peer** who argues the opposite of the thesis. Stress-tests the hedges.
+- **Structure/retention editor**: will a reader finish it? Where does momentum sag? Is the
+  spine always visible?
+
+### Make it compelling (engagement levers)
+Apply once the content is settled. These decide whether the post gets read and shared, not just
+whether it's good.
+- **Title carries the most weight.** It's the feed and social-card hook. Concrete noun plus a
+  curiosity gap; front-load the interesting word; keep the searchable keyword if there is one.
+- **Assume scanning, not reading.** People scan in an F-pattern and read a fraction of the words
+  (Nielsen Norman Group). Earn the scroll with a concrete first sentence, descriptive section
+  headings, and short paragraphs.
+- **Pull quotes:** ~2 for a long post, via the `pullquote` shortcode
+  (`layouts/shortcodes/pullquote.html`). Lift a self-contained line already in the body and mark
+  it `aria-hidden` (it repeats). Place them at the longest text runs, and favor the most
+  surprising / most shareable line.
+- **Bold the one landing line** a skimmer must catch, roughly one per section, sparingly.
+- **TOC on** (`ShowToc = true`) for long posts (~1.5k+ words).
+- **Images:** the cover is `hidden = true` on-page (the warm parchment clashes with the post and
+  reads as noise), but it IS the Bluesky/LinkedIn card, so it still must be strong with full alt
+  text. Add at most one in-body image, and only if a concept genuinely wants a diagram. Never
+  decorative stock.
+- **End on a question or open thread,** not a summary; it invites replies and quote-shares.
+- **Distribution is half the work.** Every post ships with a Bluesky + LinkedIn teaser (see the
+  notes-file "Social teasers" section). The teaser hook matters as much as the on-page open: lead
+  with the most surprising or most trending idea in the piece, not necessarily the thesis.
+
+### Pre-publish
+See `CHECKLISTS.md` and the post's notes-file checklist (five-point writing test, cover image,
+mobile + axe-core a11y, rebase, flip `draft = false`).
+
 ## Git Workflow
 
 **Submodule init is automated via `.config/wt.toml`.** The PaperMod theme is a git submodule, and new worktrees don't auto-initialize submodules — without it the dev server fails with missing shortcodes/partials. The `wt` `pre-start` hook runs `git submodule update --init` automatically on every `wt switch --create`. If you create a worktree by other means, run it manually once:

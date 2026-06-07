@@ -105,5 +105,9 @@ task dev   # serve on :1313 (binds 0.0.0.0 so the Docker browser can reach it)
 2. Manually verify what axe can't: heading order, descriptive link text, image alt text,
    diagram `accTitle`/`accDescr`, the skip link and landmark labels, visible focus.
 
-Record substantive audits as a dated doc in [`audits/`](audits/) — see
-`audits/2026-06-01-accessibility-audit.md` for the worked example and method.
+**When to write a dated audit doc.** Only for **infrastructure or design changes** —
+layout / template / CSS work, brand or theme changes, tooling upgrades. Record those as a
+dated doc in [`audits/`](audits/); see `audits/2026-06-01-accessibility-audit.md` for the
+worked example and method. **Publishing a single post does not warrant an audit doc** — run
+the mobile + a11y checks inline and move on. Reserve the `audits/` folder for changes that
+affect the whole blog.

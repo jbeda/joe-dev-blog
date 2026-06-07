@@ -91,6 +91,11 @@ Ordered by impact.
   their visible `<figcaption>`, so a screen reader hears each description twice. Options:
   set `alt=""` (let the caption describe it) or write a distinct *visual* description in the
   alt. Minor; left to author preference.
+- **`#top-link` outside a landmark** — PaperMod's floating "back to top" button sits outside
+  any landmark, so axe flags one moderate `region` violation ("all page content should be
+  contained by landmarks") on every page once you scroll. Site-wide template element, not
+  tied to any post. Fix by wrapping/moving the button into a landmark. (Surfaced 2026-06-06
+  while checking the "new 20% time" post.)
 
 ---
 
