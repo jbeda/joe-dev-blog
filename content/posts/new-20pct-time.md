@@ -7,6 +7,7 @@ tags = ['AI', 'agents', '20% time', 'Google', 'culture']
 ShowToc = true
 coverImage = "static/covers/new-20pct-time.png"
 cover = { image = "/covers/new-20pct-time.png", alt = "Cover image for the post 'The new 20% time, minus the time.' On a warm off-white background, the title is set in large black serif type across two lines. A short teal underline sits beneath it, above the gray subtitle: 'Attention is replacing hours. But is it 120% time all over again?' In the lower right, a teal rounded square holds a white serif J monogram, with 'joe.dev' and 'Joe Beda' stacked below. A thin teal band runs along the bottom edge.", hidden = true }
+atUri = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mnupdfuyvf2a"
 +++
 
 Twenty years ago, a few weeks into my job at Google, I wrote [a post about 20% time](https://www.eightypercent.net/post/old/00235.html).[^blog] For anyone who never ran into it: 20% time was Google's policy of letting engineers spend a day a week, a fifth of their time, on a project of their own choosing. The argument in that post was that you couldn't just copy it. 20% time worked because of the environment around it, not because someone wrote "20%" in a handbook. It was, as I put it then, "a result of an environment and philosophy to development more than a cause."
