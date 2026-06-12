@@ -116,6 +116,10 @@ almost always ahead after a push. Never push without rebasing first or it will b
 git add <files> && git commit -m "..." && git rebase origin/main && git push
 ```
 
+**Don't push drafts as a backstop.** This repo is public, so pushing exposes unfinished
+work — never suggest pushing early just to back up drafts or work-in-progress branches.
+Keep those local.
+
 ---
 
 ## Brand & Theme
