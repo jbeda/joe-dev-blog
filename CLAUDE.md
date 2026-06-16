@@ -13,10 +13,11 @@ layout managed by the `wt`/worktrunk CLI.
 
 ## Checklists
 
-See [`CHECKLISTS.md`](CHECKLISTS.md) before **publishing a post** (cover image, mobile +
-accessibility eval, build, rebase) or making **layout / template / CSS changes** (mobile +
-accessibility checks in both light and dark mode). It also documents the repeatable mobile
-and axe-core check recipes.
+See [`CHECKLISTS.md`](CHECKLISTS.md) before **publishing a post** (cover image, voice + source
+check, social snippets, build, rebase) or making **layout / template / CSS changes** (mobile +
+accessibility checks in both light and dark mode). The full mobile + axe-core run is reserved for
+structural changes, not routine posts. It also documents the repeatable mobile and axe-core check
+recipes.
 
 ## Writing & editing a post
 
@@ -98,7 +99,8 @@ whether it's good.
 
 ### Pre-publish
 See `CHECKLISTS.md` and the post's notes-file checklist (five-point writing test, cover image,
-mobile + axe-core a11y, rebase, flip `draft = false`).
+social snippets, rebase, flip `draft = false`). The full mobile + axe-core a11y run is reserved
+for structural / layout changes, not routine posts.
 
 ## Git Workflow
 

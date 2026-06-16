@@ -3,8 +3,8 @@
 Operational checklists for joe.dev. Referenced from [`CLAUDE.md`](CLAUDE.md).
 
 Two flows are covered: **publishing a post** and **changing layout / templates / CSS**.
-Both rely on the shared **mobile** and **accessibility** checks defined at the bottom — run
-those the same way every time.
+The full **mobile** and **accessibility** (axe-core) checks at the bottom are for **structural
+changes** (layout / templates / CSS), not routine posts — see each flow below.
 
 ---
 
@@ -31,12 +31,16 @@ Before a new post goes live (merged to `main` / deployed):
 - [ ] **Images have full alt text** — describe what the image shows for a no-vision reader.
 - [ ] **Mermaid diagrams** (if any) include `accTitle:` and `accDescr { … }` in the source
       (see `layouts/partials/CLAUDE.md`).
-- [ ] **Mobile check** — run the mobile recipe below. New posts most often break on wide
-      code blocks, tables, and side-by-side figures.
-- [ ] **Accessibility check** — run the a11y recipe below. Expect **0 axe violations** and a
-      sane heading order (single `<h1>`, no skipped levels).
+- [ ] **Social snippets drafted** — Bluesky + LinkedIn teasers in the post's notes file. Lead
+      with the most surprising / most shareable line, not necessarily the thesis (see
+      `CLAUDE.md` → Make it compelling).
 - [ ] **Build passes** — `task build` (only the known PaperMod deprecation warnings).
 - [ ] **Rebase before push** — `git rebase origin/main` (CI auto-commits to `main`).
+
+> **Mobile + axe-core a11y are not part of routine post publishing** — too noisy for
+> content-only changes. Reserve the full checks for layout / template / CSS work (next section).
+> The content-level a11y items above (alt text, descriptive link text, Mermaid
+> `accTitle`/`accDescr`) still apply to every post.
 
 ---
 
@@ -108,6 +112,6 @@ task dev   # serve on :1313 (binds 0.0.0.0 so the Docker browser can reach it)
 **When to write a dated audit doc.** Only for **infrastructure or design changes** —
 layout / template / CSS work, brand or theme changes, tooling upgrades. Record those as a
 dated doc in [`audits/`](audits/); see `audits/2026-06-01-accessibility-audit.md` for the
-worked example and method. **Publishing a single post does not warrant an audit doc** — run
-the mobile + a11y checks inline and move on. Reserve the `audits/` folder for changes that
-affect the whole blog.
+worked example and method. **Publishing a single post does not warrant an audit doc, and no
+longer triggers the mobile + a11y run at all** — content-only changes are too noisy to gate on
+it. Reserve both the `audits/` folder and the full checks for changes that affect the whole blog.
