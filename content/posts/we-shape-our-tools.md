@@ -7,6 +7,7 @@ tags = ['AI', 'agents', 'tools', 'skill', 'expertise']
 ShowToc = true
 coverImage = "static/covers/we-shape-our-tools.png"
 cover = { image = "/covers/we-shape-our-tools.png", alt = "Cover image for the post \"We shape our tools\" on a cream parchment background. The title is set in a large serif typeface with a short teal underline, above the subtitle \"...and they shape us back. With AI, we are speedrunning it.\" A teal rounded square with a white letter J sits in the lower right, labeled joe.dev / Joe Beda.", hidden = true }
+atUri = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3moja6p6n4224"
 +++
 
 The line everyone quotes is "we shape our tools and thereafter our tools shape us." Marshall McLuhan gets the credit but he didn't write it. His friend John Culkin did, in a [1967 essay](https://quoteinvestigator.com/2016/06/26/shape/) about McLuhan, and pinned it on McLuhan. But the original idea came from Winston Churchill; when rebuilding the bombed House of Commons in 1943, he told Parliament, "we shape our buildings, and afterwards our buildings shape us."  Somewhere "buildings" became "tools." The line about how tools reshape us got reshaped.
