@@ -7,6 +7,7 @@ tags = ['AI', 'agents', 'collaboration', 'chess']
 ShowToc = false
 coverImage = "static/covers/animatronic-rubber-duck.png"
 cover = { image = "/covers/animatronic-rubber-duck.png", alt = "Cover image for the post 'The animatronic rubber duck' on a warm off-white background. The title is set in large black serif type across two lines, with a short teal underline beneath it, above the gray subtitle: 'One of the best ways to use AI is as an active listener to build understanding and expertise.' In the lower right, a teal rounded square holds a white serif J monogram, with 'joe.dev' and 'Joe Beda' stacked below. A thin teal band runs along the bottom edge.", hidden = true }
+atUri = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mq3dw22xxe2r"
 +++
 
 You know rubber duck debugging even if you have never named it: put a rubber duck on your desk, and when you are stuck, explain your code to it out loud, line by line. The duck says nothing back. That is not a limitation of the technique. It is the whole mechanism. 
