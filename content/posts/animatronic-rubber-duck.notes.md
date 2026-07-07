@@ -2,6 +2,30 @@
 
 Not rendered to the site (`*.notes.md` excluded via `ignoreFiles` in hugo.toml).
 
+## Status (2026-07-07, human review pass)
+
+Human reviewer flagged that the inline Kasparov quote ("weak human + machine + better process...")
+introduces a third variable, process, that isn't the piece's thesis. The two-part claim (human +
+machine > either alone) gets muddied by a formula that reads as arguing for a specific
+process/technique, which belongs to a different piece (the "how you use AI," skills/tooling
+angle, explicitly out of scope here). Fix (Joe's choice, from an AskUserQuestion fork): moved the
+verbatim quote to the footnote (keeps source accuracy intact) and paraphrased in the body using
+"judgment" instead of "process," matching the vocabulary the piece already uses later
+("discipline," "judgment"). Added a caveat sentence to the footnote itself, at Joe's request,
+naming what "process" means in Kasparov's sense (skills/technique for working with the machine)
+and flagging it as a different piece's subject. Net effect: body prose no longer surfaces
+"process" as a term at all; footnote preserves the exact Kasparov wording plus the scoping note
+for anyone who clicks through.
+
+Joe caught a second layer of the same issue on re-read: the paraphrase still compared a
+weak-human+machine pair against a *stronger* human-machine pair ("beat a stronger human-machine
+pair with worse judgment"), which is a pairs-vs-pairs claim, not the pairs-vs-solo claim the
+piece actually argues (para 26 already gives the real human-alone/machine-alone comparisons via
+grandmasters losing and Hydra losing; para 34's summary line is "a human and a computer
+outperforming either one alone"). Cut that clause entirely from the body paraphrase, leaving only
+the machine-alone comparison ("beat a raw supercomputer"), which lines up with the rest of the
+section instead of quietly reintroducing a third axis.
+
 ## Status (2026-07-04, fifth pass)
 
 Joe asked to "bold some key phrases and add a pull quote or two" after reacting well to the
@@ -292,4 +316,11 @@ Alt Bluesky hook (chess-fact lead, more surprising):
 - [~] Expert/fact-check review — every claim already verified against a primary source during
       drafting (not a summary/secondary blog). Flagged to Joe whether he wants a full
       multi-perspective pass anyway; treating as sufficient unless he asks for more.
-- [ ] `git rebase origin/main`, flip `draft = false`, push.
+- [x] Human review caught the Kasparov quote conflating "process" (technique/tooling, out of
+      scope) with the piece's actual two-part claim (human+machine beats human alone / machine
+      alone). Fixed in two passes 2026-07-07 (see Status above): quote moved to footnote,
+      body paraphrase re-verified against the banned-words/writing-rules list, no em-dashes or
+      curly quotes introduced.
+- [x] `task build` passes clean (only the known PaperMod deprecation warnings).
+- [x] Flip `draft = false`.
+- [ ] `git rebase origin/main`, push directly to `main` (solo repo, no PR).

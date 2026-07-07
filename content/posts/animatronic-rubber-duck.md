@@ -1,6 +1,6 @@
 +++
-date = '2026-07-04T00:00:00-07:00'
-draft = true
+date = '2026-07-07T00:00:00-07:00'
+draft = false
 title = 'The animatronic rubber duck'
 description = "One of the best ways to use AI is as an active listener to build understanding and expertise."
 tags = ['AI', 'agents', 'collaboration', 'chess']
@@ -27,7 +27,7 @@ The same pattern showed up once before, at much higher stakes. After Deep Blue b
 
 {{< pullquote >}}The computer did the calculating. The human stayed in charge.{{< /pullquote >}}
 
-Kasparov's own conclusion: "weak human + machine + better process was superior to a strong computer alone and, more remarkably, superior to a strong human + machine + inferior process."[^kasparov] That process was human intuition: knowing which line to trust, when to override it, when to ignore it outright. The computer did the calculating. The human stayed in charge.
+Kasparov's own conclusion was blunt: a weaker human paired with a machine, guided by good judgment, beat a raw supercomputer.[^kasparov] That judgment was human intuition: knowing which line to trust, when to override it, when to ignore it outright. The computer did the calculating. The human stayed in charge.
 
 David Epstein picks up the same thread in *Range* and aims it straight at the "10,000 hours" rule: his own centaur example is Anson Williams, a British engineer with **no official chess rating**, whose team beat grandmasters who had spent a career earning one.[^range]
 
@@ -53,6 +53,6 @@ The old, silent duck still has a job too. Sometimes you already know where you a
 
 [^chessbase]: ChessBase's contemporaneous report on the tournament: ["Dark horse ZackS wins Freestyle Chess Tournament"](https://en.chessbase.com/post/dark-horse-zacks-wins-freestyle-che-tournament) (2005). Kasparov's own essay does not name the winning players; the team names and tournament details come from this report.
 
-[^kasparov]: Garry Kasparov, ["The Chess Master and the Computer"](https://www.nybooks.com/articles/2010/02/11/the-chess-master-and-the-computer/), *The New York Review of Books*, February 11, 2010.
+[^kasparov]: Kasparov's own words: "weak human + machine + better process was superior to a strong computer alone and, more remarkably, superior to a strong human + machine + inferior process." Garry Kasparov, ["The Chess Master and the Computer"](https://www.nybooks.com/articles/2010/02/11/the-chess-master-and-the-computer/), *The New York Review of Books*, February 11, 2010. "Process" in his sense covers the specific skills and technique behind how you work with the machine, a real subject, and a different piece than this one.
 
 [^range]: David Epstein, *Range: Why Generalists Triumph in a Specialized World* (Riverhead Books, 2019), chapter 1, "The Cult of the Head Start." Epstein's centaur example is a different freestyle chess tournament than the one described above: Anson Williams and teammate Nelson Hernandez, playing as team Intagrand, beat grandmaster-led teams and the supercomputer Hydra.
