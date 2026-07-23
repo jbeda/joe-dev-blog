@@ -7,6 +7,7 @@ tags = ['AI', 'agents', 'Claude Code', 'ssh', 'tmux', 'dotfiles']
 ShowToc = true
 coverImage = "static/covers/always-on-claude-code.png"
 cover = { image = "/covers/always-on-claude-code.png", alt = "Cover image for the post \"An always-on home for Claude Code\" on a cream parchment background. The title is set in a large black serif typeface with a short teal underline beneath it, above the subtitle \"Running Claude Code on a spare NUC sounds simple, but the devil is in the details.\" A teal rounded square containing a white letter J sits at the lower right, labeled joe.dev / Joe Beda.", hidden = true }
+atUri = "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mrdt6k6wik2x"
 +++
 
 I was about to get on a plane with Claude Code mid-session on my laptop, an agent halfway through a change I didn't want to lose. Closing the lid would suspend the session.

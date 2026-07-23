@@ -47,6 +47,12 @@
       "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mq3dw22xxe2r",
       "lastPublished": "2026-07-07T19:33:43.800Z",
       "slug": "animatronic-rubber-duck"
+    },
+    "content/posts/always-on-claude-code.md": {
+      "contentHash": "44a7bf429aa5d93888e57bbf8dfae39d17a6101241328d1e03290bc2de140cfb",
+      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mrdt6k6wik2x",
+      "lastPublished": "2026-07-23T21:53:24.671Z",
+      "slug": "always-on-claude-code"
     }
   },
   "publication": {
