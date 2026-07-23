@@ -1,0 +1,7 @@
+{
+  "spec_version": "6",
+  "title": "An always-on home for Claude Code",
+  "output": "/home/jbeda/src/joe-dev-blog/static/covers/always-on-claude-code.png",
+  "description": "Running Claude Code on a spare NUC sounds simple, but the devil is in the details.",
+  "source_post": "content/posts/always-on-claude-code.md"
+}
