@@ -1,0 +1,11 @@
+# Project tool versions for the blog, managed by mise (directory-scoped: these
+# activate only inside this repo, so they don't shadow global hugo/bun on the
+# Mac). Kept in sync with .github/workflows/deploy.yml.
+#
+# First time in this dir, mise will ask you to `mise trust` this file.
+[tools]
+# Matches CI: peaceiris/actions-hugo pins hugo-version 0.161.1 with extended:true.
+hugo-extended = "0.161.1"
+# CI's setup-bun floats to latest; pin here for local reproducibility. bun only
+# runs `bunx sequoia-cli@0.5.7` for the ATproto publish step.
+bun = "1.3.14"
