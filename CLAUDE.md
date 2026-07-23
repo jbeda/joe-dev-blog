@@ -3,8 +3,7 @@
 ## Project Overview
 
 Hugo static blog at **joe.dev**, deployed via Cloudflare Pages. Posts are mirrored to
-ATproto (Bluesky) via [Sequoia](https://sequoia.tools). The repo uses a bare+worktree
-layout managed by the `wt`/worktrunk CLI.
+ATproto (Bluesky) via [Sequoia](https://sequoia.tools).
 
 - **Repo:** `github.com/jbeda/joe-dev-blog`
 - **Live site:** https://joe.dev
@@ -104,7 +103,7 @@ for structural / layout changes, not routine posts.
 
 ## Git Workflow
 
-**Submodule init is automated via `.config/wt.toml`.** The PaperMod theme is a git submodule, and new worktrees don't auto-initialize submodules — without it the dev server fails with missing shortcodes/partials. The `wt` `pre-start` hook runs `git submodule update --init` automatically on every `wt switch --create`. If you create a worktree by other means, run it manually once:
+**Initialize submodules after cloning.** The PaperMod theme is a git submodule, and a fresh clone doesn't auto-initialize it — without this the dev server fails with missing shortcodes/partials. Run once after cloning:
 
 ```bash
 git submodule update --init

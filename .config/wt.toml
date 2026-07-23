@@ -1,7 +1,0 @@
-# Initialize git submodules (PaperMod theme) in every new worktree.
-# Hugo's dev server fails with missing shortcodes/partials without this step.
-pre-start = "git submodule update --init"
-
-# Deinit submodules before removal so git doesn't refuse with "working trees
-# containing submodules cannot be moved or removed".
-pre-remove = "git submodule deinit --all"
