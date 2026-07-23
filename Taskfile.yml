@@ -30,7 +30,11 @@ tasks:
   dev:stop:
     desc: Stop any running Hugo dev server
     cmds:
-      - pkill -f "hugo server" || true
+      # Kill by listening port, not `pkill -f "hugo server"`: with -f, pkill also
+      # matches this command's own shell (the pattern is in its argv) and can kill it
+      # mid-run. Run under the system shell via `sh -c` because go-task's built-in
+      # interpreter has no `kill` builtin. lsof works on macOS and Linux.
+      - sh -c 'PIDS=$(lsof -ti tcp:{{.DEV_PORT}} 2>/dev/null || true); [ -n "$PIDS" ] && kill $PIDS 2>/dev/null || true'
 
   dev:restart:
     desc: Restart the Hugo dev server
