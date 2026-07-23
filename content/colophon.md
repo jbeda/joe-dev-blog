@@ -41,12 +41,12 @@ Browse my ATproto records directly at
 
 ## Branding & theme
 
-The visual design uses a warm off-white palette with teal accents, with a near-black dark mode.
+The visual design uses a warm palette with teal accents: a warm near-black dark mode, now the default, and a warm off-white light mode.
 
 ### Typefaces
 
 {{< font-sample family="'Cormorant', serif" size="2rem" weight="600" sample="Cormorant Semi Bold" role="Headings & site logo" url="https://fonts.google.com/specimen/Cormorant" >}}
-{{< font-sample family="'Nunito', sans-serif" size="1.1rem" weight="300" sample="Nunito Light — the quick brown fox jumps over the lazy dog" role="Body text (300 Light, 600 Semi Bold for emphasis)" url="https://fonts.google.com/specimen/Nunito" >}}
+{{< font-sample family="'Nunito', sans-serif" size="1.1rem" weight="400" sample="Nunito Regular: the quick brown fox jumps over the lazy dog" role="Body text (400 Regular, 600 Semi Bold for emphasis)" url="https://fonts.google.com/specimen/Nunito" >}}
 {{< font-sample family="'Space Mono', monospace" size="0.9rem" weight="400" sample="Space Mono — fmt.Println(\"hello, world\")" role="Inline & block code" url="https://fonts.google.com/specimen/Space+Mono" >}}
 
 ### Colors
@@ -54,7 +54,7 @@ The visual design uses a warm off-white palette with teal accents, with a near-b
 {{< color-table >}}
 {{< color-swatch role="Page background"  light="#F5F1EB"  dark="#181511" >}}
 {{< color-swatch role="Teal accent"      light="#0A7A70"  dark="#2DD4BF" >}}
-{{< color-swatch role="Primary text"     light="#1F1F1F"  dark="#C4C4C5" >}}
+{{< color-swatch role="Primary text"     light="#1F1F1F"  dark="#E5E0D6" >}}
 {{< color-swatch role="Secondary text"   light="#6C6C6C"  dark="#9B9C9D" >}}
 {{< color-swatch role="Border"           light="#E8E4DE"  dark="#3C362C" >}}
 {{< color-swatch role="Inline code"      light="#E6F2F0"  dark="#1E2C2A" >}}

@@ -13,14 +13,18 @@
     --entry:   #24201A;   /* warm dark card bg */
     --border:  #3C362C;   /* warm amber-tinted border */
     --code-bg: #2E2921;   /* warm dark inline code bg */
+    /* Body text: PaperMod's default --content is a neutral gray (rgb 196,196,197)
+       that reads muddy on the warm dark bg. Use a warmer, brighter off-white so
+       body copy is crisp and matches the palette (~13.8:1 on --theme, well past AA). */
+    --content: #E5E0D6;
 }
 
 /* === Typography === */
 
 body {
     font-family: 'Nunito', sans-serif;
-    font-weight: 300;
-    line-height: 1.7;
+    font-weight: 400;
+    line-height: 1.6;
 }
 
 /* Restore legible weight for bold/strong inline text */
@@ -51,7 +55,7 @@ h4, h5, h6 {
     line-height: 1.5;
 }
 
-/* Card titles need more weight to read as headlines over Nunito 300 body */
+/* Card titles need more weight to read as headlines over the Nunito body */
 .entry-header h2 {
     font-weight: 600;
 }
