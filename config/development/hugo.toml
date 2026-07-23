@@ -1,6 +1,0 @@
-# Development-only overrides. `hugo server` runs in the "development" environment;
-# the `hugo` production build (and CI) runs in "production" and ignores this file.
-#
-# Make internal links relative so the dev server works when reached from another
-# host (e.g. over Tailscale at claudes-plan:1313), not just from localhost.
-relativeURLs = true
