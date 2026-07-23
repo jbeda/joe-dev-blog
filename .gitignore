@@ -23,3 +23,9 @@ __pycache__/
 # Task runner cache
 /.task/
 
+# Node dependencies (graphics-gen/, tools/)
+node_modules/
+
+# Local visual + a11y check output
+/.a11y-shots/
+

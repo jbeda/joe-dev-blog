@@ -37,6 +37,21 @@ tasks:
     cmds:
       - task: dev
 
+  a11y:
+    desc: "Headless-Chromium a11y + screenshot check (axe-core in light & dark, mobile-overflow at 375/320). Shots → .a11y-shots/. Override pages with URLS=/,/posts/foo/"
+    cmds:
+      - |
+        set -e
+        BUILD=$(mktemp -d)
+        SRV=""
+        cleanup() { [ -n "$SRV" ] && kill "$SRV" 2>/dev/null || true; rm -rf "$BUILD"; }
+        trap cleanup EXIT
+        hugo -D -F --baseURL "http://localhost:8899/" -d "$BUILD" >/dev/null
+        python3 -m http.server 8899 --directory "$BUILD" >/dev/null 2>&1 &
+        SRV=$!
+        for i in $(seq 1 20); do curl -sf -o /dev/null http://localhost:8899/ && break; sleep 0.5; done
+        BASE=http://localhost:8899 OUT="${OUT:-.a11y-shots}" node tools/visual/check.js
+
   build:
     desc: Production build (minified output → public/)
     cmds:
