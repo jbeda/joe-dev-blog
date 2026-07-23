@@ -34,6 +34,8 @@ Before a new post goes live (merged to `main` / deployed):
 - [ ] **Social snippets drafted** — Bluesky + LinkedIn teasers in the post's notes file. Lead
       with the most surprising / most shareable line, not necessarily the thesis (see
       `CLAUDE.md` → Make it compelling).
+- [ ] **Date updated to the publish day** — posts are often drafted over several days, so set
+      the frontmatter `date` to the actual ship date before deploying.
 - [ ] **Build passes** — `task build` (only the known PaperMod deprecation warnings).
 - [ ] **Rebase before push** — `git rebase origin/main` (CI auto-commits to `main`).
 
