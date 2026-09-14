@@ -1,0 +1,13 @@
+{
+  "spec_version": "7",
+  "title": "Introducing Mecatl",
+  "output": "static/covers/introducing-mecatl.png",
+  "description": "Defining and creating a “Cloud Native Harness”",
+  "source_post": "content/posts/introducing-mecatl.md",
+  "image": {
+    "path": "static/images/mecatito.png",
+    "width": 340,
+    "top": 0,
+    "right": 0
+  }
+}

@@ -3,15 +3,19 @@
  * Generate a 1200×630 cover image for a blog post.
  *
  * Usage:
- *   node src/cover.mjs --post content/posts/my-post.md
- *   node src/cover.mjs --title "My Title" [--description "..."] --output static/covers/foo.png
+ *   node src/cover.mjs --post content/posts/my-post.md [--image static/images/illustration.png]
+ *   node src/cover.mjs --title "My Title" [--description "..."] --output static/covers/foo.png [--image static/images/illustration.png]
  *   node src/cover.mjs --regen-all
+ *
+ * Image defaults place a 340px-wide PNG at the upper right, overflowing the
+ * card edge with 24 px of clearance above the signature. Override with
+ * --image-width, --image-top, and --image-right.
  *
  * Run `task fonts` first to download brand fonts into fonts/.
  */
 
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs'
-import { join, dirname, basename } from 'node:path'
+import { join, dirname, basename, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import satori from 'satori'
 import { renderPng, STATIC_DIR, CONTENT_DIR, h, getFonts, getFontMetrics } from './lib/render.mjs'
@@ -23,7 +27,15 @@ const COVERS_DIR = join(STATIC_DIR, 'covers')
 const W = 1200, H = 630
 const PAD = 80
 const TEAL = '#0D9488'
-const SPEC_VERSION = '6'
+const STRIPE_HEIGHT = 8
+const SIGNATURE_ICON_SIZE = 96
+const SIGNATURE_TEXT_SIZE = 24
+const SIGNATURE_GAP = 6
+const SIGNATURE_GAP_ABOVE_STRIPE = 24
+const SIGNATURE_BOTTOM = STRIPE_HEIGHT + SIGNATURE_GAP_ABOVE_STRIPE
+const SIGNATURE_HEIGHT = SIGNATURE_ICON_SIZE + SIGNATURE_GAP + 35
+const IMAGE_SIGNATURE_GAP = 24
+const SPEC_VERSION = '7'
 
 // Font metrics from Cormorant-Light.ttf OS/2 table (via opentype.js).
 const { ascenderRatio: CORMORANT_ASCENDER_RATIO, capHeightRatio, descenderRatio } = getFontMetrics('Cormorant-Light.ttf')
@@ -54,11 +66,11 @@ function typographicQuotes(text) {
 const FONT_SIZES = [120, 96, 72, 60, 52]
 
 // Probe render: return actual layout height of the title element via onNodeDetected.
-async function measureTitleHeight(title, fontSize, lineHeight) {
+async function measureTitleHeight(title, fontSize, lineHeight, width = W - PAD * 2) {
   let height = null
   await satori(
     h('div',
-      { style: { width: W, height: H, display: 'flex', flexDirection: 'column', paddingLeft: PAD, paddingRight: PAD } },
+      { style: { width, height: H, display: 'flex', flexDirection: 'column' } },
       h('div',
         { id: 'TITLE_PROBE', style: { fontFamily: 'Cormorant', fontWeight: 300, fontSize, lineHeight, color: '#000' } },
         title
@@ -71,16 +83,16 @@ async function measureTitleHeight(title, fontSize, lineHeight) {
 }
 
 // Try font sizes largest-first; return the first that fits in ≤3 lines.
-async function selectFontSize(title) {
+async function selectFontSize(title, width) {
   for (const size of FONT_SIZES) {
     const lh = titleLineHeight(size)
-    const titleHeight = await measureTitleHeight(title, size, lh)
+    const titleHeight = await measureTitleHeight(title, size, lh, width)
     const lines = Math.round(titleHeight / (size * lh))
     if (lines <= 3) return { size, titleHeight, lineHeight: lh }
   }
   const size = FONT_SIZES.at(-1)
   const lh = titleLineHeight(size)
-  return { size, titleHeight: await measureTitleHeight(title, size, lh), lineHeight: lh }
+  return { size, titleHeight: await measureTitleHeight(title, size, lh, width), lineHeight: lh }
 }
 
 // ── Rule positioning ──────────────────────────────────────────────────────────
@@ -95,7 +107,7 @@ function computeRuleMargin(fontSize, lineHeight) {
 
 // ── Layout ────────────────────────────────────────────────────────────────────
 
-function makeCoverNode({ title, description, logoDataUrl, titleSize, titleHeight, ruleMargin, lineHeight }) {
+function makeCoverNode({ title, description, logoDataUrl, image, titleSize, titleHeight, ruleMargin, lineHeight }) {
   const ruleTop = titleHeight + ruleMargin   // absolute position within hero block
 
   return h('div',
@@ -103,7 +115,7 @@ function makeCoverNode({ title, description, logoDataUrl, titleSize, titleHeight
 
     // Main area: hero block vertically centered
     h('div',
-      { style: { flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: PAD, paddingRight: PAD, paddingTop: PAD, paddingBottom: PAD } },
+      { style: { flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: PAD, paddingRight: image ? 360 : PAD, paddingTop: PAD, paddingBottom: PAD } },
       h('div',
         // marginTop: -32 nudges the block 16px above true center for visual balance.
         { style: { display: 'flex', flexDirection: 'column', marginTop: -32, position: 'relative' } },
@@ -126,45 +138,70 @@ function makeCoverNode({ title, description, logoDataUrl, titleSize, titleHeight
       ),
     ),
 
-    // Bottom stripe
-    h('div', { style: { height: 8, background: TEAL } }),
+    image
+      ? h('img', { src: image.dataUrl, width: image.width, height: image.height, style: { position: 'absolute', top: image.top, right: image.right } })
+      : null,
 
-    // Signature block: absolute bottom-right above stripe
+    // Bottom stripe
+    h('div', { style: { height: STRIPE_HEIGHT, background: TEAL } }),
+
+    // Signature block: bottom-right, with a fixed gap above the stripe.
     h('div',
-      { style: { position: 'absolute', bottom: PAD + 8, right: PAD, display: 'flex', flexDirection: 'column', alignItems: 'center' } },
-      h('img', { src: logoDataUrl, width: 128, height: 128 }),
-      h('div', { style: { fontFamily: 'Nunito', fontWeight: 400, fontSize: 24, color: '#6C6C6C', marginTop: 6 } }, 'joe.dev'),
-      h('div', { style: { fontFamily: 'Nunito', fontWeight: 400, fontSize: 24, color: '#6C6C6C' } }, 'Joe Beda'),
+      { style: { position: 'absolute', bottom: SIGNATURE_BOTTOM, right: PAD, display: 'flex', flexDirection: 'column', alignItems: 'center' } },
+      h('img', { src: logoDataUrl, width: SIGNATURE_ICON_SIZE, height: SIGNATURE_ICON_SIZE }),
+      h('div', { style: { fontFamily: 'Nunito', fontWeight: 400, fontSize: SIGNATURE_TEXT_SIZE, color: '#6C6C6C', marginTop: SIGNATURE_GAP } }, 'joe.dev · Joe Beda'),
     ),
   )
 }
 
 // ── Core generate ─────────────────────────────────────────────────────────────
 
-function loadLogoDataUrl() {
-  const logoPath = join(STATIC_DIR, 'apple-touch-icon.png')
-  const data = readFileSync(logoPath).toString('base64')
-  return `data:image/png;base64,${data}`
+function loadImage(imagePath, width, top, right) {
+  const data = readFileSync(imagePath)
+  if (data.readUInt32BE(0) !== 0x89504e47 || data.readUInt32BE(4) !== 0x0d0a1a0a) {
+    throw new Error(`Cover images must be PNG files: ${imagePath}`)
+  }
+  const intrinsicWidth = data.readUInt32BE(16)
+  const intrinsicHeight = data.readUInt32BE(20)
+  return {
+    dataUrl: `data:image/png;base64,${data.toString('base64')}`,
+    width,
+    height: Math.round(width * intrinsicHeight / intrinsicWidth),
+    top,
+    right,
+  }
 }
 
-async function generateCover({ title, description, output, sourcePost }) {
+function loadLogoDataUrl() {
+  return loadImage(join(STATIC_DIR, 'apple-touch-icon.png'), SIGNATURE_ICON_SIZE, 0, 0).dataUrl
+}
+
+async function generateCover({ title, description, output, sourcePost, imagePath, imageWidth, imageTop, imageRight }) {
   title = typographicQuotes(title)
   if (description) description = typographicQuotes(description)
 
-  const { size: titleSize, titleHeight, lineHeight } = await selectFontSize(title)
+  const titleWidth = W - PAD * 2 - (imagePath ? Math.min(Math.max(imageWidth - 60, 280), 480) : 0)
+  const { size: titleSize, titleHeight, lineHeight } = await selectFontSize(title, titleWidth)
   const ruleMargin = computeRuleMargin(titleSize, lineHeight)
 
   const logoDataUrl = loadLogoDataUrl()
-  const node = makeCoverNode({ title, description, logoDataUrl, titleSize, titleHeight, ruleMargin, lineHeight })
+  const image = imagePath ? loadImage(join(REPO_ROOT, imagePath), imageWidth, imageTop, imageRight) : null
+  if (image && image.top == null) {
+    image.top = H - SIGNATURE_BOTTOM - SIGNATURE_HEIGHT - IMAGE_SIGNATURE_GAP - image.height
+  }
+  const node = makeCoverNode({ title, description, logoDataUrl, image, titleSize, titleHeight, ruleMargin, lineHeight })
   const png  = await renderPng(node, W, H)
 
   mkdirSync(dirname(output), { recursive: true })
   writeFileSync(output, png)
   console.log(`✓ ${output}  (${titleSize}px, ruleMargin=${ruleMargin})`)
 
-  const sidecarData = { spec_version: SPEC_VERSION, title, output }
+  const sidecarData = { spec_version: SPEC_VERSION, title, output: relative(REPO_ROOT, output) }
   if (description) sidecarData.description = description
   if (sourcePost)  sidecarData.source_post = sourcePost
+  if (imagePath) {
+    sidecarData.image = { path: imagePath, width: imageWidth, top: imageTop, right: imageRight }
+  }
   const sidecar = output.replace(/\.png$/, '.cover.json')
   writeFileSync(sidecar, JSON.stringify(sidecarData, null, 2) + '\n')
   console.log(`  sidecar → ${sidecar}`)
@@ -174,13 +211,17 @@ async function generateCover({ title, description, output, sourcePost }) {
 
 function parseFrontmatter(postPath) {
   const text = readFileSync(postPath, 'utf8')
-  const m = text.match(/^\+\+\+([\s\S]*?)\+\+\+/)
-  if (!m) throw new Error(`No TOML frontmatter found in ${postPath}`)
-  const fm = m[1]
+  const toml = text.match(/^\+\+\+([\s\S]*?)\+\+\+/)
+  const yaml = text.match(/^---\r?\n([\s\S]*?)\r?\n---/)
+  if (!toml && !yaml) throw new Error(`No TOML or YAML frontmatter found in ${postPath}`)
+  const fm = (toml ?? yaml)[1]
   const get = (key) => {
-    // Try double-quoted first (allows inner single quotes), then single-quoted (allows inner double quotes)
-    let r = fm.match(new RegExp(`\\b${key}\\s*=\\s*"([^"]*)"` ))
-    if (!r) r = fm.match(new RegExp(`\\b${key}\\s*=\\s*'([^']*)'`))
+    if (toml) {
+      let r = fm.match(new RegExp(`\\b${key}\\s*=\\s*"([^"]*)"`))
+      if (!r) r = fm.match(new RegExp(`\\b${key}\\s*=\\s*'([^']*)'`))
+      return r ? r[1] : null
+    }
+    const r = fm.match(new RegExp(`^${key}:\\s*['"](.*)['"]\\s*$`, 'm'))
     return r ? r[1] : null
   }
   const title = get('title')
@@ -193,6 +234,23 @@ function parseFrontmatter(postPath) {
 const args = process.argv.slice(2)
 const flag = (name) => args.includes(name)
 const opt  = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : null }
+const numericOpt = (name, defaultValue) => {
+  const value = opt(name)
+  if (value == null) return defaultValue
+  const number = Number(value)
+  if (!Number.isFinite(number)) throw new Error(`${name} must be a number`)
+  return number
+}
+const imageOptions = () => {
+  const imagePath = opt('--image')
+  if (!imagePath) return {}
+  return {
+    imagePath,
+    imageWidth: numericOpt('--image-width', 340),
+    imageTop: numericOpt('--image-top', null),
+    imageRight: numericOpt('--image-right', -70),
+  }
+}
 
 if (flag('--regen-all')) {
   const sidecars = readdirSync(COVERS_DIR)
@@ -201,8 +259,18 @@ if (flag('--regen-all')) {
   if (!sidecars.length) { console.error('No sidecar files found in', COVERS_DIR); process.exit(1) }
   for (const sidecar of sidecars) {
     const data = JSON.parse(readFileSync(sidecar, 'utf8'))
-    console.log(`Regenerating: ${data.output}`)
-    await generateCover({ title: data.title, description: data.description, output: data.output, sourcePost: data.source_post })
+    const output = join(COVERS_DIR, basename(data.output))
+    console.log(`Regenerating: ${output}`)
+    await generateCover({
+      title: data.title,
+      description: data.description,
+      output,
+      sourcePost: data.source_post,
+      imagePath: data.image?.path,
+      imageWidth: data.image?.width,
+      imageTop: data.image?.top,
+      imageRight: data.image?.right,
+    })
   }
 
 } else if (opt('--post')) {
@@ -210,14 +278,14 @@ if (flag('--regen-all')) {
   const { title, description } = parseFrontmatter(join(REPO_ROOT, postPath))
   const slug    = basename(postPath, '.md')
   const output  = opt('--output') || join(COVERS_DIR, `${slug}.png`)
-  await generateCover({ title, description: opt('--description') ?? description, output, sourcePost: postPath })
+  await generateCover({ title, description: opt('--description') ?? description, output, sourcePost: postPath, ...imageOptions() })
 
 } else if (opt('--title')) {
   const output = opt('--output')
   if (!output) { console.error('--output required with --title'); process.exit(1) }
-  await generateCover({ title: opt('--title'), description: opt('--description'), output })
+  await generateCover({ title: opt('--title'), description: opt('--description'), output, ...imageOptions() })
 
 } else {
-  console.error('Usage: node src/cover.mjs --post FILE | --title TEXT [--description TEXT] --output FILE | --regen-all')
+  console.error('Usage: node src/cover.mjs --post FILE [--image PNG] [--image-width N --image-top N --image-right N] | --title TEXT [--description TEXT] --output FILE [--image PNG] | --regen-all')
   process.exit(1)
 }

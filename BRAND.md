@@ -85,7 +85,7 @@ Dark mode substitutes: `#2d3a39` / `#2DD4BF` / `#e8e3da` / `#18150f`.
 
 Standard size: **1200×630 px** PNG (OG / 16:9 dimensions; ATproto blob limit is 1 MB).
 
-Current spec version: **"6"** (defined as `SPEC_VERSION` in `graphics-gen/src/cover.mjs`).
+Current spec version: **"7"** (defined as `SPEC_VERSION` in `graphics-gen/src/cover.mjs`).
 
 | Layer | Details |
 |---|---|
@@ -94,7 +94,8 @@ Current spec version: **"6"** (defined as `SPEC_VERSION` in `graphics-gen/src/co
 | Teal rule | `#0D9488`, 6 px × 380 px, 28 px below title block |
 | Description | Nunito Regular (400), 28 px, `#505050`, 18 px below teal rule; max width 880 px to clear signature block |
 | Bottom stripe | `#0D9488`, 8 px × full width, bottom edge |
-| Signature block | `static/apple-touch-icon.png` at 128 px, bottom-right; `joe.dev` / `Joe Beda` stacked below at Nunito Regular 24 px, `#6C6C6C`, centred on icon |
+| Signature block | `static/apple-touch-icon.png` at 96 px, bottom-right and 24 px above the stripe; `joe.dev · Joe Beda` beneath it in Nunito Regular 24 px, `#6C6C6C`, centred on the icon |
+| Optional illustration | PNG placed at the upper-right, overflowing the right edge. Default position keeps a 24 px margin above the signature block; image width and position are adjustable at generation time |
 | Padding | 80 px horizontal and vertical |
 
 Title block is vertically centered −16 px above true center.

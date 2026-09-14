@@ -144,10 +144,10 @@ tasks:
       - "{{.NODE}} graphics-gen/src/og-home.mjs"
 
   cover:
-    desc: "Generate cover image for a post (reads title from frontmatter). Usage: task cover POST=content/posts/my-post.md"
+    desc: "Generate a cover image. Usage: task cover POST=content/posts/my-post.md ARGS='--image static/images/illustration.png [--image-width 340 --image-top N --image-right -70]'"
     deps: [fonts, graphics-gen:setup]
     cmds:
-      - "{{.NODE}} graphics-gen/src/cover.mjs --post {{.POST}}"
+      - "{{.NODE}} graphics-gen/src/cover.mjs --post {{.POST}} {{.ARGS}}"
     requires:
       vars: [POST]
 
