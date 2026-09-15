@@ -53,6 +53,12 @@
       "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mrdt6k6wik2x",
       "lastPublished": "2026-07-23T21:53:24.671Z",
       "slug": "always-on-claude-code"
+    },
+    "content/posts/introducing-mecatl.md": {
+      "contentHash": "7fd57073a2222552878eeee1f2df5a3fd1863425a8a7221393381c0549d7bde4",
+      "atUri": "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mvkxry7pah2t",
+      "lastPublished": "2026-09-15T15:45:17.261Z",
+      "slug": "introducing-mecatl"
     }
   },
   "publication": {

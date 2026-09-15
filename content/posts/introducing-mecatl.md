@@ -7,6 +7,7 @@ tags: ['AI', 'agents', 'infrastructure', 'Mecatl', 'Cloud Native', 'Kubernetes']
 ShowToc: false
 coverImage: 'static/covers/introducing-mecatl.png'
 cover: { image: '/covers/introducing-mecatl.png', alt: 'Cover image for the post "Introducing Mecatl." On a warm parchment background, the black serif title is set above a short teal rule and the subtitle "Defining and creating a Cloud Native Harness." An illustration of Mecatito, Mecatl’s mascot, is large at the upper right. A teal stripe and joe.dev / Joe Beda signature sit along the bottom.', hidden: true }
+atUri: "at://did:plc:vkn2vmcnsmlffrpwalvgybw5/site.standard.document/3mvkxry7pah2t"
 ---
 I joined Stacklok a little over 5 months ago.
 It has been a whirlwind.
