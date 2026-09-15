@@ -5,6 +5,7 @@
 - Cover generated at `static/covers/introducing-mecatl.png` with Mecatito as the optional upper-right cover illustration.
 
 ## Decisions
+- 2026-09-15: Added `Mecatl`, `Cloud Native`, and `Kubernetes` tags.
 - 2026-09-14: Title set to "Introducing Mecatl".
 - 2026-09-14: Description set to `Defining and creating a "Cloud Native Harness"`.
 - 2026-09-14: Define a Cloud Native Harness as an agent system built from the ground up for Kubernetes, with independently deployable, scalable, and secured supporting services.
